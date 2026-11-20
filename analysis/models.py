@@ -17,3 +17,22 @@ class PositionAnalysis(models.Model):
 
     def mate_for_side_to_move(self) -> int | None:
         return self.mate
+
+
+class MoveExplanation(models.Model):
+    """Words for one move from one position, in one language. Shared by all users."""
+
+    position = models.ForeignKey(PositionAnalysis, on_delete=models.CASCADE, related_name="explanations")
+    move_uci = models.CharField(max_length=5)
+    language = models.CharField(max_length=2)
+    depth = models.CharField(max_length=5)  # "short" | "full"
+    text = models.TextField()
+    source = models.CharField(max_length=10)  # "template" | "ai"
+    model = models.CharField(max_length=50, blank=True)
+    needs_ai = models.BooleanField(default=False, db_index=True)  # template stand-in waiting for AI text
+    facts = models.JSONField(default=dict)  # the FactPacket, so the AI text can be filled in later
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["position", "move_uci", "language", "depth"],
+                                               name="unique_explanation")]
