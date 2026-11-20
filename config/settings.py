@@ -8,8 +8,12 @@ def env(name, default=None):
     return os.environ.get(name, default)
 
 
-SECRET_KEY = env("DJANGO_SECRET_KEY", "dev-only-change-me")
 DEBUG = env("DJANGO_DEBUG", "1") == "1"
+SECRET_KEY = env("DJANGO_SECRET_KEY", "dev-only-change-me" if DEBUG else None)
+if not SECRET_KEY:
+    from django.core.exceptions import ImproperlyConfigured
+
+    raise ImproperlyConfigured("Set DJANGO_SECRET_KEY when DJANGO_DEBUG=0.")
 ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = [o for o in env("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o]
 
