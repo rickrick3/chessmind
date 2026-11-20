@@ -1,0 +1,134 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-20 20:09+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: analysis/views.py:35
+#, python-format
+msgid "You've used your %(n)s reviews this week. New ones open on Monday."
+msgstr "Tu as utilisé tes %(n)s analyses de la semaine. Les nouvelles arrivent lundi."
+
+#: games/views.py:23
+msgid "Chess.com is not answering, showing the games already imported."
+msgstr "Chess.com ne répond pas, voici les parties déjà importées."
+
+#: players/views.py:30
+msgid "Type your Chess.com username."
+msgstr "Tape ton pseudo Chess.com."
+
+#: players/views.py:35
+msgid "Chess.com is not answering, try again in a minute."
+msgstr "Chess.com ne répond pas, réessaie dans une minute."
+
+#: players/views.py:38
+#, python-format
+msgid "No Chess.com player named “%(name)s”."
+msgstr "Aucun joueur Chess.com ne s'appelle « %(name)s »."
+
+#: templates/base.html:21
+msgid "Sign out"
+msgstr "Se déconnecter"
+
+#: templates/base.html:30
+msgid "Analysis by"
+msgstr "Analyse par"
+
+#: templates/base.html:30
+msgid "source code"
+msgstr "code source"
+
+#: templates/game_list.html:3
+msgid "Your recent games"
+msgstr "Tes parties récentes"
+
+#: templates/game_list.html:4
+#, python-format
+msgid "Free reviews left this week: %(left)s"
+msgstr "Analyses gratuites restantes cette semaine : %(left)s"
+
+#: templates/game_list.html:5
+msgid "No standard games in the last two months."
+msgstr "Aucune partie standard ces deux derniers mois."
+
+#: templates/game_list.html:14
+msgid "Review"
+msgstr "Analyser"
+
+#: templates/review.html:18
+msgid "Back to games"
+msgstr "Retour aux parties"
+
+#: templates/review.html:23
+msgid "Previous move"
+msgstr "Coup précédent"
+
+#: templates/review.html:24
+msgid "Next move"
+msgstr "Coup suivant"
+
+#: templates/review.html:28
+msgid "Analysing your game… this takes about a minute."
+msgstr "Analyse de ta partie… environ une minute."
+
+#: templates/review.html:37
+msgid "The analysis failed. Go back and try again."
+msgstr "L'analyse a échoué. Reviens en arrière et réessaie."
+
+#: templates/review.html:38
+msgid "Best move"
+msgstr "Meilleur coup"
+
+#: templates/review.html:38
+msgid "Opponent can answer"
+msgstr "L'adversaire peut répondre"
+
+#: templates/review.html:39
+msgid "best"
+msgstr "meilleur"
+
+#: templates/review.html:39
+msgid "good"
+msgstr "bon"
+
+#: templates/review.html:39
+msgid "inaccuracy"
+msgstr "imprécision"
+
+#: templates/review.html:40
+msgid "mistake"
+msgstr "erreur"
+
+#: templates/review.html:40
+msgid "blunder"
+msgstr "gaffe"
+
+#: templates/signin.html:4
+msgid "Learn from your own games"
+msgstr "Apprends de tes propres parties"
+
+#: templates/signin.html:5
+msgid ""
+"Enter your Chess.com username. Every move of your recent games gets graded "
+"and explained."
+msgstr "Entre ton pseudo Chess.com. Chaque coup de tes parties récentes est noté et expliqué."
+
+#: templates/signin.html:9
+msgid "Chess.com username"
+msgstr "Pseudo Chess.com"
+
+#: templates/signin.html:10
+msgid "Start"
+msgstr "Commencer"

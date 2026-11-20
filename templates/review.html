@@ -1,0 +1,45 @@
+{% extends "base.html" %}{% load static i18n %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'vendor/cm-chessboard/assets/chessboard.css' %}">
+<link rel="stylesheet" href="{% static 'vendor/cm-chessboard/assets/extensions/arrows/arrows.css' %}">
+<link rel="stylesheet" href="{% static 'vendor/cm-chessboard/assets/extensions/markers/markers.css' %}">
+<style>
+  #board { max-width: 520px; width: 100%; }
+  #moves { max-height: 260px; overflow-y: auto; }
+  .mv { cursor: pointer; display: inline-block; padding: 2px 6px; border-radius: 4px; margin: 1px; }
+  .mv.active { outline: 2px solid #0d6efd; }
+  .g-inaccuracy { background: #fff3cd; } .g-mistake { background: #ffe0b2; } .g-blunder { background: #f8d7da; }
+  .reply { cursor: pointer; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-baseline flex-wrap gap-2 mb-2">
+  <h1 class="h5 mb-0">{{ game.white }} – {{ game.black }} · {{ game.result }}</h1>
+  <a href="{% url 'game_list' %}" class="small">{% trans "Back to games" %}</a>
+</div>
+<div class="row g-3">
+  <div class="col-md-6"><div id="board"></div>
+    <div class="d-flex gap-2 mt-2">
+      <button class="btn btn-outline-secondary btn-sm" id="prev" aria-label="{% trans 'Previous move' %}">◀</button>
+      <button class="btn btn-outline-secondary btn-sm" id="next" aria-label="{% trans 'Next move' %}">▶</button>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div id="state" class="text-secondary">{% trans "Analysing your game… this takes about a minute." %}</div>
+    <div id="counts" class="small mb-2"></div>
+    <div id="moves" class="border rounded bg-white p-2 mb-3"></div>
+    <div id="explain" class="border rounded bg-white p-3"></div>
+  </div>
+</div>
+<script id="review-data" type="application/json">{"statusUrl": "{% url 'review_status' review.id %}",
+ "assets": "{% static 'vendor/cm-chessboard/assets/' %}",
+ "orientation": "{% if player.chesscom_username == game.black %}b{% else %}w{% endif %}",
+ "i18n": {"failed": "{% trans 'The analysis failed. Go back and try again.' %}",
+          "better": "{% trans 'Best move' %}", "replies": "{% trans 'Opponent can answer' %}",
+          "grades": {"best": "{% trans 'best' %}", "good": "{% trans 'good' %}", "inaccuracy": "{% trans 'inaccuracy' %}",
+                     "mistake": "{% trans 'mistake' %}", "blunder": "{% trans 'blunder' %}"}}}</script>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script type="module" src="{% static 'js/review.js' %}"></script>
+{% endblock %}
