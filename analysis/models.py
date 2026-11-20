@@ -36,3 +36,21 @@ class MoveExplanation(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(fields=["position", "move_uci", "language", "depth"],
                                                name="unique_explanation")]
+
+
+class GameReview(models.Model):
+    """One player's review of one game. The heavy parts (analysis, explanations) live in the shared tables."""
+
+    game = models.ForeignKey("games.Game", on_delete=models.CASCADE)
+    player = models.ForeignKey("players.Player", on_delete=models.CASCADE)
+    language = models.CharField(max_length=2, default="en")
+    status = models.CharField(max_length=10, default="queued")  # queued | running | done | failed
+    charged = models.BooleanField(default=False)  # counted against the weekly limit
+    counts = models.JSONField(default=dict)
+    moves = models.JSONField(default=list)
+    error = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    finished_at = models.DateTimeField(null=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["game", "player"], name="one_review_per_player_game")]

@@ -13,3 +13,16 @@ class Player(models.Model):
 
     def __str__(self):
         return self.chesscom_username
+
+
+class UsageCounter(models.Model):
+    """How much of the weekly free allowance a player has used (ISO week, UTC)."""
+
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    iso_year = models.IntegerField()
+    iso_week = models.IntegerField()
+    reviews_used = models.IntegerField(default=0)
+    explains_used = models.IntegerField(default=0)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=["player", "iso_year", "iso_week"], name="one_counter_per_week")]
