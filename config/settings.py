@@ -1,0 +1,99 @@
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def env(name, default=None):
+    return os.environ.get(name, default)
+
+
+SECRET_KEY = env("DJANGO_SECRET_KEY", "dev-only-change-me")
+DEBUG = env("DJANGO_DEBUG", "1") == "1"
+ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+CSRF_TRUSTED_ORIGINS = [o for o in env("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o]
+
+INSTALLED_APPS = [
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "players",
+    "games",
+    "analysis",
+]
+
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+ROOT_URLCONF = "config.urls"
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.request",
+                "django.template.context_processors.i18n",
+                "django.contrib.messages.context_processors.messages",
+                "players.context.player",
+            ]
+        },
+    }
+]
+WSGI_APPLICATION = "config.wsgi.application"
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("POSTGRES_DB", "chess"),
+        "USER": env("POSTGRES_USER", "chess"),
+        "PASSWORD": env("POSTGRES_PASSWORD", "chess"),
+        "HOST": env("POSTGRES_HOST", "localhost"),
+        "PORT": env("POSTGRES_PORT", "5432"),
+    }
+}
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
+
+LANGUAGE_CODE = "en"
+LANGUAGES = [("fr", "Français"), ("en", "English")]
+LOCALE_PATHS = [BASE_DIR / "locale"]
+USE_I18N = True
+TIME_ZONE = "UTC"
+USE_TZ = True
+
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+CELERY_BROKER_URL = env("REDIS_URL", "redis://localhost:6379/0")
+CELERY_TASK_ALWAYS_EAGER = env("CELERY_TASK_ALWAYS_EAGER", "0") == "1"
+CELERY_TASK_EAGER_PROPAGATES = False
+
+# Engine
+ENGINE_PATH = env("ENGINE_PATH", "/usr/games/stockfish")
+ENGINE_DEPTH = int(env("ENGINE_DEPTH", "18"))
+ENGINE_MULTIPV = 3
+
+# Weekly limits (ISO week, UTC)
+LIMIT_REVIEWS_PER_WEEK = int(env("LIMIT_REVIEWS_PER_WEEK", "5"))
+LIMIT_EXPLAINS_PER_WEEK = int(env("LIMIT_EXPLAINS_PER_WEEK", "20"))
+
+# AI
+AI_PROVIDER = env("AI_PROVIDER", "gemini")  # "gemini" or "none"
+GEMINI_MODEL = env("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_API_KEY = env("GEMINI_API_KEY", "")
+
+# Chess.com asks API clients to identify themselves with a contact.
+CHESSCOM_USER_AGENT = env("CHESSCOM_USER_AGENT", "ChessCoach/0.1 (contact: rickrick20050@gmail.com)")

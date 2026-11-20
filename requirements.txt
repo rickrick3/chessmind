@@ -1,0 +1,13 @@
+Django>=5.1,<6
+celery>=5.4,<6
+redis>=5
+psycopg[binary]>=3.2
+chess>=1.11
+requests>=2.32
+google-genai>=1.0
+gunicorn>=23
+pytest>=8
+pytest-django>=4.9
+pytest-mock>=3.14
+responses>=0.25
+whitenoise>=6.7
