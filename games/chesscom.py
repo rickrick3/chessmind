@@ -25,3 +25,16 @@ def get_player(username: str) -> dict | None:
     if r.status_code != 200:
         raise ChessComUnavailable(f"HTTP {r.status_code}")
     return r.json()
+
+
+def get_month_games(username: str, year: int, month: int, etag: str | None = None) -> tuple[list[dict], str | None]:
+    """Return (games, etag). On 304 Not Modified returns ([], etag)."""
+    headers = {"If-None-Match": etag} if etag else {}
+    r = _get(f"{BASE}/player/{username.strip().lower()}/games/{year}/{month:02d}", headers)
+    if r.status_code == 304:
+        return [], etag
+    if r.status_code == 404:
+        return [], None
+    if r.status_code != 200:
+        raise ChessComUnavailable(f"HTTP {r.status_code}")
+    return r.json().get("games", []), r.headers.get("ETag")

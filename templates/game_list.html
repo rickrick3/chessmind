@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% load i18n %}
+{% block content %}
+<h1 class="h4">{% trans "Your recent games" %}</h1>
+{% if not games %}<p class="text-secondary">{% trans "No standard games in the last two months." %}</p>{% endif %}
+<div class="list-group">
+{% for g in games %}
+  <div class="list-group-item d-flex justify-content-between align-items-center gap-2">
+    <div>
+      <div class="fw-semibold">{{ g.white }} ({{ g.white_rating }}) – {{ g.black }} ({{ g.black_rating }}) · {{ g.result }}</div>
+      <div class="small text-secondary">{{ g.time_class }} · {{ g.opening_name|default:g.eco }} · {{ g.played_at|date:"d M Y" }}</div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endblock %}
