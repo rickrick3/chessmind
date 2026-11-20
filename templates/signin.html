@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% load i18n %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-md-6 col-lg-5">
+  <h1 class="h3 mt-4">{% trans "Learn from your own games" %}</h1>
+  <p class="text-secondary">{% trans "Enter your Chess.com username. Every move of your recent games gets graded and explained." %}</p>
+  {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+  <form method="post">{% csrf_token %}
+    <input class="form-control form-control-lg mb-2" name="username" value="{{ username|default:'' }}"
+           placeholder="{% trans 'Chess.com username' %}" autocapitalize="none" autocomplete="username" required>
+    <button class="btn btn-primary btn-lg w-100">{% trans "Start" %}</button>
+  </form>
+</div></div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% load static i18n %}<!doctype html>
+{% get_current_language as LANG %}
+<html lang="{{ LANG }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Chess Coach{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
+  {% block head %}{% endblock %}
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-light bg-white border-bottom mb-3">
+  <div class="container">
+    <a class="navbar-brand fw-semibold" href="{% url 'signin' %}">Chess Coach</a>
+    <div class="d-flex align-items-center gap-2">
+      <form method="post" action="{% url 'set_language' %}" class="d-flex gap-1">{% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <button name="lang" value="fr" class="btn btn-sm {% if LANG == 'fr' %}btn-dark{% else %}btn-outline-dark{% endif %}">FR</button>
+        <button name="lang" value="en" class="btn btn-sm {% if LANG == 'en' %}btn-dark{% else %}btn-outline-dark{% endif %}">EN</button>
+      </form>
+      {% if player %}<a class="btn btn-sm btn-link" href="{% url 'signout' %}">{% trans "Sign out" %}</a>{% endif %}
+    </div>
+  </div>
+</nav>
+<main class="container pb-5">
+  {% for m in messages %}<div class="alert alert-warning">{{ m }}</div>{% endfor %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="container small text-secondary pb-4">
+  {% trans "Analysis by" %} <a href="https://github.com/official-stockfish/Stockfish">Stockfish</a> (GPL-3.0, {% trans "source code" %}).
+</footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>
