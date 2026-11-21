@@ -86,6 +86,11 @@ GUEST_IDLE_DAYS = 180
 DAILY_GOAL_CHOICES = (10, 20, 30, 50)
 DAILY_GOAL_DEFAULT = 20
 LOGIN_FAILURE_LIMIT = 5
+# XP (gamification.domain.xp)
+XP_LESSON_FIRST = 10
+XP_ACCURACY_BONUS = 5
+XP_ACCURACY_BONUS_MIN = 0.9
+XP_LESSON_REPLAY = 3
 LOGIN_FAILURE_WINDOW = 15 * 60  # seconds
 
 # Email (password reset). Console in development; any SMTP service in production.
