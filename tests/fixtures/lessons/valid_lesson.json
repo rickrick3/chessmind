@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "meta": {
+    "title": {"fr": "Les premiers coups", "en": "The first moves"},
+    "description": {"fr": "Prends le centre et sors tes pièces.", "en": "Take the centre and bring your pieces out."},
+    "objectives": [
+      {"fr": "Jouer 1.e4 et comprendre pourquoi", "en": "Play 1.e4 and know why"},
+      {"fr": "Défendre e5 avec Nc6", "en": "Defend e5 with Nc6"}
+    ],
+    "difficulty": 1,
+    "estimated_minutes": 4,
+    "orientation": "white"
+  },
+  "completion": {"min_accuracy": 0},
+  "steps": [
+    {
+      "id": "s1", "type": "explain",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "text": {"fr": "Chaque partie commence ici. Les Blancs jouent en premier.",
+               "en": "Every game starts here. White moves first."},
+      "arrows": [["e2", "e4"]]
+    },
+    {
+      "id": "s2", "type": "show_moves",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "text": {"fr": "Regarde les trois premiers coups.", "en": "Watch the first three moves."},
+      "moves": [
+        {"uci": "e2e4", "caption": {"fr": "1.e4 prend le centre.", "en": "1.e4 takes the centre."}},
+        {"uci": "e7e5", "caption": {"fr": "Les Noirs répondent e5.", "en": "Black answers e5."}},
+        {"uci": "g1f3", "caption": {"fr": "Nf3 attaque le pion e5.", "en": "Nf3 attacks the pawn on e5."}}
+      ],
+      "skills": ["center"]
+    },
+    {
+      "id": "s3", "type": "find_move",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+      "prompt": {"fr": "Comment les Noirs défendent-ils le pion e5 ?", "en": "How does Black defend the pawn on e5?"},
+      "accept": ["b8c6"],
+      "also_good": [{"uci": "d7d6", "note": {"fr": "d6 défend aussi, mais enferme le fou.",
+                                              "en": "d6 defends too, but shuts in the bishop."}}],
+      "wrong": [{"uci": "f7f6", "feedback": {"fr": "f6 affaiblit ton roi.", "en": "f6 weakens your king."}}],
+      "correct": {"fr": "Nc6 défend e5 et sort un cavalier.", "en": "Nc6 defends e5 and develops a knight."},
+      "hint": {"fr": "Sors un cavalier pour protéger e5.", "en": "Bring a knight out to protect e5."},
+      "skills": ["development"]
+    },
+    {
+      "id": "s4", "type": "choice",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "question": {"fr": "Quelle pièce vaut le plus ?", "en": "Which piece is worth the most?"},
+      "options": [
+        {"text": {"fr": "La dame", "en": "The queen"}},
+        {"text": {"fr": "La tour", "en": "The rook"}},
+        {"text": {"fr": "Le cavalier", "en": "The knight"}}
+      ],
+      "answer": 0,
+      "explanation": {"fr": "La dame vaut environ neuf pions.", "en": "The queen is worth about nine pawns."},
+      "hint": {"fr": "Elle bouge comme une tour et un fou.", "en": "It moves like a rook and a bishop."},
+      "skills": ["piece-values"]
+    },
+    {
+      "id": "s5", "type": "play_line",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "side": "white",
+      "prompt": {"fr": "Rejoue l'Italienne de mémoire.", "en": "Play the Italian from memory."},
+      "moves": ["e2e4", "e7e5", "g1f3", "b8c6", "f1c4"],
+      "also_accept": {"4": ["f1b5"]},
+      "notes": {"4": {"fr": "Bc4 vise f7.", "en": "Bc4 aims at f7."}},
+      "hint": {"fr": "Centre, cavalier, puis fou.", "en": "Centre, knight, then bishop."},
+      "srs": {"line_key": "main"},
+      "skills": ["italian"]
+    },
+    {
+      "id": "s6", "type": "choice",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+      "question": {"fr": "Quel coup développe une pièce vers le centre ?",
+                   "en": "Which move develops a piece toward the centre?"},
+      "options": [{"uci": "f1c4"}, {"uci": "h2h4"}],
+      "answer": 0,
+      "explanation": {"fr": "Bc4 sort le fou et vise f7.", "en": "Bc4 brings the bishop out and eyes f7."},
+      "hint": {"fr": "Un pion sur le bord ne développe rien.", "en": "A pawn on the edge develops nothing."}
+    },
+    {
+      "id": "s7", "type": "explain",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",
+      "text": {"fr": "Centre, cavaliers, fous : tu connais l'idée.", "en": "Centre, knights, bishops: you know the idea."}
+    }
+  ]
+}
