@@ -65,10 +65,10 @@ def test_other_players_review_is_404(client, farel, game):
     assert client.get(f"/reviews/{r.id}/").status_code == 404
 
 
-def test_signed_out_redirects_to_signin(client, farel, game):
+def test_signed_out_redirects_to_chesscom_link(client, farel, game):
     r = done_review_for(farel, game, "en")
     resp = client.get(f"/reviews/{r.id}/")
-    assert resp.status_code == 302 and resp.url == "/"
+    assert resp.status_code == 302 and resp.url == "/profile/chess-com/"
 
 
 def test_start_review_redirects_to_page(client, farel, game):

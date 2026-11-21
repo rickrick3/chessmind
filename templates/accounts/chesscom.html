@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}Chess.com · ChessMind{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-md-6 col-lg-5">
+  <h1 class="h3 mt-4">{% trans "Connect Chess.com" %}</h1>
+  <p class="text-secondary">{% trans "Type your Chess.com username to review your recent games, every move explained." %}</p>
+  {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+  {% if learner.player %}
+    <p>{% blocktrans with name=learner.player.chesscom_username %}Linked to {{ name }}.{% endblocktrans %}</p>
+    <form method="post" action="{% url 'chesscom_unlink' %}" class="mb-3">{% csrf_token %}
+      <button class="btn btn-outline-secondary btn-sm">{% trans "Unlink" %}</button>
+    </form>
+  {% endif %}
+  <form method="post">{% csrf_token %}
+    <input class="form-control form-control-lg mb-2" name="username" value="{{ form.username.value|default:'' }}"
+           placeholder="{% trans 'Chess.com username' %}" autocapitalize="none" required>
+    <button class="btn btn-primary btn-lg w-100">{% trans "Connect" %}</button>
+  </form>
+</div></div>
+{% endblock %}

@@ -77,6 +77,6 @@ def test_game_list_newest_first(client, player, mock_archive):
     assert len(games) == 2 and games[0].played_at > games[1].played_at
 
 
-def test_game_list_requires_signin(client):
+def test_game_list_requires_chesscom_link(client):
     r = client.get("/games/")
-    assert r.status_code == 302 and r.url == "/"
+    assert r.status_code == 302 and r.url == "/profile/chess-com/"

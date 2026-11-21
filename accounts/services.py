@@ -7,6 +7,9 @@ from django.contrib.auth import get_user_model, login
 from django.core.cache import cache
 from django.db import transaction
 
+from games import chesscom
+from players.models import Player
+
 from .models import Learner
 from .signals import merge_learners
 
@@ -93,3 +96,59 @@ def record_login_failure(email: str, ip: str) -> None:
 
 def clear_login_failures(email: str, ip: str) -> None:
     cache.delete(_failure_key(email, ip))
+
+
+# --- Settings, Chess.com link, deletion ------------------------------------
+
+class UnknownChessComUser(Exception):
+    """No Chess.com player has this username."""
+
+
+def update_settings(learner: Learner, *, display_name: str | None = None, language: str | None = None,
+                    daily_goal_xp: int | None = None, timezone: str | None = None) -> Learner:
+    """Change a learner's settings. Raises ValueError(<field name>) for an invalid value; nothing is saved then."""
+    if language is not None and language not in ("fr", "en"):
+        raise ValueError("language")
+    if daily_goal_xp is not None and int(daily_goal_xp) not in settings.DAILY_GOAL_CHOICES:
+        raise ValueError("daily_goal_xp")
+    if timezone is not None and not valid_timezone(timezone):
+        raise ValueError("timezone")
+    if display_name is not None:
+        learner.display_name = display_name.strip()[:40]
+    if language is not None:
+        learner.language = language
+    if daily_goal_xp is not None:
+        learner.daily_goal_xp = int(daily_goal_xp)
+    if timezone is not None:
+        learner.timezone = timezone
+    learner.save()
+    return learner
+
+
+def link_chesscom(learner: Learner, username: str) -> Player:
+    """Link a Chess.com username (checked to exist, not to be owned). Several learners may share one."""
+    name = (username or "").strip().lower()
+    if not name or chesscom.get_player(name) is None:  # may raise chesscom.ChessComUnavailable
+        raise UnknownChessComUser(name)
+    player, _ = Player.objects.get_or_create(chesscom_username=name, defaults={"language": learner.language})
+    learner.player = player
+    learner.save(update_fields=["player"])
+    return player
+
+
+def unlink_chesscom(learner: Learner) -> None:
+    learner.player = None
+    learner.save(update_fields=["player"])
+
+
+def delete_account(request) -> None:
+    """Delete the learner, its learning data and its user. Shared Player, Game and analysis rows stay."""
+    learner = getattr(request, "learner", None)
+    with transaction.atomic():
+        if learner is not None:
+            user = learner.user
+            learner.delete()
+            if user is not None:
+                user.delete()
+    request.session.flush()
+    request.learner = None

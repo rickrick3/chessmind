@@ -51,6 +51,10 @@ def set_language(request):
     lang = request.POST.get("lang")
     if lang not in ("fr", "en"):
         lang = "en"
+    learner = getattr(request, "learner", None)
+    if learner is not None:
+        learner.language = lang
+        learner.save(update_fields=["language"])
     player = current_player(request)
     if player:
         player.language = lang

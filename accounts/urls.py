@@ -7,6 +7,11 @@ urlpatterns = [
     path("signup/", views.signup, name="signup"),
     path("login/", views.login_view, name="login"),
     path("logout/", views.logout_view, name="logout"),
+    path("profile/settings/", views.settings_view, name="settings"),
+    path("profile/chess-com/", views.chesscom_link, name="chesscom_link"),
+    path("profile/chess-com/unlink/", views.chesscom_unlink, name="chesscom_unlink"),
+    path("profile/delete/", views.delete_account, name="delete_account"),
+    path("profile/password/", views.PasswordChangeView.as_view(), name="password_change"),
     path("password-reset/", auth_views.PasswordResetView.as_view(
         template_name="registration/password_reset_form.html",
         email_template_name="registration/password_reset_email.txt",

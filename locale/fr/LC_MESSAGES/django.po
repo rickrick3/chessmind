@@ -216,3 +216,64 @@ msgstr "Choisis un nouveau mot de passe ici :"
 
 msgid "If it wasn't you, ignore this email."
 msgstr "Si ce n'était pas toi, ignore cet e-mail."
+
+msgid "Name"
+msgstr "Prénom"
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "Daily goal"
+msgstr "Objectif du jour"
+
+msgid "Time zone"
+msgstr "Fuseau horaire"
+
+msgid "Unknown time zone."
+msgstr "Fuseau horaire inconnu."
+
+msgid "Settings saved."
+msgstr "Réglages enregistrés."
+
+msgid "Wrong password."
+msgstr "Mot de passe incorrect."
+
+msgid "Password changed."
+msgstr "Mot de passe changé."
+
+msgid "Settings"
+msgstr "Réglages"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Chess.com account"
+msgstr "Compte Chess.com"
+
+msgid "Change my password"
+msgstr "Changer mon mot de passe"
+
+msgid "Delete my account"
+msgstr "Supprimer mon compte"
+
+msgid "Connect Chess.com"
+msgstr "Connecte Chess.com"
+
+msgid "Type your Chess.com username to review your recent games, every move explained."
+msgstr "Tape ton pseudo Chess.com pour analyser tes parties récentes, chaque coup expliqué."
+
+#, python-format
+msgid "Linked to %(name)s."
+msgstr "Relié à %(name)s."
+
+msgid "Unlink"
+msgstr "Délier"
+
+msgid "Connect"
+msgstr "Connecter"
+
+msgid "Your progress, XP and streak are deleted for good. This can't be undone."
+msgstr "Ta progression, tes XP et ta série sont supprimés pour de bon. Impossible de revenir en arrière."
+
+msgid "Delete everything"
+msgstr "Tout supprimer"
