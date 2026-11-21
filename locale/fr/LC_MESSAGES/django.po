@@ -277,3 +277,34 @@ msgstr "Ta progression, tes XP et ta série sont supprimés pour de bon. Impossi
 
 msgid "Delete everything"
 msgstr "Tout supprimer"
+
+msgid "The request is too large."
+msgstr "La requête est trop grande."
+
+msgid "The request is not valid JSON."
+msgstr "La requête n'est pas du JSON valide."
+
+msgid "The request must be a JSON object."
+msgstr "La requête doit être un objet JSON."
+
+msgid "Pick one of the three levels."
+msgstr "Choisis un des trois niveaux."
+
+#, python-format
+msgid "Invalid value: %(field)s"
+msgstr "Valeur invalide : %(field)s"
+
+msgid "This lesson does not exist."
+msgstr "Cette leçon n'existe pas."
+
+msgid "Finish the lessons before this one first."
+msgstr "Termine d'abord les leçons d'avant."
+
+msgid "This attempt does not exist."
+msgstr "Cette tentative n'existe pas."
+
+msgid "This lesson was started too long ago. Start it again."
+msgstr "Cette leçon a commencé il y a trop longtemps. Recommence-la."
+
+msgid "These answers don't match the lesson."
+msgstr "Ces réponses ne correspondent pas à la leçon."

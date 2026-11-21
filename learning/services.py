@@ -1,11 +1,17 @@
 """Learning use cases: what is unlocked, starting and finishing attempts, progress."""
-from datetime import datetime
+from datetime import datetime, timedelta
+
+from django.conf import settings
+from django.db import transaction
 
 from curriculum.models import Lesson
 from curriculum.services import published_content
+from gamification.domain.achievements import ProgressStats
+from gamification.services import award_for_attempt
 
+from .domain.scoring import score_attempt
 from .domain.unlock import LessonNode, lesson_states, next_up
-from .models import LessonAttempt, LessonProgress
+from .models import LessonAttempt, LessonProgress, StepResult
 
 START_LEVELS = ("new", "rules", "club")
 
@@ -16,6 +22,10 @@ class Locked(Exception):
 
 class NotPublished(Exception):
     """The lesson has no published version."""
+
+
+class Expired(Exception):
+    """The attempt started too long ago to be finished."""
 
 
 def published_lessons():
@@ -99,3 +109,55 @@ def on_merge(sender, source, target, **kwargs) -> None:
     if not target.start_level and source.start_level:
         target.start_level = source.start_level
         target.save(update_fields=["start_level"])
+
+
+def progress_stats(learner) -> ProgressStats:
+    done = LessonProgress.objects.filter(learner=learner, first_completed_at__isnull=False)
+    done_slugs = set(done.values_list("lesson__slug", flat=True))
+    units: dict[int, set[str]] = {}
+    for unit_id, slug in published_lessons().values_list("unit_id", "slug"):
+        units.setdefault(unit_id, set()).add(slug)
+    return ProgressStats(lessons_completed=len(done_slugs),
+                         units_completed=sum(1 for slugs in units.values() if slugs <= done_slugs),
+                         perfect_lessons=done.filter(best_accuracy__gte=1.0).count())
+
+
+def finish_attempt(learner, attempt_id, steps: list[dict], now: datetime) -> dict:
+    """Score the tries against the pinned version, record progress and XP. A repeat call returns the same result."""
+    with transaction.atomic():
+        attempt = (LessonAttempt.objects.select_for_update().select_related("version", "lesson")
+                   .get(pk=attempt_id, learner=learner))
+        if attempt.finished_at is not None:
+            return attempt.result
+        if now - attempt.started_at > timedelta(hours=settings.ATTEMPT_EXPIRY_HOURS):
+            raise Expired(str(attempt_id))
+        scored = score_attempt(attempt.version.content, steps)  # InvalidResult: nothing written yet
+
+        nodes = path_nodes()
+        before = states_for(learner, nodes)
+        StepResult.objects.bulk_create([
+            StepResult(attempt=attempt, step_id=s.step_id, step_type=s.step_type, correct=s.correct,
+                       cleared=s.cleared, tries=s.tries, hints=s.hints, ms=s.ms, skills=s.skills)
+            for s in scored.steps])
+        progress, _ = LessonProgress.objects.select_for_update().get_or_create(learner=learner,
+                                                                              lesson=attempt.lesson)
+        first_completion = scored.completed and progress.first_completed_at is None
+        if scored.completed:
+            progress.completions += 1
+            progress.best_accuracy = max(progress.best_accuracy, scored.accuracy)
+            if first_completion:
+                progress.first_completed_at = now
+        progress.last_attempt_at = now
+        progress.save()
+        after = states_for(learner, nodes)
+        unlocked = [n.slug for n in nodes if before.get(n.slug) == "locked" and after.get(n.slug) != "locked"]
+
+        award = award_for_attempt(learner, attempt, completed=scored.completed, accuracy=scored.accuracy,
+                                  first_completion=first_completion, stats=progress_stats(learner), now=now)
+        result = {"completed": scored.completed, "accuracy": scored.accuracy, "xp": award["xp"],
+                  "streak": award["streak"], "daily_goal": award["daily_goal"], "unlocked": unlocked,
+                  "achievements": award["achievements"], "new_cards": 0}
+        attempt.finished_at, attempt.completed, attempt.accuracy = now, scored.completed, scored.accuracy
+        attempt.xp_awarded, attempt.result = award["xp"]["awarded"], result
+        attempt.save(update_fields=["finished_at", "completed", "accuracy", "xp_awarded", "result"])
+    return result
