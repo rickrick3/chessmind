@@ -365,3 +365,106 @@ msgstr "Les deux premiers niveaux sont ouverts."
 
 msgid "Something went wrong. Try again."
 msgstr "Un problème est survenu. Réessaie."
+
+msgid "Path"
+msgstr "Parcours"
+
+msgid "Openings"
+msgstr "Ouvertures"
+
+msgid "Endgames"
+msgstr "Finales"
+
+msgid "Tactics"
+msgstr "Tactique"
+
+msgid "Ready for today's lesson?"
+msgstr "Prêt pour la leçon du jour ?"
+
+#, python-format
+msgid "Level %(n)s"
+msgstr "Niveau %(n)s"
+
+msgid "lessons"
+msgstr "leçons"
+
+msgid "next:"
+msgstr "ensuite :"
+
+msgid "locked"
+msgstr "verrouillée"
+
+msgid "The first lessons are on their way. Come back soon!"
+msgstr "Les premières leçons arrivent. Reviens vite !"
+
+#, python-format
+msgid "record %(n)s"
+msgstr "record %(n)s"
+
+msgid "Guest"
+msgstr "Invité"
+
+#, python-format
+msgid "Level %(level)s · %(xp)s XP"
+msgstr "Niveau %(level)s · %(xp)s XP"
+
+msgid "Profile sections"
+msgstr "Sections du profil"
+
+msgid "Performance"
+msgstr "Performance"
+
+msgid "Mastery"
+msgstr "Maîtrise"
+
+msgid "Statistics"
+msgstr "Statistiques"
+
+msgid "d"
+msgstr "j"
+
+msgid "Streak"
+msgstr "Série"
+
+msgid "record"
+msgstr "record"
+
+msgid "Level"
+msgstr "Niveau"
+
+msgid "Lessons"
+msgstr "Leçons"
+
+#, python-format
+msgid "perfect: %(n)s"
+msgstr "parfaites : %(n)s"
+
+msgid "Accuracy"
+msgstr "Précision"
+
+msgid "No lessons yet."
+msgstr "Pas encore de leçons."
+
+msgid "Name, language, daily goal, time zone"
+msgstr "Prénom, langue, objectif du jour, fuseau horaire"
+
+msgid "Not connected"
+msgstr "Pas connecté"
+
+msgid "My level"
+msgstr "Mon niveau"
+
+msgid "Where you start on the path."
+msgstr "Où tu commences le parcours."
+
+msgid "To review your games, every move explained."
+msgstr "Pour analyser tes parties, chaque coup expliqué."
+
+msgid "My game reviews"
+msgstr "Bilan de mes parties"
+
+msgid "Your strong points and what costs you points."
+msgstr "Tes points forts et ce qui te coûte des points."
+
+msgid "Keep your progress"
+msgstr "Garde ta progression"

@@ -1,0 +1,51 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "Learn" %} · ChessMind{% endblock %}
+{% block content %}
+<div class="cm-coach mb-4">
+  <div class="cm-coach__avatar" aria-hidden="true">&#9822;</div>
+  <div class="cm-bubble">{% trans "Ready for today's lesson?" %}</div>
+</div>
+{% for unit in units %}
+<section class="cm-unit" aria-labelledby="unit-{{ unit.number }}">
+  <div class="cm-unit__header">
+    <div class="cm-label cm-unit__label">{{ unit.course }} · {% blocktrans with n=unit.number %}Level {{ n }}{% endblocktrans %}</div>
+    <h2 class="cm-unit__title" id="unit-{{ unit.number }}">{{ unit.title }}</h2>
+    <div class="cm-unit__meta">
+      <span>{{ unit.done }} / {{ unit.total }}</span> {% trans "lessons" %}{% if unit.next_title %} · {% trans "next:" %} {{ unit.next_title }}{% endif %}
+    </div>
+  </div>
+  <ol class="cm-path">
+    {% for item in unit.lessons %}
+    <li class="cm-path__item cm-path__item--o{{ item.offset }}">
+      <div class="node is-{{ item.state }}">
+        {% if item.state == "locked" %}
+          <span class="node__disc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+          <span class="node__title">{{ item.title }}<span class="visually-hidden"> ({% trans "locked" %})</span></span>
+        {% else %}
+          {% if item.state == "current" %}<a class="node__start" href="/lessons/{{ item.slug }}/">{% trans "Start" %}</a>{% endif %}
+          <a class="node__disc" href="/lessons/{{ item.slug }}/" aria-label="{{ item.title }}">{% if item.state == "done" %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>{% else %}<span aria-hidden="true">&#9823;</span>{% endif %}</a>
+          <span class="node__title">{{ item.title }}</span>
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% empty %}
+<div class="cm-card cm-card--tint"><p class="mb-0">{% trans "The first lessons are on their way. Come back soon!" %}</p></div>
+{% endfor %}
+{% endblock %}
+{% block aside %}<div class="cm-card mb-3" data-streak-card="{{ header.streak.current }}">
+  <div class="cm-stat">
+    <div class="cm-icon-tile cm-icon-tile--orange" aria-hidden="true">&#128293;</div>
+    <div><div class="cm-stat__value">{{ header.streak.current }}</div>
+      <div class="cm-label">{% trans "Day streak" %} · {% blocktrans with n=header.streak.longest %}record {{ n }}{% endblocktrans %}</div></div>
+  </div>
+</div>
+<div class="cm-card" data-goal="{{ header.daily_goal.today_xp }}/{{ header.daily_goal.target }}">
+  <div class="cm-stat">
+    <div class="cm-ring" style="--p: {% widthratio header.daily_goal.today_xp header.daily_goal.target 100 %}" aria-hidden="true"></div>
+    <div><div class="cm-stat__value">{{ header.daily_goal.today_xp }} / {{ header.daily_goal.target }} XP</div>
+      <div class="cm-label">{% trans "Daily goal" %}</div></div>
+  </div>
+</div>{% endblock %}

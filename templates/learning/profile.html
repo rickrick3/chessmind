@@ -1,0 +1,67 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "Profile" %} · ChessMind{% endblock %}
+{% block content %}
+<div class="cm-profile">
+  <div class="cm-profile__avatar" aria-hidden="true">{% if learner.display_name %}{{ learner.display_name|first|upper }}{% else %}&#9822;{% endif %}</div>
+  <div>
+    <h1 class="mb-1">{% if learner.display_name %}{{ learner.display_name }}{% elif learner.is_guest %}{% trans "Guest" %}{% else %}{{ user.email }}{% endif %}</h1>
+    <div class="cm-profile__level">{% blocktrans with level=me.level xp=me.xp_total %}Level {{ level }} · {{ xp }} XP{% endblocktrans %}</div>
+  </div>
+</div>
+
+<nav class="cm-tabs my-4" aria-label="{% trans 'Profile sections' %}">
+  <a {% if tab == "performance" %}class="is-active" {% endif %}href="?tab=performance">{% trans "Performance" %}</a>
+  <a {% if tab == "mastery" %}class="is-active" {% endif %}href="?tab=mastery">{% trans "Mastery" %}</a>
+  <a {% if tab == "settings" %}class="is-active" {% endif %}href="?tab=settings">{% trans "Settings" %}</a>
+</nav>
+
+{% if tab == "performance" %}
+<h2 class="h4 mb-3">{% trans "Statistics" %}</h2>
+<div class="cm-stats mb-4">
+  <div class="cm-card cm-stat"><div class="cm-icon-tile cm-icon-tile--orange" aria-hidden="true">&#128293;</div>
+    <div><div class="cm-stat__value"><span data-stat="streak">{{ me.streak.current }}</span> {% trans "d" %}</div>
+      <div class="cm-label">{% trans "Streak" %}</div><div class="small text-secondary">{% trans "record" %} <span data-stat="record">{{ me.streak.longest }}</span></div></div></div>
+  <div class="cm-card cm-stat"><div class="cm-icon-tile cm-icon-tile--purple" aria-hidden="true">&#9889;</div>
+    <div><div class="cm-stat__value" data-stat="level">{{ me.level }}</div>
+      <div class="cm-label">{% trans "Level" %}</div><div class="small text-secondary">{{ me.xp_total }} XP</div></div></div>
+  <div class="cm-card cm-stat"><div class="cm-icon-tile" aria-hidden="true">&#9813;</div>
+    <div><div class="cm-stat__value" data-stat="lessons">{{ stats.lessons_completed }}</div>
+      <div class="cm-label">{% trans "Lessons" %}</div><div class="small text-secondary">{% blocktrans with n=stats.perfect_lessons %}perfect: {{ n }}{% endblocktrans %}</div></div></div>
+  {% for row in accuracy %}
+  <div class="cm-card cm-stat"><div class="cm-icon-tile" aria-hidden="true">&#9678;</div>
+    <div><div class="cm-stat__value">{{ row.percent }}%</div>
+      <div class="cm-label">{% trans "Accuracy" %}</div><div class="small text-secondary">{{ row.label }}</div></div></div>
+  {% endfor %}
+</div>
+{% elif tab == "mastery" %}
+<h2 class="h4 mb-3">{% trans "Mastery" %}</h2>
+{% for unit in units %}
+<div class="cm-card mb-3">
+  <div class="d-flex justify-content-between align-items-baseline gap-2">
+    <div><div class="cm-label">{{ unit.course }}</div><div class="fw-bold fs-5">{{ unit.title }}</div></div>
+    <div class="fw-bold">{{ unit.done }} / {{ unit.total }}</div>
+  </div>
+  <div class="cm-progress mt-2" role="progressbar" aria-valuenow="{{ unit.percent }}" aria-valuemin="0" aria-valuemax="100"><span style="width: {{ unit.percent }}%"></span></div>
+</div>
+{% empty %}<p class="text-secondary">{% trans "No lessons yet." %}</p>{% endfor %}
+{% else %}
+<a class="cm-row" href="/profile/settings/"><div class="cm-icon-tile" aria-hidden="true">&#9881;</div><div class="cm-row__body"><div class="cm-row__title">{% trans "Settings" %}</div><div class="cm-row__sub">{% trans "Name, language, daily goal, time zone" %}</div></div></a>
+<a class="cm-row" href="/profile/chess-com/"><div class="cm-icon-tile" aria-hidden="true">&#128279;</div><div class="cm-row__body"><div class="cm-row__title">{% trans "Chess.com account" %}</div><div class="cm-row__sub">{% if learner.player %}{{ learner.player.chesscom_username }}{% else %}{% trans "Not connected" %}{% endif %}</div></div></a>
+{% if not learner.is_guest %}<a class="cm-row" href="/profile/password/"><div class="cm-icon-tile" aria-hidden="true">&#128273;</div><div class="cm-row__body"><div class="cm-row__title">{% trans "Change my password" %}</div></div></a>{% endif %}
+<a class="cm-row" href="/profile/delete/"><div class="cm-icon-tile cm-icon-tile--orange" aria-hidden="true">&#10005;</div><div class="cm-row__body"><div class="cm-row__title">{% trans "Delete my account" %}</div></div></a>
+{% endif %}
+
+<div class="mt-4">
+  <a class="cm-row" href="/start/"><div class="cm-icon-tile cm-icon-tile--purple" aria-hidden="true">&#8599;</div><div class="cm-row__body"><div class="cm-row__title">{% trans "My level" %}</div><div class="cm-row__sub">{% trans "Where you start on the path." %}</div></div></a>
+  <a class="cm-row" href="/profile/chess-com/"><div class="cm-icon-tile" aria-hidden="true">&#128279;</div><div class="cm-row__body"><div class="cm-row__title">{% trans "Connect Chess.com" %}</div><div class="cm-row__sub">{% trans "To review your games, every move explained." %}</div></div></a>
+  <a class="cm-row" href="/games/"><div class="cm-icon-tile" aria-hidden="true">&#9638;</div><div class="cm-row__body"><div class="cm-row__title">{% trans "My game reviews" %}</div><div class="cm-row__sub">{% trans "Your strong points and what costs you points." %}</div></div></a>
+</div>
+{% endblock %}
+{% block aside %}{% if learner.is_guest %}<div class="cm-card">
+  <h2 class="h4">{% trans "Keep your progress" %}</h2>
+  <p class="text-secondary">{% trans "Your lessons, streak and XP follow you on every device." %}</p>
+  <div class="d-grid gap-2">
+    <a class="cm-btn cm-btn--primary" href="/signup/?next=/profile/">{% trans "Create an account" %}</a>
+    <a class="cm-btn cm-btn--secondary" href="/login/?next=/profile/">{% trans "I already have an account" %}</a>
+  </div>
+</div>{% endif %}{% endblock %}
