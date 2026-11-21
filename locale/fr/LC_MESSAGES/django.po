@@ -308,3 +308,60 @@ msgstr "Cette leçon a commencé il y a trop longtemps. Recommence-la."
 
 msgid "These answers don't match the lesson."
 msgstr "Ces réponses ne correspondent pas à la leçon."
+
+msgid "Learn"
+msgstr "Apprendre"
+
+msgid "Analysis"
+msgstr "Analyse"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Main menu"
+msgstr "Menu principal"
+
+msgid "Day streak"
+msgstr "Série de jours"
+
+msgid "day streak"
+msgstr "jours de série"
+
+msgid "Log out"
+msgstr "Se déconnecter"
+
+msgid "Learn chess, one short lesson a day"
+msgstr "Apprends les échecs, une courte leçon par jour"
+
+msgid "Openings, endgames and tactics in five-minute lessons. Keep your streak, earn XP, and watch your game grow."
+msgstr "Ouvertures, finales et tactique en leçons de cinq minutes. Garde ta série, gagne des XP et regarde ton jeu progresser."
+
+msgid "I already have an account"
+msgstr "J'ai déjà un compte"
+
+msgid "Where do you start?"
+msgstr "Par où commences-tu ?"
+
+msgid "Pick the closest. You can change it later."
+msgstr "Choisis le plus proche. Tu pourras changer plus tard."
+
+msgid "I'm new to chess"
+msgstr "Je débute aux échecs"
+
+msgid "Start from the very first lesson."
+msgstr "Commence par la toute première leçon."
+
+msgid "I know the rules"
+msgstr "Je connais les règles"
+
+msgid "Every lesson of the first unit is open."
+msgstr "Toutes les leçons du premier niveau sont ouvertes."
+
+msgid "I play regularly"
+msgstr "Je joue souvent"
+
+msgid "The first two units are open."
+msgstr "Les deux premiers niveaux sont ouverts."
+
+msgid "Something went wrong. Try again."
+msgstr "Un problème est survenu. Réessaie."

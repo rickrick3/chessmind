@@ -35,5 +35,10 @@
     {% if learner and not learner.is_guest %}<li><a href="{% url 'password_change' %}">{% trans "Change my password" %}</a></li>{% endif %}
     <li><a class="text-danger" href="{% url 'delete_account' %}">{% trans "Delete my account" %}</a></li>
   </ul>
+  {% if user.is_authenticated %}
+  <form method="post" action="{% url 'logout' %}">{% csrf_token %}
+    <button class="cm-btn cm-btn--secondary cm-btn--sm">{% trans "Log out" %}</button>
+  </form>
+  {% endif %}
 </div></div>
 {% endblock %}

@@ -4,31 +4,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Chess Coach{% endblock %}</title>
+  <title>{% block title %}ChessMind{% endblock %}</title>
+  <link rel="preload" href="{% static 'fonts/nunito/nunito-latin-wght-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/chessmind.css' %}">
   {% block head %}{% endblock %}
 </head>
-<body class="bg-light">
-<nav class="navbar navbar-light bg-white border-bottom mb-3">
-  <div class="container">
-    <a class="navbar-brand fw-semibold" href="{% url 'signin' %}">Chess Coach</a>
-    <div class="d-flex align-items-center gap-2">
-      <form method="post" action="{% url 'set_language' %}" class="d-flex gap-1">{% csrf_token %}
-        <input type="hidden" name="next" value="{{ request.get_full_path }}">
-        <button name="lang" value="fr" class="btn btn-sm {% if LANG == 'fr' %}btn-dark{% else %}btn-outline-dark{% endif %}">FR</button>
-        <button name="lang" value="en" class="btn btn-sm {% if LANG == 'en' %}btn-dark{% else %}btn-outline-dark{% endif %}">EN</button>
-      </form>
-      {% if player %}<a class="btn btn-sm btn-link" href="{% url 'signout' %}">{% trans "Sign out" %}</a>{% endif %}
-    </div>
+<body class="cm">
+<div class="cm-app">
+  <aside class="cm-sidebar">
+    {% include "partials/logo.html" %}
+    <nav class="cm-nav" aria-label="{% trans 'Main menu' %}">{% include "partials/nav.html" %}</nav>
+  </aside>
+  <div class="cm-main">
+    <header class="cm-topbar">
+      {% include "partials/logo.html" %}
+      <div class="cm-topbar__right">
+        {% if header %}<span class="cm-streak" data-streak="{{ header.streak.current }}" title="{% trans 'Day streak' %}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-3 2-4 2-7 1.5 1 2 2.5 2 4 1-1 1-4 1-8z"/></svg>{{ header.streak.current }}<span class="visually-hidden"> {% trans "day streak" %}</span></span>{% endif %}
+        <form method="post" action="{% url 'set_language' %}" class="cm-lang">{% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+          <button name="lang" value="fr" class="{% if LANG == 'fr' %}is-active{% endif %}" aria-label="Français">FR</button><button name="lang" value="en" class="{% if LANG == 'en' %}is-active{% endif %}" aria-label="English">EN</button>
+        </form>
+        {% if user.is_authenticated %}
+          <a class="cm-avatar" href="/profile/" aria-label="{% trans 'Profile' %}">{{ learner.display_name|default:user.email|first|upper }}</a>
+        {% else %}
+          <a class="cm-btn cm-btn--secondary cm-btn--sm" href="{% url 'login' %}">{% trans "Log in" %}</a>
+        {% endif %}
+      </div>
+    </header>
+    <main>
+      {% for m in messages %}<div class="alert {% if m.tags == 'error' %}alert-danger{% elif m.tags == 'success' %}alert-success{% else %}alert-warning{% endif %}" role="status">{{ m }}</div>{% endfor %}
+      <div class="cm-page"><div>{% block content %}{% endblock %}</div><aside class="cm-rail">{% block aside %}{% endblock %}</aside></div>
+    </main>
+    <footer class="small text-secondary py-4">
+      {% trans "Analysis by" %} <a href="https://github.com/official-stockfish/Stockfish">Stockfish</a> (GPL-3.0, {% trans "source code" %}).
+    </footer>
   </div>
-</nav>
-<main class="container pb-5">
-  {% for m in messages %}<div class="alert alert-warning">{{ m }}</div>{% endfor %}
-  {% block content %}{% endblock %}
-</main>
-<footer class="container small text-secondary pb-4">
-  {% trans "Analysis by" %} <a href="https://github.com/official-stockfish/Stockfish">Stockfish</a> (GPL-3.0, {% trans "source code" %}).
-</footer>
+</div>
+<nav class="cm-tabbar" aria-label="{% trans 'Main menu' %}">{% include "partials/nav.html" %}</nav>
 {% block scripts %}{% endblock %}
 </body>
 </html>

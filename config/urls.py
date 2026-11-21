@@ -9,4 +9,5 @@ urlpatterns = [
     path("", include("players.urls")),
     path("", include("games.urls")),
     path("", include("analysis.urls")),
+    path("", include("learning.urls")),
 ]
