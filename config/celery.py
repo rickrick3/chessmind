@@ -15,6 +15,10 @@ app.conf.beat_schedule = {
         "task": "analysis.tasks.upgrade_pending_explanations",
         "schedule": crontab(hour=8, minute=5),
     },
+    "delete-idle-guests": {
+        "task": "accounts.tasks.delete_idle_guests",
+        "schedule": crontab(hour=3, minute=30, day_of_week="mon"),
+    },
 }
 
 

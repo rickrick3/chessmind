@@ -18,6 +18,30 @@ def _packet(**kw):
 
 
 @pytest.fixture
+def rf_with_session(rf):
+    """Build a request that has a session, a LANGUAGE_CODE and no learner yet, as the middleware leaves it."""
+    from django.contrib.sessions.middleware import SessionMiddleware
+    from django.utils.translation import get_language_from_request
+
+    def build(path="/", **headers):
+        req = rf.get(path, **headers)
+        SessionMiddleware(lambda r: None).process_request(req)
+        req.session.save()
+        req.LANGUAGE_CODE = get_language_from_request(req)
+        req.learner = None
+        return req
+
+    return build
+
+
+@pytest.fixture
+def guest(db):
+    from accounts.models import Learner
+
+    return Learner.objects.create()
+
+
+@pytest.fixture
 def packet_good():
     return _packet()
 

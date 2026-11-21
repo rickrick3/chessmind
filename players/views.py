@@ -9,10 +9,9 @@ from .models import Player
 
 
 def current_player(request) -> Player | None:
-    pid = request.session.get("player_id")
-    if not pid:
-        return None
-    return Player.objects.filter(id=pid).first()
+    """The Chess.com player linked to this request's learner, if any."""
+    learner = getattr(request, "learner", None)
+    return learner.player if learner is not None else None
 
 
 def _with_language(response, lang):

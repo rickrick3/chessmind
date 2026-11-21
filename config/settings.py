@@ -38,6 +38,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "accounts.middleware.LearnerMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -58,6 +59,7 @@ TEMPLATES = [
                 "django.template.context_processors.i18n",
                 "django.contrib.messages.context_processors.messages",
                 "players.context.player",
+                "accounts.context.learner",
             ]
         },
     }
@@ -80,6 +82,9 @@ MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 # Accounts: guests keep their progress in a long-lived session.
 SESSION_COOKIE_AGE = 365 * 24 * 3600
 LOGIN_URL = "/login/"
+GUEST_IDLE_DAYS = 180
+DAILY_GOAL_CHOICES = (10, 20, 30, 50)
+DAILY_GOAL_DEFAULT = 20
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
