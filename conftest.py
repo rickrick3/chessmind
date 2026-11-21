@@ -100,6 +100,22 @@ def lesson_factory(db):
 
 
 @pytest.fixture
+def publish(db):
+    """publish(lesson, content) -> LessonVersion: a new version, published straight away (test setup only)."""
+    from curriculum import services
+    from curriculum.domain.workflow import APPROVED
+    from curriculum.models import LessonVersion
+
+    def make(lesson, content):
+        version = services.new_version(lesson, None, content=content)
+        LessonVersion.objects.filter(pk=version.pk).update(status=APPROVED)
+        version.refresh_from_db()
+        return services.publish(version, None)
+
+    return make
+
+
+@pytest.fixture
 def valid_content():
     """A 7-step lesson using all five step types (tests/fixtures/lessons/valid_lesson.json), fresh each time."""
     import json
