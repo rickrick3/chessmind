@@ -17,8 +17,15 @@ services:
   worker:
     build: .
     env_file: .env
-    command: celery -A config worker -B -c 2 -l info
+    command: celery -A config worker -B -Q celery,content -c 2 -l info
     depends_on: [db, redis]
     restart: unless-stopped
+  test:
+    build: .
+    profiles: ["test"]
+    env_file: .env
+    volumes: [".:/app"]
+    depends_on: [db, redis]
+    command: pytest
 volumes:
   pgdata:

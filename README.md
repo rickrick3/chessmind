@@ -12,7 +12,16 @@ docker compose up --build
 
 Open http://localhost:8000.
 
-## Run tests (without Docker)
+## Run tests
+
+The `test` service mounts the code, so there is no rebuild between runs:
+
+```bash
+docker compose run --rm test pytest              # everything
+docker compose run --rm test pytest tests/test_setup.py -v
+```
+
+### Without Docker
 
 Needs Postgres (user/db `chess`, password `chess` on localhost), Stockfish at `/usr/games/stockfish`
 (`apt install stockfish`), and Python 3.12+.

@@ -18,6 +18,7 @@ ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = [o for o in env("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o]
 
 INSTALLED_APPS = [
+    "django.contrib.admin",
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "django.contrib.sessions",
@@ -26,12 +27,17 @@ INSTALLED_APPS = [
     "players",
     "games",
     "analysis",
+    "accounts",
+    "curriculum",
+    "learning",
+    "gamification",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -48,6 +54,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
                 "django.template.context_processors.i18n",
                 "django.contrib.messages.context_processors.messages",
                 "players.context.player",
@@ -70,6 +77,16 @@ DATABASES = {
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
+# Accounts: guests keep their progress in a long-lived session.
+SESSION_COOKIE_AGE = 365 * 24 * 3600
+LOGIN_URL = "/login/"
+AUTH_PASSWORD_VALIDATORS = [
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+]
+
 LANGUAGE_CODE = "en"
 LANGUAGES = [("fr", "Français"), ("en", "English")]
 LOCALE_PATHS = [BASE_DIR / "locale"]
@@ -81,9 +98,18 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": env("REDIS_URL", "redis://localhost:6379/0"),
+    }
+}
+
 CELERY_BROKER_URL = env("REDIS_URL", "redis://localhost:6379/0")
 CELERY_TASK_ALWAYS_EAGER = env("CELERY_TASK_ALWAYS_EAGER", "0") == "1"
 CELERY_TASK_EAGER_PROPAGATES = False
+# Lesson generation and validation run on their own queue so game reviews stay fast.
+CELERY_TASK_ROUTES = {"curriculum.tasks.*": {"queue": "content"}}
 
 # Engine
 ENGINE_PATH = env("ENGINE_PATH", "/usr/games/stockfish")
