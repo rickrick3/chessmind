@@ -100,6 +100,16 @@ def lesson_factory(db):
 
 
 @pytest.fixture
+def valid_content():
+    """A 7-step lesson using all five step types (tests/fixtures/lessons/valid_lesson.json), fresh each time."""
+    import json
+    from pathlib import Path
+
+    path = Path(__file__).parent / "tests" / "fixtures" / "lessons" / "valid_lesson.json"
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+@pytest.fixture
 def packet_good():
     return _packet()
 

@@ -68,8 +68,21 @@ def transition(version: LessonVersion, to: str, actor, note: str = "") -> Lesson
             fields += ["reviewed_by", "reviewed_at"]
         locked.save(update_fields=fields)
         _log(locked, actor, "transition", previous, to, note.strip())
+        if to == VALIDATING:
+            transaction.on_commit(lambda: _enqueue_validation(locked.pk))
     _refresh(version, locked)
     return version
+
+
+def request_validation(version: LessonVersion, actor) -> LessonVersion:
+    """Send a draft to the automatic checks; the content-queue job moves it on."""
+    return transition(version, VALIDATING, actor)
+
+
+def _enqueue_validation(version_id: int) -> None:
+    from .tasks import validate_version  # tasks imports this module
+
+    validate_version.delay(version_id)
 
 
 def publish(version: LessonVersion, actor) -> LessonVersion:
