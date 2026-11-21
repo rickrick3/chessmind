@@ -21,6 +21,17 @@ docker compose run --rm test pytest              # everything
 docker compose run --rm test pytest tests/test_setup.py -v
 ```
 
+### End-to-end tests
+
+A real browser (Chromium, Playwright) plays a lesson on a phone-sized screen against Django's live server:
+
+```bash
+docker compose --profile e2e build e2e     # once; Playwright image + app requirements
+docker compose --profile e2e run --rm e2e  # pytest e2e -v
+```
+
+The image tag in `Dockerfile.e2e` must match the `playwright` version in `requirements-dev.txt`.
+
 ### Without Docker
 
 Needs Postgres (user/db `chess`, password `chess` on localhost), Stockfish at `/usr/games/stockfish`
@@ -32,6 +43,17 @@ pytest
 ```
 
 Tests use engine depth 8, no AI calls, and run Celery tasks inline (see `conftest.py`).
+
+## Lessons
+
+Lessons live in the database and reach learners only after review:
+
+```bash
+docker compose run --rm web python manage.py import_lessons curriculum/seed/foundation.json
+```
+
+Then, as a staff user, open `/studio/`: validate each draft (the `content` queue runs the checks with Stockfish),
+read the report, preview it, approve and publish.
 
 ## Gemini (free tier)
 

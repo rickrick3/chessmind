@@ -1,0 +1,4 @@
+# End-to-end browser tests only (docker compose --profile e2e run --rm e2e). Not installed in the app image.
+# playwright must match the Playwright base image tag in Dockerfile.e2e, whose browsers it uses.
+playwright==1.49.0
+pytest-playwright>=0.5,<0.8

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "meta": {
+    "title": {"fr": "Premier pas", "en": "First step"},
+    "description": {"fr": "Un coup, une question.", "en": "One move, one question."},
+    "objectives": [{"fr": "Jouer e4", "en": "Play e4"}],
+    "difficulty": 1,
+    "estimated_minutes": 2,
+    "orientation": "white"
+  },
+  "completion": {"min_accuracy": 0},
+  "steps": [
+    {"id": "hello", "type": "explain", "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+     "text": {"fr": "Bientôt tu joueras Nf3. D'abord, le centre.", "en": "Soon you will play Nf3. First, the centre."}},
+    {"id": "centre", "type": "find_move", "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+     "prompt": {"fr": "Avance le pion du roi de deux cases.", "en": "Push the king's pawn two squares."},
+     "accept": ["e2e4"],
+     "also_good": [{"uci": "g1f3", "note": {"fr": "Nf3 est bon aussi.", "en": "Nf3 is good too."}}],
+     "wrong": [{"uci": "e2e3", "feedback": {"fr": "Trop timide.", "en": "Too timid."}}],
+     "correct": {"fr": "e4 prend le centre.", "en": "e4 takes the centre."},
+     "hint": {"fr": "Le pion devant ton roi.", "en": "The pawn in front of your king."}},
+    {"id": "worth", "type": "choice", "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+     "question": {"fr": "Combien vaut une tour ?", "en": "What is a rook worth?"},
+     "options": [{"text": {"fr": "3 pions", "en": "3 pawns"}}, {"text": {"fr": "5 pions", "en": "5 pawns"}}],
+     "answer": 1,
+     "explanation": {"fr": "Une tour vaut 5 pions.", "en": "A rook is worth 5 pawns."},
+     "hint": {"fr": "Plus qu'un fou.", "en": "More than a bishop."}}
+  ]
+}

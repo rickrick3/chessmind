@@ -1,9 +1,18 @@
+from django.contrib import messages
 from django.db.models import Avg
-from django.shortcuts import redirect, render
+from django.http import Http404
+from django.middleware.csrf import get_token
+from django.shortcuts import get_object_or_404, redirect, render
+from django.templatetags.static import static
 from django.utils import timezone
+from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_GET
 
+from accounts.services import request_language
+from curriculum.domain.schema import localize
+from curriculum.models import Lesson, LessonVersion
+from curriculum.services import published_content
 from gamification.services import summary
 
 from . import services
@@ -85,3 +94,48 @@ def profile(request):
         "stats": services.progress_stats(learner), "accuracy": accuracy,
         "units": _units(learner, services.states_for(learner)) if tab == "mastery" else [],
     })
+
+
+def _player_strings() -> dict:
+    g = gettext
+    return {
+        "continue": g("Continue"), "check": g("Check"), "hint": g("Hint"), "close": g("Close"),
+        "excellent": g("Excellent!"), "notQuite": g("Not quite"), "tryAgain": g("Try again."),
+        "showAnswer": g("Here is the move. Play it."), "alsoWorks": g("That also works. We'll follow the lesson's line."),
+        "lineDone": g("Line complete"), "yourMove": g("Your move."), "loadError": g("This lesson could not load."),
+        "lessonDone": g("Lesson complete!"), "lessonNotDone": g("Almost there. Try this lesson again."),
+        "accuracy": g("Accuracy"), "time": g("Time"), "streak": g("Day streak"), "levelUp": g("Level up!"),
+        "keepProgress": g("Create an account to keep your progress"), "createAccount": g("Create an account"),
+        "backToPath": g("Continue"), "preview": g("Preview: nothing was saved."), "saving": g("Saving…"),
+        "savedLater": g("We'll save this when you're back online."),
+        "achievements": {"first_lesson": g("First lesson"), "first_unit": g("First unit complete"),
+                         "streak_3": g("3-day streak"), "streak_7": g("7-day streak"), "streak_30": g("30-day streak"),
+                         "perfect_10": g("10 perfect lessons")},
+    }
+
+
+@require_GET
+def lesson_page(request, slug):
+    lesson = get_object_or_404(Lesson.objects.select_related("published_version"), slug=slug)
+    learner = request.learner
+    wanted = request.GET.get("version", "")
+    preview = (request.user.is_authenticated and request.user.is_staff and wanted.isdigit()
+               and LessonVersion.objects.filter(pk=int(wanted), lesson=lesson).exists())
+    if not preview:
+        if published_content(lesson) is None:
+            raise Http404
+        if services.states_for(learner).get(slug, "locked") == "locked":
+            messages.info(request, gettext("Finish the lessons before this one first."))
+            return redirect("/learn/")
+    lang = learner.language if learner is not None else request_language(request)
+    lesson_url = f"/api/v1/lessons/{slug}" + (f"?version={wanted}" if preview else "")
+    config = {
+        "lessonUrl": lesson_url, "attemptsUrl": f"/api/v1/lessons/{slug}/attempts",
+        "finishUrl": "/api/v1/attempts/{id}/finish", "preview": bool(preview),
+        "versionId": int(wanted) if preview else None, "isGuest": learner is None or learner.is_guest,
+        "signupUrl": "/signup/?next=/profile/", "pathUrl": "/learn/", "csrfToken": get_token(request),
+        "assets": static("vendor/cm-chessboard/assets/"), "lang": lang, "i18n": _player_strings(),
+    }
+    version = LessonVersion.objects.get(pk=int(wanted)) if preview else lesson.published_version
+    title = localize(version.content.get("meta", {}), lang).get("title") or lesson.slug
+    return render(request, "learning/lesson.html", {"config": config, "lesson": lesson, "lesson_title": title})

@@ -468,3 +468,90 @@ msgstr "Tes points forts et ce qui te coûte des points."
 
 msgid "Keep your progress"
 msgstr "Garde ta progression"
+
+msgid "Continue"
+msgstr "Continuer"
+
+msgid "Check"
+msgstr "Vérifier"
+
+msgid "Hint"
+msgstr "Indice"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Excellent!"
+msgstr "Excellent !"
+
+msgid "Not quite"
+msgstr "Pas tout à fait"
+
+msgid "Try again."
+msgstr "Réessaie."
+
+msgid "Here is the move. Play it."
+msgstr "Voici le coup. Joue-le."
+
+msgid "That also works. We'll follow the lesson's line."
+msgstr "Ça marche aussi. On suit la ligne de la leçon."
+
+msgid "Line complete"
+msgstr "Ligne terminée"
+
+msgid "Your move."
+msgstr "À toi de jouer."
+
+msgid "This lesson could not load."
+msgstr "Cette leçon n'a pas pu se charger."
+
+msgid "Lesson complete!"
+msgstr "Leçon terminée !"
+
+msgid "Almost there. Try this lesson again."
+msgstr "Presque ! Refais cette leçon."
+
+msgid "Time"
+msgstr "Temps"
+
+msgid "Level up!"
+msgstr "Niveau supérieur !"
+
+msgid "Create an account to keep your progress"
+msgstr "Crée un compte pour garder ta progression"
+
+msgid "Preview: nothing was saved."
+msgstr "Aperçu : rien n'a été enregistré."
+
+msgid "Saving…"
+msgstr "Enregistrement…"
+
+msgid "We'll save this when you're back online."
+msgstr "On enregistrera dès que tu seras de nouveau en ligne."
+
+msgid "First lesson"
+msgstr "Première leçon"
+
+msgid "First unit complete"
+msgstr "Premier niveau terminé"
+
+msgid "3-day streak"
+msgstr "Série de 3 jours"
+
+msgid "7-day streak"
+msgstr "Série de 7 jours"
+
+msgid "30-day streak"
+msgstr "Série de 30 jours"
+
+msgid "10 perfect lessons"
+msgstr "10 leçons parfaites"
+
+msgid "Lesson"
+msgstr "Leçon"
+
+msgid "Right answers in a row"
+msgstr "Bonnes réponses d'affilée"
+
+msgid "Moves"
+msgstr "Coups"

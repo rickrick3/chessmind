@@ -27,5 +27,16 @@ services:
     volumes: [".:/app"]
     depends_on: [db, redis]
     command: pytest
+  e2e:
+    build:
+      context: .
+      dockerfile: Dockerfile.e2e
+    profiles: ["e2e"]
+    env_file: .env
+    environment:
+      DJANGO_ALLOW_ASYNC_UNSAFE: "true"
+    volumes: [".:/app"]
+    depends_on: [db, redis]
+    command: pytest e2e -v -p no:cacheprovider
 volumes:
   pgdata:

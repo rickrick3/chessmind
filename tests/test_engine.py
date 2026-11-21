@@ -51,3 +51,18 @@ def test_concurrent_insert_same_fen_keeps_one_row(mocker):
     mocker.patch.object(engine_mod, "_cached", return_value=None)
     pa = analyse(chess.Board())
     assert pa.pk == existing.pk and PositionAnalysis.objects.count() == 1
+
+
+def test_script_using_the_engine_exits_by_itself():
+    """python-chess runs Stockfish on a non-daemon thread: without closing it, a management command or script
+    that validates lessons outside Celery would never exit."""
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    code = ("import os, django; os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.test_settings'); "
+            "django.setup(); import chess, chess.engine; from analysis.engine import get_engine; "
+            "get_engine().analyse(chess.Board(), chess.engine.Limit(depth=1)); print('done')")
+    r = subprocess.run([sys.executable, "-c", code], cwd=Path(__file__).resolve().parent.parent,
+                       capture_output=True, text=True, timeout=60)
+    assert r.returncode == 0 and "done" in r.stdout

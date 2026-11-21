@@ -1,0 +1,6 @@
+# Browser tests: Playwright's image (Chromium included) + the app's Python requirements.
+# The image's system Python is ours alone, so installing into it is safe. Code is mounted at /app by compose.
+FROM mcr.microsoft.com/playwright/python:v1.49.0-noble
+WORKDIR /app
+COPY requirements.txt requirements-dev.txt ./
+RUN pip install --no-cache-dir --break-system-packages -r requirements.txt -r requirements-dev.txt

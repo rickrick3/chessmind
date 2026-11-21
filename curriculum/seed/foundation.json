@@ -160,7 +160,7 @@
          {
           "id": "free-rook",
           "type": "find_move",
-          "fen": "6k1/8/8/1r6/4p3/2N5/8/6K1 w - - 0 1",
+          "fen": "6k1/5ppp/8/1r6/4p3/2N5/5PPP/6K1 w - - 0 1",
           "prompt": {
            "fr": "Les Blancs jouent. Quelle prise gagne le plus ?",
            "en": "White to play. Which capture wins the most?"

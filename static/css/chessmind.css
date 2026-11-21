@@ -108,7 +108,7 @@ body.cm {
 .cm-btn--purple { background: var(--cm-purple); border-color: var(--cm-purple-dark); color: #fff !important; }
 .cm-btn--secondary { background: #fff; border-color: var(--cm-border); color: var(--cm-green-ink) !important; }
 .cm-btn--block { width: 100%; }
-.cm-btn--sm { min-height: 40px; padding: 8px 14px; font-size: 13px; }
+.cm-btn--sm { min-height: 40px; padding: 8px 14px; font-size: 13px; white-space: nowrap; }
 
 /* ---- cards, rows, stats, tabs, pills ---- */
 .cm-card { background: #fff; border: 2px solid var(--cm-border); border-radius: var(--cm-radius); padding: 24px; }
@@ -232,6 +232,8 @@ body.cm {
 }
 .cm-profile__level { font-size: 20px; color: var(--cm-muted); font-weight: 800; }
 @media (max-width: 575px) {
+  .cm-topbar .cm-logo__text { display: none; }  /* the mark alone leaves room for streak, language and log in */
+  .cm-topbar__right { gap: 8px; }
   .cm-profile__avatar { width: 72px; height: 72px; font-size: 32px; }
   .cm-path__item--o1 { transform: translateX(40px); }
   .cm-path__item--o3 { transform: translateX(-40px); }
