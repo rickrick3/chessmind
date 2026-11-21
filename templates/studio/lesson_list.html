@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Studio · ChessMind{% endblock %}
+{% block content %}
+<h1 class="h4">Studio</h1>
+<p class="small text-secondary">Lessons reach learners only once a reviewed version is published.</p>
+{% for course in courses %}
+  <h2 class="h5 mt-4">{{ course.title.en }} <span class="badge text-bg-light border">{{ course.track }}</span></h2>
+  {% for unit in course.units.all %}
+    <h3 class="h6 mt-3 text-secondary">{{ unit.title.en }}</h3>
+    <table class="table table-sm align-middle">
+      <thead><tr><th>Lesson</th><th>Published</th><th>Latest version</th><th></th></tr></thead>
+      <tbody>
+      {% for lesson in unit.lessons.all %}
+        {% with latest=lesson.versions.all|first %}
+        <tr>
+          <td><code>{{ lesson.slug }}</code> · {{ lesson.kind }}</td>
+          <td>{% if lesson.published_version %}v{{ lesson.published_version.number }}{% else %}–{% endif %}</td>
+          <td>{% if latest %}<a href="{% url 'studio_version' latest.pk %}">v{{ latest.number }}</a> · {{ latest.status }}{% else %}none{% endif %}</td>
+          <td><form method="post" action="{% url 'studio_new_version' lesson.slug %}">{% csrf_token %}<button class="btn btn-sm btn-outline-secondary">New version</button></form></td>
+        </tr>
+        {% endwith %}
+      {% endfor %}
+      </tbody>
+    </table>
+  {% endfor %}
+{% empty %}
+  <p>No lessons yet. Import some with <code>python manage.py import_lessons curriculum/seed/foundation.json</code>.</p>
+{% endfor %}
+{% endblock %}
