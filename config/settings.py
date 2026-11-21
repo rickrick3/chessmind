@@ -85,6 +85,17 @@ LOGIN_URL = "/login/"
 GUEST_IDLE_DAYS = 180
 DAILY_GOAL_CHOICES = (10, 20, 30, 50)
 DAILY_GOAL_DEFAULT = 20
+LOGIN_FAILURE_LIMIT = 5
+LOGIN_FAILURE_WINDOW = 15 * 60  # seconds
+
+# Email (password reset). Console in development; any SMTP service in production.
+EMAIL_BACKEND = env("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = env("EMAIL_HOST", "localhost")
+EMAIL_PORT = int(env("EMAIL_PORT", "587"))
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS", "1") == "1"
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "ChessMind <no-reply@localhost>")
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},

@@ -17,6 +17,16 @@ def _packet(**kw):
     return FactPacket(**base)
 
 
+@pytest.fixture(autouse=True)
+def _clear_cache():
+    """The test cache is in-process: clear it so one test's login failures can't block another's login."""
+    from django.core.cache import cache
+
+    cache.clear()
+    yield
+    cache.clear()
+
+
 @pytest.fixture
 def rf_with_session(rf):
     """Build a request that has a session, a LANGUAGE_CODE and no learner yet, as the middleware leaves it."""
@@ -39,6 +49,25 @@ def guest(db):
     from accounts.models import Learner
 
     return Learner.objects.create()
+
+
+@pytest.fixture
+def guest_client(client, guest):
+    """A test client whose session holds a guest learner. Returns (client, guest)."""
+    s = client.session
+    s["learner_id"] = guest.id
+    s.save()
+    return client, guest
+
+
+@pytest.fixture
+def account(db, django_user_model):
+    """User farel@example.com / Chess-is-fun-42 with a learner."""
+    from accounts.models import Learner
+
+    user = django_user_model.objects.create_user("farel@example.com", "farel@example.com", "Chess-is-fun-42")
+    Learner.objects.create(user=user, display_name="Farel")
+    return user
 
 
 @pytest.fixture

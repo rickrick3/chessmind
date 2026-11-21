@@ -132,3 +132,87 @@ msgstr "Pseudo Chess.com"
 #: templates/signin.html:10
 msgid "Start"
 msgstr "Commencer"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Name (optional)"
+msgstr "Prénom (facultatif)"
+
+msgid "This email already has an account."
+msgstr "Cet e-mail a déjà un compte."
+
+msgid "Too many attempts. Try again in 15 minutes."
+msgstr "Trop d'essais. Réessaie dans 15 minutes."
+
+msgid "Wrong email or password."
+msgstr "E-mail ou mot de passe incorrect."
+
+msgid "Create your account"
+msgstr "Crée ton compte"
+
+msgid "Your lessons, streak and XP follow you on every device."
+msgstr "Tes leçons, ta série et tes XP te suivent sur tous tes appareils."
+
+msgid "Create account"
+msgstr "Créer mon compte"
+
+msgid "Already have an account?"
+msgstr "Tu as déjà un compte ?"
+
+msgid "Log in"
+msgstr "Se connecter"
+
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié ?"
+
+msgid "New here?"
+msgstr "Nouveau ici ?"
+
+msgid "Create an account"
+msgstr "Créer un compte"
+
+msgid "Reset your password"
+msgstr "Réinitialise ton mot de passe"
+
+msgid "Type your email. We'll send you a link to choose a new password."
+msgstr "Tape ton e-mail. On t'envoie un lien pour choisir un nouveau mot de passe."
+
+msgid "Send the link"
+msgstr "Envoyer le lien"
+
+msgid "Check your email"
+msgstr "Regarde tes e-mails"
+
+msgid "If an account uses this email, a link to reset the password is on its way."
+msgstr "Si un compte utilise cet e-mail, un lien pour changer le mot de passe arrive."
+
+msgid "Choose a new password"
+msgstr "Choisis un nouveau mot de passe"
+
+msgid "Save the password"
+msgstr "Enregistrer le mot de passe"
+
+msgid "This link has expired"
+msgstr "Ce lien a expiré"
+
+msgid "Ask for a new link"
+msgstr "Demander un nouveau lien"
+
+msgid "Password saved"
+msgstr "Mot de passe enregistré"
+
+msgid "Reset your ChessMind password"
+msgstr "Réinitialise ton mot de passe ChessMind"
+
+msgid "Someone asked to reset the password of your ChessMind account."
+msgstr "Quelqu'un a demandé à changer le mot de passe de ton compte ChessMind."
+
+msgid "Choose a new password here:"
+msgstr "Choisis un nouveau mot de passe ici :"
+
+msgid "If it wasn't you, ignore this email."
+msgstr "Si ce n'était pas toi, ignore cet e-mail."
