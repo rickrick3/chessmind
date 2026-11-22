@@ -70,8 +70,17 @@ def on_merge(sender, source: Learner, target: Learner, **kwargs) -> None:
     """A guest logged into an account: move XP (no lesson counted twice) and achievements, rebuild the caches."""
     target_once = set(XpEvent.objects.filter(learner=target, reason__in=ONCE_PER_LESSON)
                       .values_list("lesson_id", "reason"))
-    for event in XpEvent.objects.filter(learner=source):
-        if event.reason in ONCE_PER_LESSON and (event.lesson_id, event.reason) in target_once:
+    replay_days = set(XpEvent.objects.filter(learner__in=(source, target), reason="lesson_replay")
+                      .values_list("lesson_id", "local_date"))
+    for event in XpEvent.objects.filter(learner=source).order_by("created_at", "id"):
+        duplicate = event.reason in ONCE_PER_LESSON and (event.lesson_id, event.reason) in target_once
+        if duplicate and event.reason == "lesson_first" and (event.lesson_id, event.local_date) not in replay_days:
+            # The account already completed this lesson: for the account it was a replay. Keeping it as one keeps
+            # the guest's day in the ledger, so the rebuilt streak doesn't lose it.
+            event.reason, event.amount, event.learner = "lesson_replay", XpRules.from_settings().lesson_replay, target
+            event.save(update_fields=["reason", "amount", "learner"])
+            replay_days.add((event.lesson_id, event.local_date))
+        elif duplicate:
             event.delete()
         else:
             event.learner = target

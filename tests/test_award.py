@@ -104,9 +104,35 @@ def test_merge_no_double_first_completion(lessons):
     LearnerAchievement.objects.create(learner=source, code="streak_3")
     merge_learners.send(sender=Learner, source=source, target=target)
     target.refresh_from_db()
-    assert target.xp_total == 25 and target.current_streak == 2 and target.longest_streak == 2
+    # L counts once as a first completion (the account's, 10); the guest's L becomes a replay (3), its bonus stays (5).
+    assert target.xp_total == 28 and target.current_streak == 2 and target.longest_streak == 2
     assert target.last_active_date == date(2026, 11, 21)
     assert sorted(XpEvent.objects.filter(learner=target).values_list("reason", flat=True)) == [
-        "accuracy_bonus", "lesson_first", "lesson_first"]
+        "accuracy_bonus", "lesson_first", "lesson_first", "lesson_replay"]
     assert set(LearnerAchievement.objects.filter(learner=target).values_list("code", flat=True)) == {
         "first_lesson", "streak_3"}
+
+
+def test_merge_keeps_the_guest_day_when_its_only_xp_was_a_shared_lesson(lessons):
+    """Review Focus 3: the guest's day must survive the merge, or logging in breaks the streak."""
+    target = Learner.objects.create(timezone="UTC")
+    source = Learner.objects.create(timezone="UTC")
+    award(target, lessons[0], datetime(2026, 11, 20, 12, tzinfo=UTC), accuracy=0.5)   # L first on D1
+    award(source, lessons[0], datetime(2026, 11, 21, 12, tzinfo=UTC), accuracy=0.5)   # L first on D2, its only XP
+    merge_learners.send(sender=Learner, source=source, target=target)
+    target.refresh_from_db()
+    assert (target.current_streak, target.last_active_date, target.xp_total) == (2, date(2026, 11, 21), 13)
+    assert sorted(XpEvent.objects.filter(learner=target).values_list("reason", "amount", "local_date")) == [
+        ("lesson_first", 10, date(2026, 11, 20)), ("lesson_replay", 3, date(2026, 11, 21))]
+
+
+def test_merge_drops_the_duplicate_when_that_day_already_has_a_replay(lessons):
+    target = Learner.objects.create(timezone="UTC")
+    source = Learner.objects.create(timezone="UTC")
+    d2 = datetime(2026, 11, 21, 12, tzinfo=UTC)
+    award(target, lessons[0], datetime(2026, 11, 20, 12, tzinfo=UTC), accuracy=0.5)
+    award(target, lessons[0], d2, accuracy=0.5, first=False)                          # account replays L on D2
+    award(source, lessons[0], d2, accuracy=0.5)                                       # guest's L first on D2
+    merge_learners.send(sender=Learner, source=source, target=target)
+    target.refresh_from_db()
+    assert target.xp_total == 13 and target.current_streak == 2
