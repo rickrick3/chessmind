@@ -100,7 +100,9 @@ def test_attempt_and_finish_over_http(client, path2):
 def test_hostile_finish_writes_nothing(client, path2):
     attempt_id = start(client)
     illegal = {"steps": [{"id": "s3", "tries": ["e2e5"], "hints": 0, "ms": 1}]}
-    for body in (illegal, '{"steps": 5}', "not json", "[1, 2]", json.dumps({"steps": perfect_steps(), "x": "y" * 70_000})):
+    nested = "[" * 30_000 + "]" * 30_000  # deepest nesting under the 64 KB limit
+    for body in (illegal, '{"steps": 5}', "not json", "[1, 2]", nested,
+                 json.dumps({"steps": perfect_steps(), "x": "y" * 70_000})):
         r = finish(client, attempt_id, body)
         assert r.status_code == 400 and r.json()["error"]["code"] in ("invalid_result", "bad_request")
     assert not StepResult.objects.exists() and not XpEvent.objects.exists()

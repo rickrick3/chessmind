@@ -114,3 +114,16 @@ def test_progress_stats(learner, path2):
     assert (s.lessons_completed, s.units_completed, s.perfect_lessons) == (1, 0, 1)
     finish_attempt(learner, start_attempt(learner, path2[1], NOW).id, perfect_steps(), NOW)
     assert progress_stats(learner).units_completed == 1
+
+
+def test_finish_locks_only_the_attempt_row(learner, path2):
+    """Locking the joined lesson/version rows would queue every learner finishing that lesson, and can deadlock
+    with a publish (which locks lesson, then versions)."""
+    from django.db import connection
+    from django.test.utils import CaptureQueriesContext
+
+    a = start_attempt(learner, path2[0], NOW)
+    with CaptureQueriesContext(connection) as ctx:
+        finish_attempt(learner, a.id, perfect_steps(), NOW)
+    locks = [q["sql"] for q in ctx.captured_queries if "FOR UPDATE" in q["sql"] and '"learning_lessonattempt"' in q["sql"]]
+    assert locks and all('FOR UPDATE OF "learning_lessonattempt"' in sql for sql in locks)

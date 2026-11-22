@@ -33,7 +33,7 @@ def _body(request) -> dict:
         return {}
     try:
         data = json.loads(request.body)
-    except (ValueError, UnicodeDecodeError) as exc:
+    except (ValueError, UnicodeDecodeError, RecursionError) as exc:  # RecursionError: absurdly deep nesting
         raise BadRequest(_("The request is not valid JSON.")) from exc
     if not isinstance(data, dict):
         raise BadRequest(_("The request must be a JSON object."))

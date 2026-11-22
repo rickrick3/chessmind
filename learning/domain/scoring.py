@@ -13,6 +13,7 @@ from curriculum.domain.schema import player_move_indexes
 
 MAX_TRIES = 10
 MAX_ENTRIES = 50
+MAX_MS = 24 * 3600 * 1000  # a step never takes more than a day; keeps ms inside the database column
 SCORED = ("find_move", "choice", "play_line")
 
 
@@ -46,9 +47,9 @@ class Scored:
     completed: bool
 
 
-def _int(value, low=0) -> int:
-    if not isinstance(value, int) or isinstance(value, bool) or value < low:
-        raise InvalidResult(f"expected an integer >= {low}, got {value!r}")
+def _int(value, low=0, high=None) -> int:
+    if not isinstance(value, int) or isinstance(value, bool) or value < low or (high is not None and value > high):
+        raise InvalidResult(f"expected an integer from {low} to {high}, got {value!r}")
     return value
 
 
@@ -92,6 +93,8 @@ def _score_play_line(step, e) -> tuple[int, int, bool]:
         raise InvalidResult(f"play_line needs {len(players)} lists of tries")
     if not isinstance(hints, list) or len(hints) != len(players):
         raise InvalidResult(f"play_line needs {len(players)} hint counts")
+    for h in hints:
+        _int(h)
     board = chess.Board(step["fen"])
     alts = step.get("also_accept", {})
     correct, cleared = 0, True
@@ -122,7 +125,7 @@ def score_attempt(content: dict, submitted) -> Scored:
             raise InvalidResult(f"unknown step {e['id']!r}")
         if e["id"] in by_id:
             raise InvalidResult(f"step {e['id']!r} sent twice")
-        _int(e.get("ms", 0))
+        _int(e.get("ms", 0), high=MAX_MS)
         by_id[e["id"]] = e
 
     scores: list[StepScore] = []

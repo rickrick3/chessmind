@@ -125,7 +125,7 @@ def progress_stats(learner) -> ProgressStats:
 def finish_attempt(learner, attempt_id, steps: list[dict], now: datetime) -> dict:
     """Score the tries against the pinned version, record progress and XP. A repeat call returns the same result."""
     with transaction.atomic():
-        attempt = (LessonAttempt.objects.select_for_update().select_related("version", "lesson")
+        attempt = (LessonAttempt.objects.select_for_update(of=("self",)).select_related("version", "lesson")
                    .get(pk=attempt_id, learner=learner))
         if attempt.finished_at is not None:
             return attempt.result

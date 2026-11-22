@@ -159,3 +159,21 @@ def test_hostile_payloads_raise(valid_content, mutate):
 def test_submission_must_be_a_list(valid_content):
     with pytest.raises(InvalidResult):
         score_attempt(valid_content, {"s3": ["b8c6"]})
+
+
+def junk_line_hint_after_wrong_first_try(sub):
+    s5 = entry(sub, "s5")
+    s5["tries"][0] = ["d2d4", "e2e4"]
+    s5["hints"] = ["junk", 0, 0]
+
+
+def ms_beyond_a_day(sub):
+    entry(sub, "s4")["ms"] = 3_000_000_000
+
+
+@pytest.mark.parametrize("mutate", [junk_line_hint_after_wrong_first_try, ms_beyond_a_day])
+def test_more_hostile_payloads_raise(valid_content, mutate):
+    sub = perfect()
+    mutate(sub)
+    with pytest.raises(InvalidResult):
+        score_attempt(valid_content, sub)
