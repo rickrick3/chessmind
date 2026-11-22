@@ -108,7 +108,7 @@ body.cm {
 .cm-btn--purple { background: var(--cm-purple); border-color: var(--cm-purple-dark); color: #fff !important; }
 .cm-btn--secondary { background: #fff; border-color: var(--cm-border); color: var(--cm-green-ink) !important; }
 .cm-btn--block { width: 100%; }
-.cm-btn--sm { min-height: 40px; padding: 8px 14px; font-size: 13px; white-space: nowrap; }
+.cm-btn--sm { min-height: 44px; padding: 8px 14px; font-size: 13px; white-space: nowrap; }
 
 /* ---- cards, rows, stats, tabs, pills ---- */
 .cm-card { background: #fff; border: 2px solid var(--cm-border); border-radius: var(--cm-radius); padding: 24px; }
@@ -155,7 +155,7 @@ body.cm {
 }
 .cm-lang { display: inline-flex; border: 2px solid var(--cm-border); border-radius: 12px; overflow: hidden; }
 .cm-lang button {
-  border: 0; background: #fff; padding: 0 10px; min-height: 40px; min-width: 40px; font: inherit; font-weight: 800;
+  border: 0; background: #fff; padding: 0 10px; min-height: 44px; min-width: 44px; font: inherit; font-weight: 800;
   color: var(--cm-muted); cursor: pointer;
 }
 .cm-lang button.is-active { background: var(--cm-ink); color: #fff; }

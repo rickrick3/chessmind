@@ -100,6 +100,20 @@ export function createUi(root, t) {
             els.feedback.hidden = true
             const box = els.summary
             box.replaceChildren()
+            if (result.rejected) {
+                box.append(el("div", "lp-summary__badge", "!"), el("h1", "lp-summary__title", t.notSaved),
+                           el("p", "lp-summary__note", result.rejected))
+                const actions = el("div", "lp-summary__actions")
+                const again = el("a", "cm-btn cm-btn--primary", t.restart)
+                again.href = location.pathname + location.search
+                const back = el("a", "cm-btn cm-btn--secondary", t.backToPath)
+                back.href = cfg.pathUrl
+                actions.append(again, back)
+                box.append(actions)
+                box.hidden = false
+                again.focus({preventScroll: true})
+                return
+            }
             const done = result.preview || result.offline || result.completed
             box.append(el("div", "lp-summary__badge", done ? "★" : "↻"))
             box.append(el("h1", "lp-summary__title", done ? t.lessonDone : t.lessonNotDone))

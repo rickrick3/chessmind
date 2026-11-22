@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 FIXTURE = Path(__file__).parent / "fixtures" / "e2e_lesson.json"
+LINE = Path(__file__).parent / "fixtures" / "e2e_line.json"
 
 
 @pytest.fixture
@@ -27,3 +28,11 @@ def page_fr(browser, live_server):
     page = context.new_page()
     yield page
     context.close()
+
+
+@pytest.fixture
+def e2e_line(transactional_db, lesson_factory, publish):
+    """A play_line lesson in an openings course, so it is open without unlocking: the Italian, White to play."""
+    lesson = lesson_factory("e2e-line", course="openings", unit="italian", track="openings", kind="opening")
+    publish(lesson, json.loads(LINE.read_text(encoding="utf-8")))
+    return lesson

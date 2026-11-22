@@ -51,7 +51,8 @@ async function finish(attemptId, body) {
         try {
             const r = await post(url, body)
             if (r.ok) return r.data
-            if (r.status >= 400 && r.status < 500) return null
+            // A 4xx is final (expired, signed out, invalid): say why; nothing is kept to resend.
+            if (r.status >= 400 && r.status < 500) return {rejected: r.data?.error?.message || t.notSaved}
         } catch (e) { /* network error: retry */ }
     }
     try { storage()?.setItem(PENDING + attemptId, JSON.stringify(body)) } catch (e) { /* private mode */ }
@@ -130,7 +131,7 @@ async function main() {
     }
     ui.saving()
     const result = await finish(attemptId, {steps: [...results.values()]})
-    ui.summary(result ? {...result, ms} : {offline: true, ms}, cfg)
+    ui.summary(result ? {...result, ms} : {offline: true, ms}, cfg)  // null: kept to resend on the next visit
 }
 
 main()

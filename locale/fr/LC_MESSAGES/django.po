@@ -555,3 +555,9 @@ msgstr "Bonnes réponses d'affilée"
 
 msgid "Moves"
 msgstr "Coups"
+
+msgid "Not saved"
+msgstr "Non enregistré"
+
+msgid "Start again"
+msgstr "Recommencer"

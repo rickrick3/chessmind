@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "meta": {
+    "title": {"fr": "L'Italienne", "en": "The Italian"},
+    "description": {"fr": "Rejoue la ligne.", "en": "Replay the line."},
+    "objectives": [{"fr": "Jouer l'Italienne de mémoire", "en": "Play the Italian from memory"}],
+    "difficulty": 1,
+    "estimated_minutes": 2,
+    "orientation": "white"
+  },
+  "completion": {"min_accuracy": 0},
+  "steps": [
+    {"id": "line", "type": "play_line", "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+     "side": "white",
+     "prompt": {"fr": "Rejoue l'Italienne de mémoire.", "en": "Play the Italian from memory."},
+     "moves": ["e2e4", "e7e5", "g1f3", "b8c6", "f1c4"],
+     "also_accept": {"4": ["f1b5"]},
+     "notes": {"4": {"fr": "Bc4 vise f7.", "en": "Bc4 aims at f7."}},
+     "hint": {"fr": "Centre, cavalier, puis fou.", "en": "Centre, knight, then bishop."},
+     "srs": {"line_key": "main"}}
+  ]
+}

@@ -108,6 +108,7 @@ def _player_strings() -> dict:
         "keepProgress": g("Create an account to keep your progress"), "createAccount": g("Create an account"),
         "backToPath": g("Continue"), "preview": g("Preview: nothing was saved."), "saving": g("Saving…"),
         "savedLater": g("We'll save this when you're back online."),
+        "notSaved": g("Not saved"), "restart": g("Start again"),
         "achievements": {"first_lesson": g("First lesson"), "first_unit": g("First unit complete"),
                          "streak_3": g("3-day streak"), "streak_7": g("7-day streak"), "streak_30": g("30-day streak"),
                          "perfect_10": g("10 perfect lessons")},
