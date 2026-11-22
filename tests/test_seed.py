@@ -20,3 +20,34 @@ def test_seed_lessons_pass_validation(staff, django_capture_on_commit_callbacks)
     assert types == {"explain", "show_moves", "find_move", "choice", "play_line"}
     assert list(Lesson.objects.order_by("order").values_list("slug", flat=True)) == [
         "piece-values", "checks-captures-threats", "mate-in-one"]
+
+
+def test_stop_mate_accepts_every_good_defence():
+    """The step asks the learner to stop Qxf7#. A move that stops it and the engine rates good must not be
+    called wrong (the hint itself suggests defending f7 once more)."""
+    import json
+    from pathlib import Path
+
+    import chess
+
+    from curriculum.validation import grade
+
+    seed = json.loads(Path("curriculum/seed/foundation.json").read_text(encoding="utf-8"))
+    lessons = {lesson["slug"]: lesson for lesson in seed["courses"][0]["units"][0]["lessons"]}
+    step = next(s for s in lessons["checks-captures-threats"]["content"]["steps"] if s["id"] == "stop-mate")
+    board = chess.Board(step["fen"])
+
+    def stops_mate(move):
+        after = board.copy()
+        after.push(move)
+        for reply in list(after.legal_moves):
+            after.push(reply)
+            mate = after.is_checkmate()
+            after.pop()
+            if mate:
+                return False
+        return True
+
+    accepted = set(step["accept"]) | {g["uci"] for g in step.get("also_good", [])}
+    good_defences = {m.uci() for m in board.legal_moves if stops_mate(m) and grade(board, m.uci()) in ("best", "good")}
+    assert good_defences and good_defences <= accepted, good_defences - accepted
