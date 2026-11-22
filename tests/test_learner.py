@@ -104,3 +104,16 @@ def test_delete_idle_guests(django_user_model):
     Learner.objects.create(last_seen_at=timezone.now() - timedelta(days=179))
     Learner.objects.create(user=django_user_model.objects.create_user("x", "x@x.x", "p"), last_seen_at=old)
     assert delete_idle_guests() == 1 and Learner.objects.count() == 2
+
+
+def test_daily_visit_renews_the_session_cookie(client, settings):
+    """Without renewal the one-year cookie expires a year after the guest arrived, even if they play every day."""
+    g = Learner.objects.create(last_seen_at=timezone.now() - timedelta(days=2))
+    s = client.session
+    s["learner_id"] = g.id
+    s.save()
+    first = client.get("/start/")
+    assert settings.SESSION_COOKIE_NAME in first.cookies
+    assert first.cookies[settings.SESSION_COOKIE_NAME]["max-age"] == settings.SESSION_COOKIE_AGE
+    second = client.get("/start/")  # same day: nothing to renew
+    assert settings.SESSION_COOKIE_NAME not in second.cookies

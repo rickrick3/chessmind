@@ -15,7 +15,7 @@ class LearnerMiddleware:
     def __call__(self, request):
         request.learner = self._learner(request)
         if request.learner is not None:
-            self._touch(request.learner)
+            self._touch(request, request.learner)
         return self.get_response(request)
 
     def _learner(self, request) -> Learner | None:
@@ -45,8 +45,10 @@ class LearnerMiddleware:
         return learner
 
     @staticmethod
-    def _touch(learner: Learner) -> None:
+    def _touch(request, learner: Learner) -> None:
+        """Once a day: record the visit and re-send the session cookie, so an active guest's year starts again."""
         now = timezone.now()
         if learner.last_seen_at is None or learner.last_seen_at.date() < now.date():
             Learner.objects.filter(pk=learner.pk).update(last_seen_at=now)
             learner.last_seen_at = now
+            request.session.modified = True
