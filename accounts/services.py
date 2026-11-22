@@ -31,9 +31,13 @@ def ensure_learner(request, *, timezone: str | None = None) -> Learner:
     """The request's learner, or a new guest bound to this session. Called at the first learning action."""
     learner = getattr(request, "learner", None)
     if learner is not None:
+        if valid_timezone(timezone) and not learner.timezone_confirmed:
+            learner.timezone, learner.timezone_confirmed = timezone, True
+            learner.save(update_fields=["timezone", "timezone_confirmed"])
         return learner
     learner = Learner.objects.create(language=request_language(request),
-                                     timezone=timezone if valid_timezone(timezone) else "UTC")
+                                     timezone=timezone if valid_timezone(timezone) else "UTC",
+                                     timezone_confirmed=valid_timezone(timezone))
     request.session["learner_id"] = learner.id
     request.learner = learner
     return learner
@@ -54,7 +58,7 @@ def signup_user(request, *, email: str, password: str, display_name: str = "", t
         if display_name:
             learner.display_name = display_name
         if valid_timezone(timezone):
-            learner.timezone = timezone
+            learner.timezone, learner.timezone_confirmed = timezone, True
         learner.save()
     login(request, user)
     request.session.pop("learner_id", None)
@@ -69,6 +73,9 @@ def login_user(request, user) -> Learner:
     target, _ = Learner.objects.get_or_create(user=user, defaults={"language": request_language(request)})
     if guest is not None and guest.is_guest and guest.pk != target.pk:
         with transaction.atomic():
+            if guest.timezone_confirmed and not target.timezone_confirmed:
+                Learner.objects.filter(pk=target.pk).update(timezone=guest.timezone, timezone_confirmed=True)
+                target.refresh_from_db()  # the receivers below compute local days in the right zone
             merge_learners.send(sender=Learner, source=guest, target=target)
             guest.delete()
         target.refresh_from_db()
@@ -120,7 +127,7 @@ def update_settings(learner: Learner, *, display_name: str | None = None, langua
     if daily_goal_xp is not None:
         learner.daily_goal_xp = int(daily_goal_xp)
     if timezone is not None:
-        learner.timezone = timezone
+        learner.timezone, learner.timezone_confirmed = timezone, True
     learner.save()
     return learner
 

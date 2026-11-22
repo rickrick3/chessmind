@@ -23,6 +23,8 @@ class Learner(models.Model):
     display_name = models.CharField(max_length=40, blank=True)
     language = models.CharField(max_length=2, choices=LANGUAGES, default="en")
     timezone = models.CharField(max_length=64, default="UTC")
+    # True once the zone came from the learner's browser or settings; until then the browser's zone is adopted.
+    timezone_confirmed = models.BooleanField(default=False)
     daily_goal_xp = models.PositiveSmallIntegerField(default=default_daily_goal)
     start_level = models.CharField(max_length=5, choices=START_LEVELS, blank=True)
     # Caches of the XP ledger, kept in step by gamification in the same transaction.
