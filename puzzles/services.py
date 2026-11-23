@@ -5,12 +5,19 @@ from django.conf import settings
 from django.db import IntegrityError, transaction
 from django.db.models import Exists, F, OuterRef
 from django.db.models.functions import Abs
+from django.utils import translation
 
 from accounts.models import Learner
+from gamification.services import award_for_puzzle
+from learning.services import progress_stats
 from skills.domain.areas import ALL_THEMES
+from skills.domain.estimate import round50
+from skills.labels import theme_label
+from skills.services import recompute, record_puzzle_evidence
 
-from .domain.glicko2 import Rating
+from .domain.glicko2 import Game, Rating, idle, rate
 from .domain.selection import target
+from .domain.solution import score_puzzle
 from .models import Puzzle, PuzzleAttempt, PuzzleRating
 
 MODES = ("rated", "theme")
@@ -19,6 +26,10 @@ DIFFICULTIES = ("easier", "normal", "harder")
 
 class NoPuzzleLeft(Exception):
     """The learner has been served every active puzzle of this mode."""
+
+
+class Expired(Exception):
+    """The puzzle was served more than ATTEMPT_EXPIRY_HOURS ago."""
 
 
 def start_rating(learner: Learner) -> Rating:
@@ -74,3 +85,74 @@ def next_puzzle(learner: Learner, *, mode: str, theme: str = "", difficulty: str
         except IntegrityError:
             continue
     raise NoPuzzleLeft(mode)
+
+
+def rating_view(rating: Rating) -> dict:
+    """How a rating is shown: a range rounded to 50, never one exact number."""
+    return {"value": round(rating.rating), "low": round50(rating.rating - rating.rd),
+            "high": round50(rating.rating + rating.rd), "settling": rating.rd > settings.PUZZLE_SETTLING_RD}
+
+
+def idle_periods(last_rated_on, today) -> int:
+    """One Glicko-2 rating period per local day without puzzles."""
+    return 0 if last_rated_on is None else max(0, (today - last_rated_on).days - 1)
+
+
+def updated_rating(before: Rating, puzzle: Puzzle, solved: bool, periods: int) -> Rating:
+    after = rate(idle(before, periods, settings.PUZZLE_RD_MAX),
+                 [Game(puzzle.rating, puzzle.rating_deviation, 1.0 if solved else 0.0)], settings.PUZZLE_TAU)
+    return Rating(after.rating, max(after.rd, settings.PUZZLE_RD_FLOOR), after.volatility)
+
+
+def _rating_result(before: Rating, after: Rating) -> dict:
+    view = rating_view(after)
+    return {"before": round(before.rating), "after": round(after.rating),
+            "change": round(after.rating) - round(before.rating), "low": view["low"], "high": view["high"],
+            "settling": view["settling"]}
+
+
+def finish_puzzle(learner: Learner, attempt_id, body: dict, now: datetime) -> dict:
+    """Score the moves against the puzzle, then rate, award and record evidence. A repeat call returns the same
+    result. Raises PuzzleAttempt.DoesNotExist, Expired or InvalidPuzzleResult (then nothing is written)."""
+    with transaction.atomic():
+        attempt = (PuzzleAttempt.objects.select_for_update(of=("self",)).select_related("puzzle")
+                   .get(pk=attempt_id, learner=learner))
+        if attempt.finished_at is not None:
+            return attempt.result
+        if now - attempt.served_at > timedelta(hours=settings.ATTEMPT_EXPIRY_HOURS):
+            raise Expired(str(attempt_id))
+        puzzle = attempt.puzzle
+        outcome = score_puzzle(puzzle.fen, puzzle.moves, body)
+        today = learner.local_date(now)
+
+        attempt.played, attempt.hints = list(outcome.played), outcome.hints
+        attempt.solution_shown, attempt.ms = outcome.solution_shown, outcome.ms
+        attempt.solved, attempt.finished_at = outcome.solved, now
+        if attempt.rated:
+            start = start_rating(learner)
+            cache, _ = PuzzleRating.objects.select_for_update().get_or_create(
+                learner=learner, defaults={"rating": start.rating, "rd": start.rd, "volatility": start.volatility})
+            before = Rating(cache.rating, cache.rd, cache.volatility)
+            after = updated_rating(before, puzzle, outcome.solved, idle_periods(cache.last_rated_on, today))
+            cache.rating, cache.rd, cache.volatility = after.rating, after.rd, after.volatility
+            cache.rated_count += 1
+            cache.solved_count += int(outcome.solved)
+            cache.last_rated_on = today
+            cache.save()
+            attempt.learner_rating_before, attempt.rating_after, attempt.rd_after = before.rating, after.rating, after.rd
+            award = award_for_puzzle(learner, attempt, solved=outcome.solved, stats=progress_stats(learner), now=now)
+        else:
+            before = after = current_rating(learner)
+            award = award_for_puzzle(learner, attempt, solved=False, stats=progress_stats(learner), now=now)
+        attempt.save()
+        if attempt.rated:
+            record_puzzle_evidence(attempt, today)
+            recompute(learner, now)
+        with translation.override(learner.language):
+            themes = [{"key": t, "label": theme_label(t)} for t in puzzle.themes]
+        result = {"solved": outcome.solved, "rating": _rating_result(before, after), **award,
+                  "puzzle": {"id": puzzle.lichess_id, "rating": puzzle.rating, "themes": themes,
+                             "game_url": puzzle.game_url}}
+        attempt.result = result
+        attempt.save(update_fields=["result"])
+    return result

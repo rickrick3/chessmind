@@ -29,3 +29,16 @@ PROMOTION = {  # 1...h6 2.g8=Q#; 2.g8=R# also mates
     "alternative": "g7g8r",
     "themes": ["promotion", "mate", "mateIn1", "oneMove", "endgame", "pawnEndgame"],
 }
+
+SOLVED = {"played": ["a2e6", "f7f8"], "hints": 0, "solution_shown": False, "ms": 9000}  # for MATE2
+MISSED = {"played": [MATE2["wrong_first"]], "hints": 0, "solution_shown": False, "ms": 4000}  # for MATE2
+
+
+def serve(learner, puzzle, when=None):
+    """A rated attempt served to the learner, as next_puzzle would create it."""
+    from django.utils import timezone
+
+    from puzzles.models import PuzzleAttempt
+
+    return PuzzleAttempt.objects.create(learner=learner, puzzle=puzzle, mode="rated",
+                                        served_at=when or timezone.now())

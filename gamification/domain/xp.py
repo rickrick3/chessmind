@@ -10,11 +10,12 @@ class XpRules:
     accuracy_bonus: int = 5
     accuracy_bonus_min: float = 0.9
     lesson_replay: int = 3
+    puzzle_solved: int = 3
 
     @classmethod
     def from_settings(cls) -> "XpRules":
         return cls(settings.XP_LESSON_FIRST, settings.XP_ACCURACY_BONUS, settings.XP_ACCURACY_BONUS_MIN,
-                   settings.XP_LESSON_REPLAY)
+                   settings.XP_LESSON_REPLAY, settings.XP_PUZZLE_SOLVED)
 
 
 @dataclass(frozen=True)

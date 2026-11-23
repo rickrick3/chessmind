@@ -38,9 +38,21 @@ def award_for_attempt(learner: Learner, attempt, *, completed: bool, accuracy: f
                     bonus_earned_before=for_lesson.filter(reason="accuracy_bonus").exists(),
                     replay_xp_today=for_lesson.filter(reason="lesson_replay", local_date=today).exists())
     awards = xp_for_attempt(ctx, XpRules.from_settings())
+    return _apply(learner, locked, awards, stats, today, lesson=attempt.lesson, attempt=attempt)
+
+
+def award_for_puzzle(learner: Learner, attempt, *, solved: bool, stats: ProgressStats, now: datetime) -> dict:
+    """XP for a rated puzzle (solved only), the streak and achievements. Call inside a transaction."""
+    locked = Learner.objects.select_for_update().get(pk=learner.pk)
+    awards = [("puzzle", XpRules.from_settings().puzzle_solved)] if solved else []
+    return _apply(learner, locked, awards, stats, locked.local_date(now), puzzle_attempt=attempt)
+
+
+def _apply(learner: Learner, locked: Learner, awards: list[tuple[str, int]], stats: ProgressStats, today,
+           **links) -> dict:
+    """Write the awards to the ledger, advance the streak and grant achievements; same result for every source."""
     for reason, amount in awards:
-        XpEvent.objects.create(learner=locked, amount=amount, reason=reason, lesson=attempt.lesson,
-                               attempt=attempt, local_date=today)
+        XpEvent.objects.create(learner=locked, amount=amount, reason=reason, local_date=today, **links)
     total = sum(amount for _reason, amount in awards)
     old_level = level_for(locked.xp_total)
     if total > 0:

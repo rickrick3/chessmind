@@ -96,6 +96,7 @@ XP_LESSON_FIRST = 10
 XP_ACCURACY_BONUS = 5
 XP_ACCURACY_BONUS_MIN = 0.9
 XP_LESSON_REPLAY = 3
+XP_PUZZLE_SOLVED = 3  # a rated puzzle solved; a miss earns nothing
 
 # Puzzles (design 5.2 and 5.4): Glicko-2 rating, start by level, target a little below the rating by default
 PUZZLE_START_RATINGS = {"new": 700, "rules": 1000, "club": 1500}

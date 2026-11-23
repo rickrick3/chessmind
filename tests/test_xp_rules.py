@@ -42,3 +42,7 @@ def test_achievements_once_and_in_order():
     assert earned(stats, 3, {"first_lesson", "first_unit", "streak_3", "perfect_10"}) == []
     assert earned(ProgressStats(0, 0, 9), 2, set()) == []
     assert earned(ProgressStats(5, 0, 0), 30, {"first_lesson"}) == ["streak_3", "streak_7", "streak_30"]
+
+
+def test_puzzle_xp_rule():
+    assert XpRules().puzzle_solved == 3 == XpRules.from_settings().puzzle_solved
