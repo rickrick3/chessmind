@@ -5,5 +5,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends stockfish gette
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+# zstd reads the Lichess puzzle file (.csv.zst) for the import_puzzles command.
+RUN apt-get update && apt-get install -y --no-install-recommends zstd && rm -rf /var/lib/apt/lists/*
 COPY . .
 RUN python manage.py collectstatic --noinput && python manage.py compilemessages

@@ -126,6 +126,29 @@ def valid_content():
 
 
 @pytest.fixture
+def puzzle_factory(db):
+    """puzzle_factory(lichess_id=None, *, data=MATE2, rating=1500, rd=80, themes=None, is_active=True) -> Puzzle.
+
+    `data` is one of the positions in tests/puzzle_data.py; themes default to the position's own."""
+    from puzzles.domain.lichess import derive
+    from puzzles.models import Puzzle
+    from tests.puzzle_data import MATE2
+
+    counter = {"n": 0}
+
+    def make(lichess_id=None, *, data=MATE2, rating=1500, rd=80, themes=None, is_active=True):
+        counter["n"] += 1
+        side, start_fen = derive(data["fen"], data["moves"])
+        return Puzzle.objects.create(
+            lichess_id=lichess_id or f"t{counter['n']:05d}", fen=data["fen"], moves=list(data["moves"]),
+            rating=rating, rating_deviation=rd, popularity=90, plays=1000,
+            themes=list(data["themes"] if themes is None else themes), game_url="https://lichess.org/abcdefgh#1",
+            side=side, start_fen=start_fen, is_active=is_active)
+
+    return make
+
+
+@pytest.fixture
 def packet_good():
     return _packet()
 

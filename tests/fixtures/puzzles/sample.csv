@@ -1,0 +1,9 @@
+PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl,OpeningTags,DailyDate
+pMate2,q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17,e8d7 a2e6 d7d8 f7f8,1760,80,90,5000,mate mateIn2 middlegame short,https://lichess.org/yyznGmXs/black#34,Italian_Game Italian_Game_Classical_Variation,
+pAlt1,7k/2p3pp/8/8/8/8/5PPP/RR4K1 b - - 0 1,c7c6 a1a8,900,75,95,4000,backRankMate mate mateIn1 oneMove endgame,https://lichess.org/abcdefgh#1,,
+pPromo,k7/6Pp/1K6/8/8/8/8/8 b - - 0 1,h7h6 g7g8q,1200,75,92,3000,promotion mate mateIn1 oneMove endgame pawnEndgame,https://lichess.org/abcdefgi#1,,
+pUnpop,7k/2p3pp/8/8/8/8/5PPP/RR4K1 b - - 0 1,c7c6 a1a8,950,75,50,4000,mate mateIn1,https://lichess.org/x1#1,,
+pFewPl,7k/2p3pp/8/8/8/8/5PPP/RR4K1 b - - 0 1,c7c6 a1a8,960,75,95,100,mate mateIn1,https://lichess.org/x2#1,,
+pHighRd,7k/2p3pp/8/8/8/8/5PPP/RR4K1 b - - 0 1,c7c6 a1a8,970,120,95,4000,mate mateIn1,https://lichess.org/x3#1,,
+pTooHi,7k/2p3pp/8/8/8/8/5PPP/RR4K1 b - - 0 1,c7c6 a1a8,3000,75,95,4000,mate mateIn1,https://lichess.org/x4#1,,
+pIllgl,7k/2p3pp/8/8/8/8/5PPP/RR4K1 b - - 0 1,c7c6 a1h8,980,75,95,4000,mate mateIn1,https://lichess.org/x5#1,,

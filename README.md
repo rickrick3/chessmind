@@ -55,6 +55,21 @@ docker compose run --rm web python manage.py import_lessons curriculum/seed/foun
 Then, as a staff user, open `/studio/`: validate each draft (the `content` queue runs the checks with Stockfish),
 read the report, preview it, approve and publish.
 
+## Puzzles
+
+Puzzles from the Lichess puzzle database (CC0). Download the file on your machine, then import a sample of it:
+2,000 well-liked puzzles per 100-point band from 400 to 2,800, about 48,000 in all.
+
+```bash
+curl -LO https://database.lichess.org/lichess_db_puzzle.csv.zst
+docker compose run --rm -v "$PWD:/data" web python manage.py import_puzzles /data/lichess_db_puzzle.csv.zst
+```
+
+The command reads `.zst` through the `zstd` tool (installed in the Docker image; elsewhere install it, or run
+`zstd -d` first and import the `.csv`). Options: `--per-band`, `--min-popularity` (80), `--min-plays` (300),
+`--max-rd` (90), `--seed`. Rerunning it is safe: puzzles left out are deactivated, never deleted. Staff can
+deactivate a reported puzzle in the Django admin (Puzzle reports → "Deactivate the reported puzzles").
+
 ## Gemini (free tier)
 
 Create a key in Google AI Studio and put it in `GEMINI_API_KEY`. Ordinary moves never call the AI.
