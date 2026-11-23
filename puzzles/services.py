@@ -156,3 +156,40 @@ def finish_puzzle(learner: Learner, attempt_id, body: dict, now: datetime) -> di
         attempt.result = result
         attempt.save(update_fields=["result"])
     return result
+
+
+def rebuild_rating(learner: Learner) -> PuzzleRating | None:
+    """Replay the learner's rated, finished attempts in order from their start rating; the cache follows."""
+    attempts = list(PuzzleAttempt.objects.filter(learner=learner, rated=True, finished_at__isnull=False)
+                    .select_related("puzzle").order_by("finished_at", "served_at"))
+    if not attempts:
+        PuzzleRating.objects.filter(learner=learner).delete()
+        return None
+    rating, last, solved = start_rating(learner), None, 0
+    for a in attempts:
+        day = learner.local_date(a.finished_at)
+        rating = updated_rating(rating, a.puzzle, bool(a.solved), idle_periods(last, day))
+        last, solved = day, solved + int(bool(a.solved))
+    cache, _ = PuzzleRating.objects.update_or_create(learner=learner, defaults={
+        "rating": rating.rating, "rd": rating.rd, "volatility": rating.volatility, "rated_count": len(attempts),
+        "solved_count": solved, "last_rated_on": last})
+    return cache
+
+
+def on_merge(sender, source: Learner, target: Learner, **kwargs) -> None:
+    """A guest logged into an account: a puzzle both did stays rated once (the earlier attempt), attempts and
+    reports move, and the rating is rebuilt from the combined history. XP events are moved by gamification."""
+    from .models import PuzzleReport
+
+    shared = (set(PuzzleAttempt.objects.filter(learner=source, rated=True).values_list("puzzle_id", flat=True))
+              & set(PuzzleAttempt.objects.filter(learner=target, rated=True).values_list("puzzle_id", flat=True)))
+    for puzzle_id in shared:
+        pair = list(PuzzleAttempt.objects.filter(learner__in=(source, target), puzzle_id=puzzle_id, rated=True))
+        pair.sort(key=lambda a: (a.finished_at is None, a.finished_at or a.served_at, a.served_at))
+        PuzzleAttempt.objects.filter(pk__in=[a.pk for a in pair[1:]]).update(rated=False)
+    PuzzleAttempt.objects.filter(learner=source).update(learner=target)
+    reported = PuzzleReport.objects.filter(learner=target).values_list("puzzle_id", flat=True)
+    PuzzleReport.objects.filter(learner=source, puzzle_id__in=list(reported)).delete()
+    PuzzleReport.objects.filter(learner=source).update(learner=target)
+    PuzzleRating.objects.filter(learner=source).delete()
+    rebuild_rating(target)

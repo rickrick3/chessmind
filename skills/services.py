@@ -100,3 +100,21 @@ def recompute(learner: Learner, now: datetime) -> None:
         SkillHistory.objects.bulk_create(history, update_conflicts=True,
                                          unique_fields=["learner", "key", "local_date"],
                                          update_fields=["basis", "value", "low", "high", "confidence"])
+
+
+def on_merge(sender, source: Learner, target: Learner, **kwargs) -> None:
+    """A guest logged into an account (runs after the learning and puzzles receivers): evidence moves, evidence
+    of attempts that no longer count is dropped, and the profile is rebuilt."""
+    from django.utils import timezone
+
+    Evidence.objects.filter(learner=source).update(learner=target)
+    Evidence.objects.filter(learner=target, source="puzzle", puzzle_attempt__rated=False).delete()
+    firsts: dict[int, object] = {}
+    for lesson_id, attempt_id in (LessonAttempt.objects.filter(learner=target, finished_at__isnull=False)
+                                  .order_by("finished_at").values_list("lesson_id", "id")):
+        firsts.setdefault(lesson_id, attempt_id)
+    (Evidence.objects.filter(learner=target, source="lesson")
+     .exclude(step_result__attempt_id__in=list(firsts.values())).delete())
+    SkillEstimate.objects.filter(learner=source).delete()
+    SkillHistory.objects.filter(learner=source).delete()
+    recompute(target, timezone.now())
