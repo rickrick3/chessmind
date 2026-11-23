@@ -29,7 +29,7 @@
         {"uci": "e7e5", "caption": {"fr": "Les Noirs répondent e5.", "en": "Black answers e5."}},
         {"uci": "g1f3", "caption": {"fr": "Nf3 attaque le pion e5.", "en": "Nf3 attacks the pawn on e5."}}
       ],
-      "skills": ["center"]
+      "skills": ["positional"]
     },
     {
       "id": "s3", "type": "find_move",
@@ -41,7 +41,7 @@
       "wrong": [{"uci": "f7f6", "feedback": {"fr": "f6 affaiblit ton roi.", "en": "f6 weakens your king."}}],
       "correct": {"fr": "Nc6 défend e5 et sort un cavalier.", "en": "Nc6 defends e5 and develops a knight."},
       "hint": {"fr": "Sors un cavalier pour protéger e5.", "en": "Bring a knight out to protect e5."},
-      "skills": ["development"]
+      "skills": ["openings"]
     },
     {
       "id": "s4", "type": "choice",
@@ -67,7 +67,7 @@
       "notes": {"4": {"fr": "Bc4 vise f7.", "en": "Bc4 aims at f7."}},
       "hint": {"fr": "Centre, cavalier, puis fou.", "en": "Centre, knight, then bishop."},
       "srs": {"line_key": "main"},
-      "skills": ["italian"]
+      "skills": ["openings"]
     },
     {
       "id": "s6", "type": "choice",

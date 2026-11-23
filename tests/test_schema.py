@@ -147,3 +147,18 @@ def test_localize_flattens_and_keeps_answers(valid):
     en = localize(valid, "en")
     assert step(en, "s3")["correct"] == "Nc6 defends e5 and develops a knight."
     assert valid == original
+
+
+def test_unknown_skill_tag_is_a_warning(valid):
+    step(valid, "s3")["skills"] = ["defence", "nonsense"]
+    issues = check_structure(valid)
+    assert [(i.check, i.level) for i in issues] == [("unknown_skill_tag", "warn")] and "nonsense" in issues[0].detail
+
+
+def test_seed_lessons_have_no_unknown_tags():
+    from skills.domain.areas import unknown_tags
+
+    seed = json.loads((Path(__file__).parent.parent / "curriculum" / "seed" / "foundation.json").read_text(encoding="utf-8"))
+    tags = [t for c in seed["courses"] for u in c["units"] for les in u["lessons"]
+            for s in les["content"]["steps"] for t in s.get("skills", [])]
+    assert tags and unknown_tags(tags) == []

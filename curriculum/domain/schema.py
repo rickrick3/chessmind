@@ -9,6 +9,7 @@ from typing import Literal
 import chess
 
 from analysis.ai import MOVE_RE
+from skills.domain.areas import unknown_tags
 
 from .san import frenchify
 
@@ -231,6 +232,8 @@ def _check_common(c: _Checker, s: dict) -> None:
     skills = s.get("skills", [])
     if not isinstance(skills, list) or not all(isinstance(k, str) for k in skills):
         c.add("schema", "fail", "skills must be a list of strings", sid)
+    elif unknown := unknown_tags(skills):
+        c.add("unknown_skill_tag", "warn", ", ".join(unknown), sid)
 
 
 def _check_explain(c, s, board, allowed):

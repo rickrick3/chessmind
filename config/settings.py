@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "learning",
     "gamification",
     "puzzles",
+    "skills",
 ]
 
 MIDDLEWARE = [

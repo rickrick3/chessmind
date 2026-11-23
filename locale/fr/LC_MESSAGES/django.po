@@ -561,3 +561,240 @@ msgstr "Non enregistré"
 
 msgid "Start again"
 msgstr "Recommencer"
+
+msgid "Calculation"
+msgstr "Calcul"
+
+msgid "Positional play"
+msgstr "Jeu positionnel"
+
+msgid "Strategy"
+msgstr "Stratégie"
+
+msgid "Defence"
+msgstr "Défense"
+
+msgid "Decisions"
+msgstr "Décisions"
+
+msgid "Time management"
+msgstr "Gestion du temps"
+
+msgid "Advanced pawn"
+msgstr "Pion avancé"
+
+msgid "Winning an advantage"
+msgstr "Prendre l'avantage"
+
+msgid "Anastasia's mate"
+msgstr "Mat d'Anastasia"
+
+msgid "Arabian mate"
+msgstr "Mat arabe"
+
+msgid "Attacking f2 or f7"
+msgstr "Attaque sur f2 ou f7"
+
+msgid "Attraction"
+msgstr "Attraction"
+
+msgid "Back-rank mate"
+msgstr "Mat du couloir"
+
+msgid "Balestra mate"
+msgstr "Mat de Balestra"
+
+msgid "Blind swine mate"
+msgstr "Mat des cochons aveugles"
+
+msgid "Bishop endgame"
+msgstr "Finale de fous"
+
+msgid "Boden's mate"
+msgstr "Mat de Boden"
+
+msgid "Castling"
+msgstr "Roque"
+
+msgid "Capturing the defender"
+msgstr "Capture du défenseur"
+
+msgid "Collinear move"
+msgstr "Coup colinéaire"
+
+msgid "Corner mate"
+msgstr "Mat dans le coin"
+
+msgid "Crushing"
+msgstr "Écrasant"
+
+msgid "Discovered check"
+msgstr "Échec à la découverte"
+
+msgid "Double bishop mate"
+msgstr "Mat des deux fous"
+
+msgid "Dovetail mate"
+msgstr "Mat en queue d'aronde"
+
+msgid "Saving the game"
+msgstr "Sauver la partie"
+
+msgid "Kingside attack"
+msgstr "Attaque à l'aile roi"
+
+msgid "Clearance"
+msgstr "Dégagement"
+
+msgid "Defensive move"
+msgstr "Coup défensif"
+
+msgid "Deflection"
+msgstr "Déviation"
+
+msgid "Discovered attack"
+msgstr "Attaque à la découverte"
+
+msgid "Double check"
+msgstr "Échec double"
+
+msgid "Endgame"
+msgstr "Finale"
+
+msgid "En passant"
+msgstr "Prise en passant"
+
+msgid "Epaulette mate"
+msgstr "Mat des épaulettes"
+
+msgid "Exposed king"
+msgstr "Roi exposé"
+
+msgid "Fork"
+msgstr "Fourchette"
+
+msgid "Hanging piece"
+msgstr "Pièce en prise"
+
+msgid "Hook mate"
+msgstr "Mat du crochet"
+
+msgid "Interference"
+msgstr "Interférence"
+
+msgid "In-between move"
+msgstr "Coup intermédiaire"
+
+msgid "Kill box mate"
+msgstr "Mat de la boîte"
+
+msgid "Pillsbury's mate"
+msgstr "Mat de Pillsbury"
+
+msgid "Morphy's mate"
+msgstr "Mat de Morphy"
+
+msgid "Swallow's tail mate"
+msgstr "Mat en queue d'hirondelle"
+
+msgid "Triangle mate"
+msgstr "Mat du triangle"
+
+msgid "Vukovic mate"
+msgstr "Mat de Vukovic"
+
+msgid "Knight endgame"
+msgstr "Finale de cavaliers"
+
+msgid "Long puzzle"
+msgstr "Problème long"
+
+msgid "Master game"
+msgstr "Partie de maître"
+
+msgid "Master vs master"
+msgstr "Maître contre maître"
+
+msgid "Checkmate"
+msgstr "Échec et mat"
+
+msgid "Mate in 1"
+msgstr "Mat en 1"
+
+msgid "Mate in 2"
+msgstr "Mat en 2"
+
+msgid "Mate in 3"
+msgstr "Mat en 3"
+
+msgid "Mate in 4"
+msgstr "Mat en 4"
+
+msgid "Mate in 5 or more"
+msgstr "Mat en 5 ou plus"
+
+msgid "Middlegame"
+msgstr "Milieu de partie"
+
+msgid "One move"
+msgstr "Un coup"
+
+msgid "Opening"
+msgstr "Ouverture"
+
+msgid "Opera mate"
+msgstr "Mat de l'Opéra"
+
+msgid "Pawn endgame"
+msgstr "Finale de pions"
+
+msgid "Pin"
+msgstr "Clouage"
+
+msgid "Promotion"
+msgstr "Promotion"
+
+msgid "Queen endgame"
+msgstr "Finale de dames"
+
+msgid "Queen and rook endgame"
+msgstr "Finale dame et tour"
+
+msgid "Queenside attack"
+msgstr "Attaque à l'aile dame"
+
+msgid "Quiet move"
+msgstr "Coup tranquille"
+
+msgid "Rook endgame"
+msgstr "Finale de tours"
+
+msgid "Sacrifice"
+msgstr "Sacrifice"
+
+msgid "Short puzzle"
+msgstr "Problème court"
+
+msgid "Skewer"
+msgstr "Enfilade"
+
+msgid "Smothered mate"
+msgstr "Mat à l'étouffée"
+
+msgid "Super GM game"
+msgstr "Partie de super GM"
+
+msgid "Trapped piece"
+msgstr "Pièce piégée"
+
+msgid "Underpromotion"
+msgstr "Sous-promotion"
+
+msgid "Very long puzzle"
+msgstr "Problème très long"
+
+msgid "X-ray attack"
+msgstr "Attaque aux rayons X"
+
+msgid "Zugzwang"
+msgstr "Zugzwang"

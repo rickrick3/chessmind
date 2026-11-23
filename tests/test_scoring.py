@@ -86,7 +86,7 @@ def test_min_accuracy_blocks_completion(valid_content):
 
 def test_ms_and_skills_are_kept(valid_content):
     s = score_attempt(valid_content, perfect())
-    assert s.steps[0].ms == 4000 and s.steps[0].skills == ["development"]
+    assert s.steps[0].ms == 4000 and s.steps[0].skills == ["openings"]
 
 
 def illegal_move(sub):
