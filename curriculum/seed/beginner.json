@@ -2770,6 +2770,846 @@
        }
       }
      ]
+    },
+    {
+     "slug": "mates",
+     "order": 4,
+     "title": {
+      "fr": "Les mats à connaître",
+      "en": "Checkmate patterns"
+     },
+     "description": {
+      "fr": "L'escalier, la dame soutenue, roi et dame, roi et tour, mat en deux.",
+      "en": "Ladder, supported queen, king and queen, king and rook, mate in two."
+     },
+     "lessons": [
+      {
+       "slug": "ladder-mate",
+       "order": 1,
+       "kind": "tactic",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Le mat de l'escalier avec deux tours",
+          "en": "Ladder mate with two rooks"
+         },
+         "description": {
+          "fr": "Deux tours poussent le roi vers le bord.",
+          "en": "Two rooks walk the king to the edge."
+         },
+         "objectives": [
+          {
+           "fr": "Utiliser deux tours à tour de rôle",
+           "en": "Use two rooks in turns"
+          },
+          {
+           "fr": "Mater sur le bord",
+           "en": "Mate on the edge"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "8/8/8/4k3/8/8/R7/1R4K1 w - - 0 1",
+          "text": {
+           "fr": "Les deux tours jouent à tour de rôle : l'une fait échec, l'autre garde la rangée d'en dessous. Le roi monte marche après marche jusqu'au bord.",
+           "en": "Two rooks take turns: one checks, the other guards the rank behind. Step by step, the king climbs to the edge."
+          }
+         },
+         {
+          "id": "ladder",
+          "type": "show_moves",
+          "fen": "8/8/8/4k3/8/8/R7/1R4K1 w - - 0 1",
+          "moves": [
+           {
+            "uci": "a2a5",
+            "caption": {
+             "fr": "Ra5+ : le roi doit monter.",
+             "en": "Ra5+: the king must go up."
+            }
+           },
+           {
+            "uci": "e5e6",
+            "caption": {
+             "fr": "Ke6",
+             "en": "Ke6"
+            }
+           },
+           {
+            "uci": "b1b6",
+            "caption": {
+             "fr": "Rb6+ : l'autre tour fait échec une rangée plus haut.",
+             "en": "Rb6+: the other rook checks one rank higher."
+            }
+           },
+           {
+            "uci": "e6e7",
+            "caption": {
+             "fr": "Ke7",
+             "en": "Ke7"
+            }
+           },
+           {
+            "uci": "a5a7",
+            "caption": {
+             "fr": "Ra7+ : encore plus haut.",
+             "en": "Ra7+: up again."
+            }
+           },
+           {
+            "uci": "e7e8",
+            "caption": {
+             "fr": "Ke8 : le bord.",
+             "en": "Ke8: the edge."
+            }
+           },
+           {
+            "uci": "b6b8",
+            "caption": {
+             "fr": "Rb8# : mat de l'escalier.",
+             "en": "Rb8#: ladder mate."
+            }
+           }
+          ]
+         },
+         {
+          "id": "roles",
+          "type": "choice",
+          "fen": "8/8/8/4k3/8/8/R7/1R4K1 w - - 0 1",
+          "question": {
+           "fr": "Dans l'escalier, que fait la tour qui ne donne pas échec ?",
+           "en": "In the ladder, what does the rook that does not give check do?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Elle empêche le roi de redescendre",
+             "en": "It stops the king from coming back down"
+            }
+           },
+           {
+            "text": {
+             "fr": "Elle attaque le roi par derrière",
+             "en": "It attacks the king from behind"
+            }
+           },
+           {
+            "text": {
+             "fr": "Rien, elle attend",
+             "en": "Nothing, it waits"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Chaque tour tient une rangée. Le roi ne peut que s'éloigner.",
+           "en": "Each rook holds a rank. The king can only go further away."
+          },
+          "hint": {
+           "fr": "Regarde la rangée juste sous le roi.",
+           "en": "Look at the rank just below the king."
+          },
+          "skills": [
+           "mate"
+          ]
+         },
+         {
+          "id": "last-step",
+          "type": "find_move",
+          "fen": "4k3/R7/8/8/8/8/8/1R4K1 w - - 0 1",
+          "prompt": {
+           "fr": "Le roi est sur le bord. Mate-le.",
+           "en": "The king is on the edge. Mate it."
+          },
+          "correct": {
+           "fr": "Rb8# : une tour fait échec, l'autre garde la septième rangée.",
+           "en": "Rb8#: one rook checks, the other guards the seventh rank."
+          },
+          "hint": {
+           "fr": "Utilise la tour qui n'est pas sur la septième rangée.",
+           "en": "Use the rook that is not on the seventh rank."
+          },
+          "accept": [
+           "b1b8"
+          ],
+          "skills": [
+           "mate",
+           "mateIn1"
+          ]
+         },
+         {
+          "id": "two-moves",
+          "type": "play_line",
+          "fen": "4k3/8/8/8/8/8/R7/1R4K1 w - - 0 1",
+          "side": "white",
+          "moves": [
+           "a2a7",
+           "e8f8",
+           "b1b8"
+          ],
+          "prompt": {
+           "fr": "Mat en deux : d'abord prends la septième rangée, puis fais échec sur la huitième.",
+           "en": "Mate in two: first take away the seventh rank, then check on the eighth."
+          },
+          "hint": {
+           "fr": "La tour a2 peut monter sur la septième rangée.",
+           "en": "The rook on a2 can go up to the seventh rank."
+          },
+          "skills": [
+           "mate",
+           "mateIn2"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Ra7 : le roi est enfermé sur la dernière rangée.",
+            "en": "Ra7: the king is trapped on the back rank."
+           },
+           "2": {
+            "fr": "Rb8#",
+            "en": "Rb8#"
+           }
+          }
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "4k3/R7/8/8/8/8/8/1R4K1 w - - 0 1",
+          "text": {
+           "fr": "Garde tes tours loin du roi, pour qu'il ne puisse pas les attaquer.",
+           "en": "Keep your rooks far from the king, so it cannot attack them."
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "supported-queen-mate",
+       "order": 2,
+       "kind": "tactic",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Le mat de la dame soutenue",
+          "en": "The supported queen mate"
+         },
+         "description": {
+          "fr": "La dame collée au roi, protégée.",
+          "en": "The queen right next to the king, protected."
+         },
+         "objectives": [
+          {
+           "fr": "Mater avec une dame protégée",
+           "en": "Mate with a protected queen"
+          },
+          {
+           "fr": "Éviter le pat",
+           "en": "Avoid stalemate"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "6k1/5p1p/5P1Q/8/8/8/8/6K1 w - - 0 1",
+          "text": {
+           "fr": "Une dame collée au roi adverse fait mat si le roi ne peut pas la prendre : une autre pièce doit la protéger.",
+           "en": "A queen next to the enemy king gives mate when the king cannot take it: another piece must protect it."
+          }
+         },
+         {
+          "id": "pawn-support",
+          "type": "find_move",
+          "fen": "6k1/5p1p/5P1Q/8/8/8/8/6K1 w - - 0 1",
+          "prompt": {
+           "fr": "Les Blancs jouent et font mat.",
+           "en": "White to play and mate."
+          },
+          "correct": {
+           "fr": "Qg7# : le pion f6 protège la dame.",
+           "en": "Qg7#: the pawn on f6 protects the queen."
+          },
+          "hint": {
+           "fr": "Quelle case à côté du roi est couverte par ton pion ?",
+           "en": "Which square next to the king is covered by your pawn?"
+          },
+          "accept": [
+           "h6g7"
+          ],
+          "skills": [
+           "mate",
+           "mateIn1"
+          ]
+         },
+         {
+          "id": "king-support",
+          "type": "choice",
+          "fen": "k7/7Q/1K6/8/8/8/8/8 w - - 0 1",
+          "question": {
+           "fr": "Quel coup fait mat ?",
+           "en": "Which move gives mate?"
+          },
+          "options": [
+           {
+            "uci": "h7b7"
+           },
+           {
+            "uci": "h7c7"
+           },
+           {
+            "uci": "b6c6"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Qb7# : ton roi protège la dame. Qc7 laisse les Noirs sans coup et sans échec : pat. Kc6 perd du temps.",
+           "en": "Qb7#: your king protects the queen. Qc7 leaves Black no move without check: stalemate. Kc6 wastes time."
+          },
+          "hint": {
+           "fr": "Mets la dame là où ton roi la protège.",
+           "en": "Put the queen where your king protects it."
+          },
+          "skills": [
+           "mate",
+           "mateIn1"
+          ]
+         },
+         {
+          "id": "king-shown",
+          "type": "show_moves",
+          "fen": "k7/7Q/1K6/8/8/8/8/8 w - - 0 1",
+          "moves": [
+           {
+            "uci": "h7b7",
+            "caption": {
+             "fr": "Qb7# : le roi ne peut pas prendre la dame protégée.",
+             "en": "Qb7#: the king cannot take the protected queen."
+            }
+           }
+          ]
+         },
+         {
+          "id": "bishop-support",
+          "type": "find_move",
+          "fen": "7k/6p1/8/8/8/8/1B6/6QK w - - 0 1",
+          "prompt": {
+           "fr": "Les Blancs jouent et font mat.",
+           "en": "White to play and mate."
+          },
+          "correct": {
+           "fr": "Qxg7# : le fou b2 protège la dame sur la grande diagonale.",
+           "en": "Qxg7#: the bishop on b2 protects the queen along the long diagonal."
+          },
+          "hint": {
+           "fr": "Ton fou vise g7.",
+           "en": "Your bishop looks at g7."
+          },
+          "accept": [
+           "g1g7"
+          ],
+          "skills": [
+           "mate",
+           "mateIn1"
+          ]
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "7k/6p1/8/8/8/8/1B6/6QK w - - 0 1",
+          "text": {
+           "fr": "Cherche une case à côté du roi qu'une de tes pièces garde déjà. Mets-y la dame.",
+           "en": "Look for a square next to the king that one of your pieces already guards. Put the queen there."
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "queen-king-mate",
+       "order": 3,
+       "kind": "tactic",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Roi et dame contre roi",
+          "en": "King and queen against king"
+         },
+         "description": {
+          "fr": "Réduis la boîte, approche le roi, jamais de pat.",
+          "en": "Shrink the box, bring the king, never stalemate."
+         },
+         "objectives": [
+          {
+           "fr": "Pousser le roi au bord avec la dame",
+           "en": "Push the king to the edge with the queen"
+          },
+          {
+           "fr": "Finir avec l'aide de ton roi",
+           "en": "Finish with your king's help"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "box",
+          "type": "explain",
+          "fen": "8/8/8/3k4/8/8/8/K5Q1 w - - 0 1",
+          "text": {
+           "fr": "La dame enferme le roi dans une boîte. Réduis la boîte, puis amène ton roi pour aider.",
+           "en": "The queen cages the king in a box. Make the box smaller, then bring your own king to help."
+          }
+         },
+         {
+          "id": "mate-edge",
+          "type": "find_move",
+          "fen": "4k3/8/4K3/8/8/8/8/7Q w - - 0 1",
+          "prompt": {
+           "fr": "Les rois se font face. Mat en un.",
+           "en": "The kings face each other. Mate in one."
+          },
+          "correct": {
+           "fr": "Mat sur la dernière rangée : ton roi garde la septième.",
+           "en": "Mate on the back rank: your king guards the seventh rank."
+          },
+          "hint": {
+           "fr": "Fais échec sur la huitième rangée.",
+           "en": "Check along the eighth rank."
+          },
+          "accept": [
+           "h1h8",
+           "h1a8"
+          ],
+          "skills": [
+           "mate",
+           "mateIn1"
+          ]
+         },
+         {
+          "id": "stalemate-trap",
+          "type": "choice",
+          "fen": "k7/8/2K5/8/8/8/8/1Q6 w - - 0 1",
+          "question": {
+           "fr": "Un coup fait mat. Deux autres font pat, une nulle. Lequel fait mat ?",
+           "en": "One move mates. Two others give stalemate, a draw. Which one mates?"
+          },
+          "options": [
+           {
+            "uci": "b1b7"
+           },
+           {
+            "uci": "c6b6"
+           },
+           {
+            "uci": "b1b6"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Qb7#. Après Kb6 ou Qb6, les Noirs n'ont aucun coup et ne sont pas en échec : pat.",
+           "en": "Qb7#. After Kb6 or Qb6 Black has no move and is not in check: stalemate."
+          },
+          "hint": {
+           "fr": "Vérifie que les Noirs sont en échec.",
+           "en": "Make sure Black is in check."
+          },
+          "skills": [
+           "mate",
+           "mateIn1"
+          ]
+         },
+         {
+          "id": "corner",
+          "type": "show_moves",
+          "fen": "7k/8/6K1/8/8/8/8/1Q6 w - - 0 1",
+          "moves": [
+           {
+            "uci": "b1b8",
+            "caption": {
+             "fr": "Qb8# : le roi garde g7 et h7, la dame la huitième rangée.",
+             "en": "Qb8#: the king guards g7 and h7, the queen the eighth rank."
+            }
+           }
+          ]
+         },
+         {
+          "id": "stalemate",
+          "type": "explain",
+          "fen": "k7/8/2K5/8/8/8/8/1Q6 w - - 0 1",
+          "text": {
+           "fr": "À chaque coup, vérifie : les Noirs ont-ils encore un coup ? Un roi bloqué sans coup et sans échec, c'est pat.",
+           "en": "Every move, check: does Black still have a move? A cornered king with no move and no check is stalemate."
+          }
+         },
+         {
+          "id": "corner-mate",
+          "type": "find_move",
+          "fen": "7k/8/6K1/8/8/8/8/1Q6 w - - 0 1",
+          "prompt": {
+           "fr": "Mat en un.",
+           "en": "Mate in one."
+          },
+          "correct": {
+           "fr": "Qb8#",
+           "en": "Qb8#"
+          },
+          "hint": {
+           "fr": "Utilise la huitième rangée.",
+           "en": "Use the eighth rank."
+          },
+          "accept": [
+           "b1b8"
+          ],
+          "skills": [
+           "mate",
+           "mateIn1"
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "slug": "rook-king-mate",
+       "order": 4,
+       "kind": "tactic",
+       "difficulty": 3,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Roi et tour contre roi",
+          "en": "King and rook against king"
+         },
+         "description": {
+          "fr": "Coupe le roi, mets-toi en face, puis fais échec.",
+          "en": "Cut the king off, face it, then check."
+         },
+         "objectives": [
+          {
+           "fr": "Couper le roi avec la tour",
+           "en": "Cut off the king with the rook"
+          },
+          {
+           "fr": "Mater quand les rois se font face",
+           "en": "Mate when the kings face each other"
+          }
+         ],
+         "difficulty": 3,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "8/8/8/3k4/8/8/8/4K2R w - - 0 1",
+          "text": {
+           "fr": "Avec roi et tour, la tour construit un mur et ton roi pousse. Le mat arrive sur le bord.",
+           "en": "With king and rook, the rook builds a wall and your king pushes. The mate comes on the edge."
+          }
+         },
+         {
+          "id": "wall",
+          "type": "show_moves",
+          "fen": "8/8/8/3k4/8/8/8/4K2R w - - 0 1",
+          "moves": [
+           {
+            "uci": "h1h4",
+            "caption": {
+             "fr": "Rh4 : un mur. Le roi noir ne peut plus franchir la quatrième rangée.",
+             "en": "Rh4: a wall. The black king cannot cross the fourth rank."
+            }
+           }
+          ]
+         },
+         {
+          "id": "face-mate",
+          "type": "find_move",
+          "fen": "4k3/8/4K3/8/8/8/8/R7 w - - 0 1",
+          "prompt": {
+           "fr": "Les rois se font face. Mat en un.",
+           "en": "The kings face each other. Mate in one."
+          },
+          "correct": {
+           "fr": "Ra8# : la tour fait échec, ton roi garde les cases de fuite.",
+           "en": "Ra8#: the rook checks, your king guards the escape squares."
+          },
+          "hint": {
+           "fr": "Fais échec sur le bord.",
+           "en": "Check along the edge."
+          },
+          "accept": [
+           "a1a8"
+          ],
+          "skills": [
+           "mate",
+           "mateIn1",
+           "endgames"
+          ]
+         },
+         {
+          "id": "which-mate",
+          "type": "choice",
+          "fen": "3k4/8/3K4/8/8/8/8/7R w - - 0 1",
+          "question": {
+           "fr": "Quel coup fait mat ?",
+           "en": "Which move is mate?"
+          },
+          "options": [
+           {
+            "uci": "h1h8"
+           },
+           {
+            "uci": "h1d1"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Rh8# : ton roi couvre c7, d7 et e7. Rd1 ne fait même pas échec : ton propre roi est sur le chemin.",
+           "en": "Rh8#: your king covers c7, d7 and e7. Rd1 is not even check: your own king is in the way."
+          },
+          "hint": {
+           "fr": "Regarde la dernière rangée.",
+           "en": "Look at the back rank."
+          },
+          "skills": [
+           "mate",
+           "mateIn1",
+           "endgames"
+          ]
+         },
+         {
+          "id": "waiting",
+          "type": "play_line",
+          "fen": "3k4/8/2K5/8/8/8/8/7R w - - 0 1",
+          "side": "white",
+          "moves": [
+           "h1h7",
+           "d8c8",
+           "h7h8"
+          ],
+          "prompt": {
+           "fr": "Enferme le roi sur la dernière rangée, puis mate quand il fait face à ton roi.",
+           "en": "Lock the king on the back rank, then mate when it faces your king."
+          },
+          "hint": {
+           "fr": "Mets la tour sur la septième rangée.",
+           "en": "Put the rook on the seventh rank."
+          },
+          "skills": [
+           "mate",
+           "endgames"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Rh7 : le roi est coincé sur la dernière rangée.",
+            "en": "Rh7: the king is stuck on the back rank."
+           },
+           "2": {
+            "fr": "Rh8#",
+            "en": "Rh8#"
+           }
+          }
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "4k3/8/4K3/8/8/8/8/R7 w - - 0 1",
+          "text": {
+           "fr": "Un mur avec la tour, pousse avec le roi, échec quand les rois se font face.",
+           "en": "Wall with the rook, push with the king, check when the kings face each other."
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "mate-in-two",
+       "order": 5,
+       "kind": "tactic",
+       "difficulty": 3,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Mat en deux",
+          "en": "Mate in two"
+         },
+         "description": {
+          "fr": "Un premier coup forcé, puis le mat.",
+          "en": "A forcing first move, then mate."
+         },
+         "objectives": [
+          {
+           "fr": "Chercher d'abord les coups forcés",
+           "en": "Look for forcing moves first"
+          },
+          {
+           "fr": "Voir un sacrifice qui mène au mat",
+           "en": "See a sacrifice that leads to mate"
+          }
+         ],
+         "difficulty": 3,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "r6k/6pp/7N/8/8/1Q6/8/6K1 w - - 0 1",
+          "text": {
+           "fr": "Pour un mat en deux, essaie d'abord les coups les plus forcés : les échecs, puis les prises, même en sacrifiant.",
+           "en": "For a mate in two, try the most forcing moves first: checks, then captures, even if you give up material."
+          }
+         },
+         {
+          "id": "smother",
+          "type": "find_move",
+          "fen": "6rk/6pp/8/6N1/8/8/8/6K1 w - - 0 1",
+          "prompt": {
+           "fr": "Mat en un : le roi est entouré de ses propres pièces.",
+           "en": "Mate in one: the king is surrounded by its own pieces."
+          },
+          "correct": {
+           "fr": "Nf7# : le mat étouffé.",
+           "en": "Nf7#: smothered mate."
+          },
+          "hint": {
+           "fr": "Seul un cavalier peut donner cet échec.",
+           "en": "Only a knight can give this check."
+          },
+          "accept": [
+           "g5f7"
+          ],
+          "skills": [
+           "mate",
+           "mateIn1",
+           "smotheredMate"
+          ]
+         },
+         {
+          "id": "first-move",
+          "type": "choice",
+          "fen": "r6k/6pp/7N/8/8/1Q6/8/6K1 w - - 0 1",
+          "question": {
+           "fr": "Quel premier coup force le mat ?",
+           "en": "Which first move forces mate?"
+          },
+          "options": [
+           {
+            "uci": "b3g8"
+           },
+           {
+            "uci": "h6f7"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Qg8+ : le sacrifice de dame force la tour à prendre, puis le cavalier mate.",
+           "en": "Qg8+: the queen sacrifice forces the rook to take, then the knight mates."
+          },
+          "hint": {
+           "fr": "Le roi ne peut pas prendre en g8 : ton cavalier protège cette case.",
+           "en": "The king cannot take on g8: your knight protects it."
+          },
+          "skills": [
+           "mate",
+           "mateIn2",
+           "sacrifice"
+          ]
+         },
+         {
+          "id": "smother-shown",
+          "type": "show_moves",
+          "fen": "r6k/6pp/7N/8/8/1Q6/8/6K1 w - - 0 1",
+          "moves": [
+           {
+            "uci": "b3g8",
+            "caption": {
+             "fr": "Qg8+ : un sacrifice de dame.",
+             "en": "Qg8+: a queen sacrifice."
+            }
+           },
+           {
+            "uci": "a8g8",
+            "caption": {
+             "fr": "Rxg8 : forcé.",
+             "en": "Rxg8: forced."
+            }
+           },
+           {
+            "uci": "h6f7",
+            "caption": {
+             "fr": "Nf7# : mat étouffé.",
+             "en": "Nf7#: smothered mate."
+            }
+           }
+          ]
+         },
+         {
+          "id": "back-rank-two",
+          "type": "play_line",
+          "fen": "2r1r1k1/5ppp/8/8/8/8/4RPPP/4Q1K1 w - - 0 1",
+          "side": "white",
+          "moves": [
+           "e2e8",
+           "c8e8",
+           "e1e8"
+          ],
+          "prompt": {
+           "fr": "Mat en deux sur la dernière rangée.",
+           "en": "Mate in two on the back rank."
+          },
+          "hint": {
+           "fr": "Commence par la prise qui fait échec.",
+           "en": "Start with the capture that gives check."
+          },
+          "skills": [
+           "mate",
+           "mateIn2",
+           "backRankMate"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Rxe8+ : échec, et les Noirs doivent reprendre.",
+            "en": "Rxe8+: check, and Black must take back."
+           },
+           "2": {
+            "fr": "Qxe8# : la dame termine.",
+            "en": "Qxe8#: the queen finishes."
+           }
+          }
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "2r1r1k1/5ppp/8/8/8/8/4RPPP/4Q1K1 w - - 0 1",
+          "text": {
+           "fr": "D'abord les échecs, puis les prises, puis les menaces. Un sacrifice est permis quand le coup suivant est mat.",
+           "en": "Checks first, then captures, then threats. A sacrifice is fine when the next move is mate."
+          }
+         }
+        ]
+       }
+      }
+     ]
     }
    ]
   }
