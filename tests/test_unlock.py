@@ -21,14 +21,23 @@ def test_blank_start_level_is_like_new():
     assert lesson_states(NODES3, set(), "") == {"a": "current", "b": "locked", "c": "locked"}
 
 
-def test_rules_opens_unit_one():
+def test_rules_starts_at_the_second_unit():
     assert lesson_states(TWO_UNITS, set(), "rules") == {
-        "a": "current", "b": "open", "c": "locked", "d": "locked", "e": "locked"}
+        "a": "open", "b": "open", "c": "current", "d": "open", "e": "locked"}
 
 
-def test_club_opens_two_units():
+def test_club_starts_at_the_third_unit():
     assert lesson_states(TWO_UNITS, {"a"}, "club") == {
-        "a": "done", "b": "current", "c": "open", "d": "open", "e": "locked"}
+        "a": "done", "b": "open", "c": "open", "d": "open", "e": "current"}
+
+
+def test_current_falls_back_when_the_start_unit_is_done():
+    assert lesson_states(TWO_UNITS, {"c", "d", "e"}, "rules")["a"] == "current"
+
+
+def test_earlier_basics_progress_opens_the_unit_after_it():  # Review Focus 2
+    states = lesson_states(TWO_UNITS, {"c", "d"}, "new")  # unit 1 done before unit 0 existed
+    assert (states["a"], states["b"], states["c"], states["e"]) == ("current", "locked", "done", "open")
 
 
 def test_next_unit_opens_after_last_lesson_of_previous():

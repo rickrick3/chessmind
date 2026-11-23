@@ -2,7 +2,8 @@
 from dataclasses import dataclass
 
 REVISIT_BELOW = 0.7
-OPENED_UNITS = {"rules": {0}, "club": {0, 1}}  # start level -> unit indexes open from the start
+OPENED_UNITS = {"rules": {0, 1}, "club": {0, 1, 2}}  # start level -> unit indexes open from the start
+START_UNIT = {"rules": 1, "club": 2}  # start level -> the unit its next lesson ("current") is taken from
 
 
 @dataclass(frozen=True)
@@ -30,8 +31,10 @@ def lesson_states(nodes: list[LessonNode], completed: set[str], start_level: str
     for n in nodes:
         if n.track != "path":
             states[n.slug] = "done" if n.slug in completed else "open" if n.prerequisites <= completed else "locked"
-    first_open = next((n.slug for n in sorted(nodes, key=lambda n: n.position)
-                       if n.track == "path" and states[n.slug] == "open"), None)
+    path_open = [n for n in sorted(nodes, key=lambda n: n.position) if n.track == "path" and states[n.slug] == "open"]
+    start_unit = START_UNIT.get(start_level, 0)
+    first_open = next((n.slug for n in path_open if n.unit_index >= start_unit),
+                      path_open[0].slug if path_open else None)
     if first_open is not None:
         states[first_open] = "current"
     return states
