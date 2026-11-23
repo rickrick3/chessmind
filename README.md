@@ -65,7 +65,8 @@ curl -LO https://database.lichess.org/lichess_db_puzzle.csv.zst
 docker compose run --rm -v "$PWD:/data" web python manage.py import_puzzles /data/lichess_db_puzzle.csv.zst
 ```
 
-The command reads `.zst` through the `zstd` tool (installed in the Docker image; elsewhere install it, or run
+It reads all 6 million rows, so it takes a while (about 25 minutes on a laptop); with the default filters every
+band from 400 to 2,700 fills to 2,000. The command reads `.zst` through the `zstd` tool (installed in the Docker image; elsewhere install it, or run
 `zstd -d` first and import the `.csv`). Options: `--per-band`, `--min-popularity` (80), `--min-plays` (300),
 `--max-rd` (90), `--seed`. Rerunning it is safe: puzzles left out are deactivated, never deleted. Staff can
 deactivate a reported puzzle in the Django admin (Puzzle reports → "Deactivate the reported puzzles").

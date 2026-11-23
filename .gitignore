@@ -4,3 +4,6 @@ __pycache__/
 .env
 staticfiles/
 .pytest_cache/
+
+# The Lichess puzzle file (import_puzzles input, ~300 MB)
+lichess_db_puzzle.csv*
