@@ -3610,6 +3610,1020 @@
        }
       }
      ]
+    },
+    {
+     "slug": "opening-principles",
+     "order": 5,
+     "title": {
+      "fr": "Les principes de l'ouverture",
+      "en": "Opening principles"
+     },
+     "description": {
+      "fr": "Le centre, le développement, le roque, la dame trop tôt et une première ouverture.",
+      "en": "The centre, development, castling, the early queen and a first opening."
+     },
+     "lessons": [
+      {
+       "slug": "take-the-centre",
+       "order": 1,
+       "kind": "concept",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Prends le centre",
+          "en": "Take the centre"
+         },
+         "description": {
+          "fr": "Pourquoi les quatre cases du milieu comptent.",
+          "en": "Why the four middle squares matter."
+         },
+         "objectives": [
+          {
+           "fr": "Connaître les cases du centre",
+           "en": "Know the centre squares"
+          },
+          {
+           "fr": "Commencer par un pion central",
+           "en": "Start the game with a central pawn"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "squares",
+          "type": "explain",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "text": {
+           "fr": "Les quatre cases du centre sont les plus importantes. Les pièces qui y sont touchent tout l'échiquier.",
+           "en": "The four centre squares are the most important ones. Pieces placed there reach the whole board."
+          },
+          "highlights": [
+           "d4",
+           "e4",
+           "d5",
+           "e5"
+          ]
+         },
+         {
+          "id": "first-move",
+          "type": "choice",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "question": {
+           "fr": "Quel premier coup prend sa part du centre ?",
+           "en": "Which first move takes a share of the centre?"
+          },
+          "options": [
+           {
+            "uci": "e2e4"
+           },
+           {
+            "uci": "a2a4"
+           },
+           {
+            "uci": "h2h3"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "e4 : le pion prend le centre et ouvre des lignes pour la dame et le fou.",
+           "en": "e4: the pawn takes the centre and opens lines for the queen and the bishop."
+          },
+          "hint": {
+           "fr": "Le centre est au milieu de l'échiquier.",
+           "en": "The centre is in the middle of the board."
+          },
+          "skills": [
+           "openings"
+          ]
+         },
+         {
+          "id": "two-pawns",
+          "type": "show_moves",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "moves": [
+           {
+            "uci": "e2e4",
+            "caption": {
+             "fr": "e4",
+             "en": "e4"
+            }
+           },
+           {
+            "uci": "e7e5",
+            "caption": {
+             "fr": "e5 : les Noirs prennent aussi leur part.",
+             "en": "e5: Black takes its share too."
+            }
+           },
+           {
+            "uci": "d2d4",
+            "caption": {
+             "fr": "d4 : deux pions blancs au centre.",
+             "en": "d4: two white pawns in the centre."
+            }
+           }
+          ]
+         },
+         {
+          "id": "why",
+          "type": "choice",
+          "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+          "question": {
+           "fr": "Pourquoi les pions au centre sont-ils utiles ?",
+           "en": "Why are pawns in the centre useful?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Ils contrôlent les cases que veulent les pièces adverses",
+             "en": "They control the squares your opponent's pieces want"
+            }
+           },
+           {
+            "text": {
+             "fr": "Ils ne peuvent jamais être pris",
+             "en": "They can never be taken"
+            }
+           },
+           {
+            "text": {
+             "fr": "Ils protègent le roi",
+             "en": "They protect the king"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Un pion central attaque deux cases du centre et laisse moins de bonnes cases à l'adversaire.",
+           "en": "A central pawn attacks two central squares and leaves fewer good squares to the other side."
+          },
+          "hint": {
+           "fr": "Pense aux cases que le pion attaque.",
+           "en": "Think of the squares the pawn attacks."
+          },
+          "skills": [
+           "openings"
+          ]
+         },
+         {
+          "id": "open-well",
+          "type": "play_line",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "side": "white",
+          "moves": [
+           "e2e4",
+           "e7e5",
+           "g1f3",
+           "b8c6",
+           "d2d4"
+          ],
+          "prompt": {
+           "fr": "Joue un bon début : un pion central, un cavalier, puis un autre pion central.",
+           "en": "Play a good start: a central pawn, a knight, then another central pawn."
+          },
+          "hint": {
+           "fr": "Commence par le pion devant ton roi ou ta dame.",
+           "en": "Start with a pawn in front of your king or queen."
+          },
+          "skills": [
+           "openings"
+          ],
+          "notes": {
+           "2": {
+            "fr": "Nf3 : développe et attaque le pion e5.",
+            "en": "Nf3: develops and attacks the pawn on e5."
+           },
+           "4": {
+            "fr": "d4 : tu prends encore plus le centre.",
+            "en": "d4: you take even more of the centre."
+           }
+          },
+          "also_accept": {
+           "0": [
+            "d2d4"
+           ],
+           "2": [
+            "b1c3",
+            "f1c4"
+           ],
+           "4": [
+            "f1c4",
+            "f1b5"
+           ]
+          }
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+          "text": {
+           "fr": "Dans les premiers coups : mets un pion au centre, puis sors tes pièces vers lui.",
+           "en": "In the first moves: put a pawn in the centre, then bring out your pieces towards it."
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "develop",
+       "order": 2,
+       "kind": "concept",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Développe tes pièces",
+          "en": "Develop your pieces"
+         },
+         "description": {
+          "fr": "Chaque coup d'ouverture devrait sortir une nouvelle pièce.",
+          "en": "Every opening move should bring a new piece into play."
+         },
+         "objectives": [
+          {
+           "fr": "Sortir d'abord cavaliers et fous",
+           "en": "Develop knights and bishops first"
+          },
+          {
+           "fr": "Éviter de bouger deux fois la même pièce",
+           "en": "Avoid moving the same piece twice"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+          "text": {
+           "fr": "Développer, c'est sortir tes cavaliers et tes fous de la dernière rangée, vers le centre.",
+           "en": "Developing means bringing your knights and bishops off the back rank, towards the centre."
+          }
+         },
+         {
+          "id": "best-develop",
+          "type": "choice",
+          "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+          "question": {
+           "fr": "Quel coup développe une pièce et attaque un pion ?",
+           "en": "Which move develops a piece and attacks a pawn?"
+          },
+          "options": [
+           {
+            "uci": "g1f3"
+           },
+           {
+            "uci": "h2h4"
+           },
+           {
+            "uci": "d1h5"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Nf3 développe et attaque e5. h4 ne développe rien, et Qh5 sort la dame trop tôt.",
+           "en": "Nf3 develops and attacks e5. h4 develops nothing, and Qh5 brings the queen out too early."
+          },
+          "hint": {
+           "fr": "Cherche un coup de cavalier.",
+           "en": "Look for a knight move."
+          },
+          "skills": [
+           "openings"
+          ]
+         },
+         {
+          "id": "both-develop",
+          "type": "show_moves",
+          "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+          "moves": [
+           {
+            "uci": "g1f3",
+            "caption": {
+             "fr": "Nf3",
+             "en": "Nf3"
+            }
+           },
+           {
+            "uci": "b8c6",
+            "caption": {
+             "fr": "Nc6 : les Noirs défendent e5 et se développent.",
+             "en": "Nc6: Black defends e5 and develops."
+            }
+           },
+           {
+            "uci": "f1c4",
+            "caption": {
+             "fr": "Bc4",
+             "en": "Bc4"
+            }
+           },
+           {
+            "uci": "f8c5",
+            "caption": {
+             "fr": "Bc5 : les cavaliers d'abord, puis les fous, tous vers le centre.",
+             "en": "Bc5: knights first, then bishops, all towards the centre."
+            }
+           }
+          ]
+         },
+         {
+          "id": "which-first",
+          "type": "choice",
+          "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+          "question": {
+           "fr": "Quelles pièces faut-il en général sortir en premier ?",
+           "en": "Which pieces should you usually develop first?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Les cavaliers et les fous",
+             "en": "Knights and bishops"
+            }
+           },
+           {
+            "text": {
+             "fr": "Les tours",
+             "en": "The rooks"
+            }
+           },
+           {
+            "text": {
+             "fr": "La dame",
+             "en": "The queen"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Cavaliers et fous sont prêts les premiers. Les tours ont besoin de lignes ouvertes, et la dame se fait chasser si elle sort tôt.",
+           "en": "Knights and bishops are ready first. Rooks need open lines, and the queen gets chased if she comes out early."
+          },
+          "hint": {
+           "fr": "Quelles pièces peuvent quitter la dernière rangée tout de suite ?",
+           "en": "Which pieces can leave the back rank right away?"
+          },
+          "skills": [
+           "openings"
+          ]
+         },
+         {
+          "id": "keep-developing",
+          "type": "play_line",
+          "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+          "side": "white",
+          "moves": [
+           "f1c4",
+           "g8f6",
+           "b1c3"
+          ],
+          "prompt": {
+           "fr": "Sors encore deux pièces.",
+           "en": "Bring out two more pieces."
+          },
+          "hint": {
+           "fr": "Ton fou et ton autre cavalier sont encore chez eux.",
+           "en": "Your bishop and your other knight are still at home."
+          },
+          "skills": [
+           "openings"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Bc4 : le fou vise f7.",
+            "en": "Bc4: the bishop aims at f7."
+           },
+           "2": {
+            "fr": "Nc3 : une pièce de plus en jeu.",
+            "en": "Nc3: another piece in play."
+           }
+          },
+          "also_accept": {
+           "0": [
+            "f1b5",
+            "b1c3",
+            "d2d4"
+           ],
+           "2": [
+            "d2d3",
+            "e1g1"
+           ]
+          }
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+          "text": {
+           "fr": "Ne bouge pas deux fois la même pièce dans l'ouverture sans bonne raison. Sors-en plutôt une nouvelle.",
+           "en": "Do not move the same piece twice in the opening without a good reason. Bring out a new one instead."
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "castle-early",
+       "order": 3,
+       "kind": "concept",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Roque tôt",
+          "en": "Castle early"
+         },
+         "description": {
+          "fr": "Mets le roi à l'abri, réveille la tour.",
+          "en": "Hide the king, wake up the rook."
+         },
+         "objectives": [
+          {
+           "fr": "Savoir pourquoi roquer tôt",
+           "en": "Know why to castle early"
+          },
+          {
+           "fr": "Savoir quand on ne peut pas roquer",
+           "en": "Know when you may not castle"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 1 5",
+          "text": {
+           "fr": "Le roque cache ton roi derrière des pions et rapproche une tour du centre. Fais-le dans les dix premiers coups.",
+           "en": "Castling hides your king behind pawns and brings a rook towards the centre. Do it in the first ten moves."
+          }
+         },
+         {
+          "id": "best-castle",
+          "type": "choice",
+          "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 1 5",
+          "question": {
+           "fr": "Quel coup met ton roi en sécurité ?",
+           "en": "Which move puts your king in safety?"
+          },
+          "options": [
+           {
+            "uci": "e1g1"
+           },
+           {
+            "uci": "e1e2"
+           },
+           {
+            "uci": "h1g1"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "O-O : le roi est à l'abri et la tour entre dans le jeu. Ke2 bloque tes pièces, et Rg1 fait perdre le roque de ce côté.",
+           "en": "O-O: the king is safe and the rook joins the game. Ke2 blocks your pieces, and Rg1 loses the right to castle on that side."
+          },
+          "hint": {
+           "fr": "Le roi avance de deux cases quand il roque.",
+           "en": "The king moves two squares when it castles."
+          },
+          "skills": [
+           "openings",
+           "castling"
+          ]
+         },
+         {
+          "id": "castled",
+          "type": "show_moves",
+          "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 1 5",
+          "moves": [
+           {
+            "uci": "e1g1",
+            "caption": {
+             "fr": "O-O : le roi derrière ses pions, la tour en f1.",
+             "en": "O-O: the king behind its pawns, the rook on f1."
+            }
+           }
+          ]
+         },
+         {
+          "id": "when-not",
+          "type": "choice",
+          "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 1 5",
+          "question": {
+           "fr": "Quand n'as-tu PAS le droit de roquer ?",
+           "en": "When are you NOT allowed to castle?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Quand ton roi est en échec",
+             "en": "When your king is in check"
+            }
+           },
+           {
+            "text": {
+             "fr": "Quand ta dame est encore chez elle",
+             "en": "When your queen is still at home"
+            }
+           },
+           {
+            "text": {
+             "fr": "Après le dixième coup",
+             "en": "After move ten"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "On ne peut pas roquer pour sortir d'un échec, à travers une case attaquée, ou si le roi ou cette tour a bougé.",
+           "en": "You may not castle out of check, through an attacked square, or if the king or that rook has moved."
+          },
+          "hint": {
+           "fr": "Pense aux règles de sécurité du roi.",
+           "en": "Think about the king's safety rules."
+          },
+          "skills": [
+           "openings",
+           "castling"
+          ]
+         },
+         {
+          "id": "castle-then",
+          "type": "play_line",
+          "fen": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+          "side": "white",
+          "moves": [
+           "e1g1",
+           "g8f6",
+           "d2d3"
+          ],
+          "prompt": {
+           "fr": "Roque maintenant, puis continue à te développer.",
+           "en": "Castle now, then keep developing."
+          },
+          "hint": {
+           "fr": "Ton roi et ta tour sont prêts à roquer.",
+           "en": "Your king and rook are ready to castle."
+          },
+          "skills": [
+           "openings",
+           "castling"
+          ],
+          "notes": {
+           "0": {
+            "fr": "O-O : roi à l'abri.",
+            "en": "O-O: king safe."
+           },
+           "2": {
+            "fr": "d3 : ouvre la route à ton autre fou.",
+            "en": "d3: opens the way for your other bishop."
+           }
+          },
+          "also_accept": {
+           "2": [
+            "f1e1",
+            "c2c3",
+            "b1c3"
+           ]
+          }
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+          "text": {
+           "fr": "Un roi resté au centre est une cible. Roque avant d'attaquer.",
+           "en": "An uncastled king in the centre is a target. Castle before you attack."
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "queen-out-early",
+       "order": 4,
+       "kind": "concept",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Ne sors pas la dame trop tôt",
+          "en": "Don't bring the queen out too early"
+         },
+         "description": {
+          "fr": "Une dame sortie tôt se fait chasser, mais attention à f7.",
+          "en": "An early queen gets chased, but watch out for f7."
+         },
+         "objectives": [
+          {
+           "fr": "Gagner du temps contre une dame sortie tôt",
+           "en": "Gain time against an early queen"
+          },
+          {
+           "fr": "Se défendre contre l'attaque sur f7",
+           "en": "Defend against the f7 attack"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "rnb1kbnr/ppp1pppp/8/3q4/8/8/PPPP1PPP/RNBQKBNR w KQkq - 0 3",
+          "text": {
+           "fr": "La dame noire est sortie dès le deuxième coup. Chaque fois que tu l'attaques avec une nouvelle pièce, tu te développes et les Noirs perdent un coup.",
+           "en": "Black's queen is out on move two. Each time you attack it with a new piece, you develop and Black loses a move."
+          }
+         },
+         {
+          "id": "tempo",
+          "type": "choice",
+          "fen": "rnb1kbnr/ppp1pppp/8/3q4/8/8/PPPP1PPP/RNBQKBNR w KQkq - 0 3",
+          "question": {
+           "fr": "Quel coup développe en attaquant la dame ?",
+           "en": "Which move develops with an attack on the queen?"
+          },
+          "options": [
+           {
+            "uci": "b1c3"
+           },
+           {
+            "uci": "g1f3"
+           },
+           {
+            "uci": "a2a3"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Nc3 développe et attaque la dame : elle doit encore bouger. Nf3 développe aussi, mais ne l'attaque pas.",
+           "en": "Nc3 develops and hits the queen: she must move again. Nf3 develops too, but does not attack her."
+          },
+          "hint": {
+           "fr": "Quel cavalier peut atteindre la dame ?",
+           "en": "Which knight can reach the queen?"
+          },
+          "skills": [
+           "openings"
+          ]
+         },
+         {
+          "id": "chased",
+          "type": "show_moves",
+          "fen": "rnb1kbnr/ppp1pppp/8/3q4/8/8/PPPP1PPP/RNBQKBNR w KQkq - 0 3",
+          "moves": [
+           {
+            "uci": "b1c3",
+            "caption": {
+             "fr": "Nc3 : la dame doit fuir.",
+             "en": "Nc3: the queen has to run."
+            }
+           }
+          ]
+         },
+         {
+          "id": "punish",
+          "type": "find_move",
+          "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 4 4",
+          "prompt": {
+           "fr": "Les Noirs ont ignoré la menace sur f7. Punis-les.",
+           "en": "Black ignored the threat on f7. Punish it."
+          },
+          "correct": {
+           "fr": "Qxf7# : le fou protège la dame. C'est le coup du berger.",
+           "en": "Qxf7#: the bishop protects the queen. This is the Scholar's mate."
+          },
+          "hint": {
+           "fr": "La dame et le fou visent tous les deux f7.",
+           "en": "Queen and bishop both aim at f7."
+          },
+          "accept": [
+           "h5f7"
+          ],
+          "skills": [
+           "mate",
+           "mateIn1",
+           "attackingF2F7"
+          ]
+         },
+         {
+          "id": "defend-f7",
+          "type": "choice",
+          "fen": "r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 3 3",
+          "question": {
+           "fr": "Tu as les Noirs. Les Blancs menacent mat en f7. Quel coup l'empêche ?",
+           "en": "You are Black. White threatens mate on f7. Which move stops it?"
+          },
+          "options": [
+           {
+            "uci": "g7g6"
+           },
+           {
+            "uci": "g8f6"
+           },
+           {
+            "uci": "a7a6"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "g6 coupe la ligne de la dame vers f7 et l'attaque. Nf6 semble naturel mais permet le mat.",
+           "en": "g6 blocks the queen's line to f7 and attacks her. Nf6 looks natural but allows mate."
+          },
+          "hint": {
+           "fr": "Regarde la ligne de la dame vers f7.",
+           "en": "Look at the line from the queen to f7."
+          },
+          "skills": [
+           "defense",
+           "openings"
+          ]
+         },
+         {
+          "id": "as-black",
+          "type": "play_line",
+          "fen": "rnbqkbnr/pppp1ppp/8/4p2Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 1 2",
+          "side": "black",
+          "moves": [
+           "b8c6",
+           "f1c4",
+           "g7g6",
+           "h5f3",
+           "g8f6"
+          ],
+          "prompt": {
+           "fr": "Tu as les Noirs contre une dame sortie tôt. Défends-toi et développe-toi.",
+           "en": "You are Black against an early queen. Defend and develop."
+          },
+          "hint": {
+           "fr": "Protège e5 d'abord, puis surveille f7.",
+           "en": "Protect e5 first, then watch f7."
+          },
+          "skills": [
+           "defense",
+           "openings"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Nc6 : développe et défend e5.",
+            "en": "Nc6: develops and defends e5."
+           },
+           "2": {
+            "fr": "g6 : la dame doit encore bouger.",
+            "en": "g6: the queen must move again."
+           },
+           "4": {
+            "fr": "Nf6 : f7 est couvert et les Noirs se développent.",
+            "en": "Nf6: f7 is covered and Black develops."
+           }
+          },
+          "also_accept": {
+           "2": [
+            "d8e7"
+           ],
+           "4": [
+            "d8f6"
+           ]
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "italian-game",
+       "order": 5,
+       "kind": "opening",
+       "difficulty": 3,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Ta première ouverture : la partie italienne",
+          "en": "Your first opening: the Italian Game"
+         },
+         "description": {
+          "fr": "1.e4 e5 2.Nf3 Nc6 3.Bc4, joué avec des idées.",
+          "en": "1.e4 e5 2.Nf3 Nc6 3.Bc4, played with ideas."
+         },
+         "objectives": [
+          {
+           "fr": "Jouer les premiers coups de la partie italienne",
+           "en": "Play the first moves of the Italian Game"
+          },
+          {
+           "fr": "Savoir ce que visent les Blancs",
+           "en": "Know what White aims for"
+          }
+         ],
+         "difficulty": 3,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",
+          "text": {
+           "fr": "La partie italienne : un pion au centre, un cavalier qui attaque e5, et un fou qui vise f7. Ensuite les Blancs roquent.",
+           "en": "The Italian Game: a pawn in the centre, a knight attacking e5, and a bishop aiming at f7. Then White castles."
+          },
+          "arrows": [
+           [
+            "c4",
+            "f7"
+           ]
+          ]
+         },
+         {
+          "id": "moves",
+          "type": "show_moves",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "moves": [
+           {
+            "uci": "e2e4",
+            "caption": {
+             "fr": "e4",
+             "en": "e4"
+            }
+           },
+           {
+            "uci": "e7e5",
+            "caption": {
+             "fr": "e5",
+             "en": "e5"
+            }
+           },
+           {
+            "uci": "g1f3",
+            "caption": {
+             "fr": "Nf3 : attaque e5.",
+             "en": "Nf3: attacks e5."
+            }
+           },
+           {
+            "uci": "b8c6",
+            "caption": {
+             "fr": "Nc6 : le défend.",
+             "en": "Nc6: defends it."
+            }
+           },
+           {
+            "uci": "f1c4",
+            "caption": {
+             "fr": "Bc4 : le fou italien.",
+             "en": "Bc4: the Italian bishop."
+            }
+           }
+          ]
+         },
+         {
+          "id": "which-italian",
+          "type": "choice",
+          "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+          "question": {
+           "fr": "Quel coup donne la partie italienne ?",
+           "en": "Which move is the Italian Game?"
+          },
+          "options": [
+           {
+            "uci": "f1c4"
+           },
+           {
+            "uci": "f1b5"
+           },
+           {
+            "uci": "d2d4"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Bc4, c'est la partie italienne. Bb5 est la partie espagnole et d4 l'écossaise : bonnes aussi, mais d'autres ouvertures.",
+           "en": "Bc4 is the Italian Game. Bb5 is the Spanish Game and d4 the Scotch Game: good too, but other openings."
+          },
+          "hint": {
+           "fr": "Le fou italien va en c4.",
+           "en": "Italian bishops go to c4."
+          },
+          "skills": [
+           "openings"
+          ]
+         },
+         {
+          "id": "aim",
+          "type": "choice",
+          "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",
+          "question": {
+           "fr": "Que vise le fou en c4 ?",
+           "en": "What is the bishop on c4 aiming at?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Le pion f7, à côté du roi noir",
+             "en": "The f7 pawn, next to Black's king"
+            }
+           },
+           {
+            "text": {
+             "fr": "La tour en a8",
+             "en": "The rook on a8"
+            }
+           },
+           {
+            "text": {
+             "fr": "Rien de spécial",
+             "en": "Nothing in particular"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Au départ, f7 n'est protégé que par le roi. C'est donc une cible.",
+           "en": "f7 is protected only by the king at the start. That makes it a target."
+          },
+          "hint": {
+           "fr": "Suis la diagonale du fou.",
+           "en": "Follow the bishop's diagonal."
+          },
+          "skills": [
+           "openings"
+          ]
+         },
+         {
+          "id": "play-it",
+          "type": "play_line",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "side": "white",
+          "moves": [
+           "e2e4",
+           "e7e5",
+           "g1f3",
+           "b8c6",
+           "f1c4",
+           "f8c5",
+           "e1g1"
+          ],
+          "prompt": {
+           "fr": "Joue la partie italienne, puis roque.",
+           "en": "Play the Italian Game, and castle."
+          },
+          "hint": {
+           "fr": "Pion, cavalier, fou, roque.",
+           "en": "Pawn, knight, bishop, castle."
+          },
+          "skills": [
+           "openings"
+          ],
+          "notes": {
+           "4": {
+            "fr": "Bc4 : la partie italienne.",
+            "en": "Bc4: the Italian Game."
+           },
+           "6": {
+            "fr": "O-O : ton roi est à l'abri et tu es prêt pour le milieu de partie.",
+            "en": "O-O: your king is safe and you are ready for the middlegame."
+           }
+          },
+          "also_accept": {
+           "6": [
+            "c2c3",
+            "d2d3",
+            "b1c3"
+           ]
+          }
+         },
+         {
+          "id": "plans",
+          "type": "explain",
+          "fen": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+          "text": {
+           "fr": "Plans suivants : roquer, jouer c3 puis plus tard d4 pour prendre tout le centre.",
+           "en": "Next plans: castle, play c3 and later d4 to take the whole centre."
+          }
+         }
+        ]
+       }
+      }
+     ]
     }
    ]
   }
