@@ -96,6 +96,20 @@ XP_LESSON_FIRST = 10
 XP_ACCURACY_BONUS = 5
 XP_ACCURACY_BONUS_MIN = 0.9
 XP_LESSON_REPLAY = 3
+
+# Skill profile: how evidence becomes an estimate (design 5.7 and 5.8)
+SKILL_PUZZLE_WINDOW = 40  # newest puzzle observations an estimate uses
+SKILL_LESSON_WINDOW = 30
+SKILL_MIN_OBSERVATIONS = 10  # fewer: "not enough evidence yet"
+SKILL_RELIABLE_OBSERVATIONS = 25
+SKILL_RELIABLE_DAYS = 3  # reliable needs evidence from at least this many different days
+SKILL_IMPROVING_SPLIT = 15
+SKILL_IMPROVING_POINTS = 100
+SKILL_IMPROVING_RATE = 0.20
+SKILL_LESSON_WEAK = 0.5
+SKILL_LESSON_STRONG = 0.85
+SKILL_REPEATED_MISSES = 3
+SKILL_REPEATED_DAYS = 14
 LOGIN_FAILURE_WINDOW = 15 * 60  # seconds
 
 # Email (password reset). Console in development; any SMTP service in production.
