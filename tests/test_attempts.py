@@ -29,7 +29,7 @@ def test_path_nodes_only_published(path3, lesson_factory):
     lesson_factory("draft-only", order=9)
     nodes = services.path_nodes()
     assert [n.slug for n in nodes] == ["lesson-1", "lesson-2", "lesson-3"]
-    assert [n.position for n in nodes] == [0, 1, 2] and {n.unit_index for n in nodes} == {0}
+    assert [n.position for n in nodes] == [0, 1, 2] and {n.unit_index for n in nodes} == {1}  # the unit's order
 
 
 def test_states_for_guest_and_none(path3, guest):

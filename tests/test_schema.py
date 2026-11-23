@@ -172,3 +172,11 @@ def test_every_mate_must_be_accepted(valid):
     assert len(issues) == 1 and issues[0].level == "fail" and "Rb8#" in issues[0].detail
     valid["steps"][-1]["also_good"] = [{"uci": "b1b8", "note": t}]
     assert not [i for i in check_structure(valid) if i.check == "missing_mate"]
+
+
+def test_malformed_answers_do_not_crash_the_mate_check(valid):
+    t = {"fr": "x", "en": "x"}
+    valid["steps"].append({"id": "odd", "type": "find_move", "fen": "6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1",
+                           "prompt": t, "correct": t, "hint": t, "accept": [{"uci": "a1a8"}],
+                           "also_good": [{"uci": ["b1b8"]}]})
+    assert has_failures(check_structure(valid))

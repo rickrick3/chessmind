@@ -744,34 +744,31 @@
          },
          {
           "id": "promote-take",
-          "type": "find_move",
+          "type": "choice",
           "fen": "3r4/4P1k1/8/8/8/8/8/4K3 w - - 0 1",
-          "prompt": {
-           "fr": "Promeus ton pion et gagne la tour en même temps.",
-           "en": "Promote your pawn and win the rook at the same time."
+          "question": {
+           "fr": "Ton pion peut prendre la tour et se promouvoir. Que doit-il devenir ?",
+           "en": "Your pawn can take the rook and promote. What should it become?"
           },
-          "correct": {
-           "fr": "exd8=Q : le pion prend et devient une dame.",
-           "en": "exd8=Q: the pawn takes and becomes a queen."
+          "options": [
+           {
+            "uci": "e7d8q"
+           },
+           {
+            "uci": "e7d8n"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "exd8=Q : le pion prend et devient une dame, la pièce la plus forte. Un cavalier serait du gâchis ici.",
+           "en": "exd8=Q: the pawn takes and becomes a queen, the strongest piece. A knight would be a waste here."
           },
           "hint": {
-           "fr": "Un pion peut se promouvoir en prenant.",
-           "en": "A pawn can promote by capturing."
+           "fr": "Choisis la pièce la plus forte.",
+           "en": "Pick the strongest piece."
           },
-          "accept": [
-           "e7d8q"
-          ],
           "skills": [
            "promotion"
-          ],
-          "also_good": [
-           {
-            "uci": "e7d8r",
-            "note": {
-             "fr": "Ça marche aussi, mais une dame est en général plus forte.",
-             "en": "That works too, but a queen is usually stronger."
-            }
-           }
           ]
          },
          {
@@ -1198,7 +1195,7 @@
            },
            "2": {
             "fr": "Rxd5 : et tu gagnes un pion.",
-            "en": "Rxd5: and you are a pawn up."
+            "en": "Rxd5: and you have won a pawn."
            }
           }
          }
@@ -2219,8 +2216,8 @@
            "en": "The knight attacks your rook. Save it the best way."
           },
           "correct": {
-           "fr": "bxc3 : prends l'attaquant, et tu as un cavalier de plus.",
-           "en": "bxc3: take the attacker, and you are a knight up."
+           "fr": "bxc3 : prends l'attaquant et gagne un cavalier entier.",
+           "en": "bxc3: take the attacker and win a whole knight."
           },
           "hint": {
            "fr": "Le cavalier est-il protégé ?",
@@ -2354,23 +2351,41 @@
          },
          {
           "id": "only-square",
-          "type": "find_move",
+          "type": "choice",
           "fen": "4k3/8/8/1b6/8/1n6/8/r3K3 w - - 0 1",
-          "prompt": {
-           "fr": "Une seule case est sûre pour ton roi. Trouve-la.",
-           "en": "Only one square is safe for your king. Find it."
+          "question": {
+           "fr": "Une seule case est sûre pour ton roi. Laquelle ?",
+           "en": "Only one square is safe for your king. Which one?"
           },
-          "correct": {
-           "fr": "Kf2 : toutes les autres cases sont attaquées.",
-           "en": "Kf2: every other square is attacked."
+          "options": [
+           {
+            "text": {
+             "fr": "f2",
+             "en": "f2"
+            }
+           },
+           {
+            "text": {
+             "fr": "e2",
+             "en": "e2"
+            }
+           },
+           {
+            "text": {
+             "fr": "d2",
+             "en": "d2"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "f2 : la tour couvre la première rangée, le fou e2 et le cavalier d2.",
+           "en": "f2: the rook covers the first rank, the bishop e2 and the knight d2."
           },
           "hint": {
            "fr": "Vérifie chaque case autour de ton roi.",
            "en": "Check every square around your king."
           },
-          "accept": [
-           "e1f2"
-          ],
           "skills": [
            "defense"
           ]
@@ -2817,7 +2832,7 @@
          {
           "id": "idea",
           "type": "explain",
-          "fen": "8/8/8/4k3/8/8/R7/1R4K1 w - - 0 1",
+          "fen": "8/8/8/4k3/R7/8/8/1R4K1 w - - 0 1",
           "text": {
            "fr": "Les deux tours jouent à tour de rôle : l'une fait échec, l'autre garde la rangée d'en dessous. Le roi monte marche après marche jusqu'au bord.",
            "en": "Two rooks take turns: one checks, the other guards the rank behind. Step by step, the king climbs to the edge."
@@ -2826,13 +2841,13 @@
          {
           "id": "ladder",
           "type": "show_moves",
-          "fen": "8/8/8/4k3/8/8/R7/1R4K1 w - - 0 1",
+          "fen": "8/8/8/4k3/R7/8/8/1R4K1 w - - 0 1",
           "moves": [
            {
-            "uci": "a2a5",
+            "uci": "b1b5",
             "caption": {
-             "fr": "Ra5+ : le roi doit monter.",
-             "en": "Ra5+: the king must go up."
+             "fr": "Rb5+ : la tour a4 garde la rangée du dessous, le roi doit donc monter.",
+             "en": "Rb5+: the rook on a4 guards the rank below, so the king must go up."
             }
            },
            {
@@ -2843,10 +2858,10 @@
             }
            },
            {
-            "uci": "b1b6",
+            "uci": "a4a6",
             "caption": {
-             "fr": "Rb6+ : l'autre tour fait échec une rangée plus haut.",
-             "en": "Rb6+: the other rook checks one rank higher."
+             "fr": "Ra6+ : l'autre tour fait échec une rangée plus haut.",
+             "en": "Ra6+: the other rook checks one rank higher."
             }
            },
            {
@@ -2857,10 +2872,10 @@
             }
            },
            {
-            "uci": "a5a7",
+            "uci": "b5b7",
             "caption": {
-             "fr": "Ra7+ : encore plus haut.",
-             "en": "Ra7+: up again."
+             "fr": "Rb7+ : encore plus haut.",
+             "en": "Rb7+: up again."
             }
            },
            {
@@ -2871,10 +2886,10 @@
             }
            },
            {
-            "uci": "b6b8",
+            "uci": "a6a8",
             "caption": {
-             "fr": "Rb8# : mat de l'escalier.",
-             "en": "Rb8#: ladder mate."
+             "fr": "Ra8# : mat de l'escalier.",
+             "en": "Ra8#: ladder mate."
             }
            }
           ]
@@ -2882,7 +2897,7 @@
          {
           "id": "roles",
           "type": "choice",
-          "fen": "8/8/8/4k3/8/8/R7/1R4K1 w - - 0 1",
+          "fen": "8/8/8/4k3/R7/8/8/1R4K1 w - - 0 1",
           "question": {
            "fr": "Dans l'escalier, que fait la tour qui ne donne pas échec ?",
            "en": "In the ladder, what does the rook that does not give check do?"
@@ -2975,6 +2990,11 @@
             "fr": "Rb8#",
             "en": "Rb8#"
            }
+          },
+          "also_accept": {
+           "0": [
+            "b1b7"
+           ]
           }
          },
          {
@@ -3206,24 +3226,24 @@
           "type": "choice",
           "fen": "k7/8/2K5/8/8/8/8/1Q6 w - - 0 1",
           "question": {
-           "fr": "Un coup fait mat. Deux autres font pat, une nulle. Lequel fait mat ?",
-           "en": "One move mates. Two others give stalemate, a draw. Which one mates?"
+           "fr": "Un coup fait mat et un autre fait pat, une nulle. Lequel fait mat ?",
+           "en": "One move mates and one gives stalemate, a draw. Which one mates?"
           },
           "options": [
            {
             "uci": "b1b7"
            },
            {
-            "uci": "c6b6"
+            "uci": "b1b6"
            },
            {
-            "uci": "b1b6"
+            "uci": "c6c7"
            }
           ],
           "answer": 0,
           "explanation": {
-           "fr": "Qb7#. Après Kb6 ou Qb6, les Noirs n'ont aucun coup et ne sont pas en échec : pat.",
-           "en": "Qb7#. After Kb6 or Qb6 Black has no move and is not in check: stalemate."
+           "fr": "Qb7#. Après Qb6, les Noirs n'ont aucun coup et ne sont pas en échec : pat. Kc7 ne risque rien, mais ne fait pas mat.",
+           "en": "Qb7#. After Qb6 Black has no move and is not in check: stalemate. Kc7 is safe, but it does not mate."
           },
           "hint": {
            "fr": "Vérifie que les Noirs sont en échec.",
@@ -3400,17 +3420,17 @@
           "fen": "3k4/8/2K5/8/8/8/8/7R w - - 0 1",
           "side": "white",
           "moves": [
-           "h1h7",
+           "h1e1",
            "d8c8",
-           "h7h8"
+           "e1e8"
           ],
           "prompt": {
-           "fr": "Enferme le roi sur la dernière rangée, puis mate quand il fait face à ton roi.",
-           "en": "Lock the king on the back rank, then mate when it faces your king."
+           "fr": "Prends la colonne e pour que le roi doive faire face au tien, puis mate.",
+           "en": "Take away the e-file so the king must face yours, then mate."
           },
           "hint": {
-           "fr": "Mets la tour sur la septième rangée.",
-           "en": "Put the rook on the seventh rank."
+           "fr": "Mets la tour sur la colonne e.",
+           "en": "Put the rook on the e-file."
           },
           "skills": [
            "mate",
@@ -3418,12 +3438,12 @@
           ],
           "notes": {
            "0": {
-            "fr": "Rh7 : le roi est coincé sur la dernière rangée.",
-            "en": "Rh7: the king is stuck on the back rank."
+            "fr": "Re1 : la seule case qui reste est c8, face à ton roi.",
+            "en": "Re1: the only square left is c8, facing your king."
            },
            "2": {
-            "fr": "Rh8#",
-            "en": "Rh8#"
+            "fr": "Re8#",
+            "en": "Re8#"
            }
           }
          },
@@ -3452,12 +3472,12 @@
           "en": "Mate in two"
          },
          "description": {
-          "fr": "Un premier coup forcé, puis le mat.",
+          "fr": "Un premier coup forçant, puis le mat.",
           "en": "A forcing first move, then mate."
          },
          "objectives": [
           {
-           "fr": "Chercher d'abord les coups forcés",
+           "fr": "Chercher d'abord les coups forçants",
            "en": "Look for forcing moves first"
           },
           {
@@ -3475,7 +3495,7 @@
           "type": "explain",
           "fen": "r6k/6pp/7N/8/8/1Q6/8/6K1 w - - 0 1",
           "text": {
-           "fr": "Pour un mat en deux, essaie d'abord les coups les plus forcés : les échecs, puis les prises, même en sacrifiant.",
+           "fr": "Pour un mat en deux, essaie d'abord les coups les plus forçants : les échecs, puis les prises, même en sacrifiant.",
            "en": "For a mate in two, try the most forcing moves first: checks, then captures, even if you give up material."
           }
          },
@@ -3509,8 +3529,8 @@
           "type": "choice",
           "fen": "r6k/6pp/7N/8/8/1Q6/8/6K1 w - - 0 1",
           "question": {
-           "fr": "Quel premier coup force le mat ?",
-           "en": "Which first move forces mate?"
+           "fr": "Quel premier coup fait mat en deux ?",
+           "en": "Which first move mates in two?"
           },
           "options": [
            {
@@ -3522,8 +3542,8 @@
           ],
           "answer": 0,
           "explanation": {
-           "fr": "Qg8+ : le sacrifice de dame force la tour à prendre, puis le cavalier mate.",
-           "en": "Qg8+: the queen sacrifice forces the rook to take, then the knight mates."
+           "fr": "Qg8+ : le sacrifice de dame force la tour à prendre, puis le cavalier mate. Nf7+ gagne aussi, mais bien plus lentement.",
+           "en": "Qg8+: the queen sacrifice forces the rook to take, then the knight mates. Nf7+ also wins, but much more slowly."
           },
           "hint": {
            "fr": "Le roi ne peut pas prendre en g8 : ton cavalier protège cette case.",
@@ -3759,8 +3779,8 @@
           ],
           "answer": 0,
           "explanation": {
-           "fr": "Un pion central attaque deux cases du centre et laisse moins de bonnes cases à l'adversaire.",
-           "en": "A central pawn attacks two central squares and leaves fewer good squares to the other side."
+           "fr": "Un pion central attaque des cases dans et autour du centre, et laisse moins de bonnes cases à l'adversaire.",
+           "en": "A central pawn attacks squares in and around the centre, leaving fewer good squares to the other side."
           },
           "hint": {
            "fr": "Pense aux cases que le pion attaque.",
@@ -3874,8 +3894,8 @@
           "type": "choice",
           "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
           "question": {
-           "fr": "Quel coup développe une pièce et attaque un pion ?",
-           "en": "Which move develops a piece and attacks a pawn?"
+           "fr": "Quel coup développe un cavalier ou un fou et attaque un pion ?",
+           "en": "Which move develops a knight or bishop and attacks a pawn?"
           },
           "options": [
            {
@@ -4711,8 +4731,8 @@
            "en": "The square runs from a4 to e8 and the king is on e5, inside it. It catches the pawn in time."
           },
           "hint": {
-           "fr": "Trace le carré : quatre cases de côté.",
-           "en": "Draw the square: four squares wide."
+           "fr": "Le carré va du pion en a4 jusqu'à e8.",
+           "en": "The square goes from the pawn on a4 up to e8."
           },
           "skills": [
            "endgames",
@@ -4972,8 +4992,8 @@
           "type": "choice",
           "fen": "8/p7/8/8/3K4/8/4P3/7k w - - 0 1",
           "question": {
-           "fr": "Ton roi peut gagner le pion a7. Quel chemin est sûr ?",
-           "en": "Your king can win the pawn on a7. Which way is safe?"
+           "fr": "Ton roi peut gagner le pion a7. Quel coup se dirige vers lui ?",
+           "en": "Your king can win the pawn on a7. Which move heads for it?"
           },
           "options": [
            {
@@ -4985,8 +5005,8 @@
           ],
           "answer": 0,
           "explanation": {
-           "fr": "Kc5, puis b5 et a6 : le roi contourne b6, que le pion garde.",
-           "en": "Kc5, then b5 and a6: the king goes around b6, which the pawn guards."
+           "fr": "Kc5 : ensuite le roi va en b5 puis a6, en contournant b6 que le pion garde.",
+           "en": "Kc5: next the king goes to b5 and a6, around b6, which the pawn guards."
           },
           "hint": {
            "fr": "Va vers le pion.",

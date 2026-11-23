@@ -2,15 +2,16 @@
 from dataclasses import dataclass
 
 REVISIT_BELOW = 0.7
-OPENED_UNITS = {"rules": {0, 1}, "club": {0, 1, 2}}  # start level -> unit indexes open from the start
-START_UNIT = {"rules": 1, "club": 2}  # start level -> the unit its next lesson ("current") is taken from
+# Unit orders of the Fundamentals path: 0 pieces, 1 basics, 2 material (curriculum/seed/*.json).
+OPENED_UNITS = {"rules": {0, 1}, "club": {0, 1, 2}}  # start level -> unit orders open from the start
+START_UNIT = {"rules": 1, "club": 2}  # start level -> the unit order its next lesson ("current") is taken from
 
 
 @dataclass(frozen=True)
 class LessonNode:
     slug: str
     track: str  # "path", "openings", "endgames", "tactics"
-    unit_index: int  # rank of the lesson's unit in its course, from 0
+    unit_index: int  # the order of the lesson's unit in its course (Unit.order)
     position: int  # rank of the lesson in its course, from 0
     prerequisites: frozenset[str]
 

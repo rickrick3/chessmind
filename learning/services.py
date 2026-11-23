@@ -36,16 +36,15 @@ def published_lessons():
 
 
 def path_nodes() -> list[LessonNode]:
-    """Every published lesson as an unlock node, numbered within its course."""
+    """Every published lesson as an unlock node, numbered within its course. A node's unit index is its unit's
+    order in the course (Unit.order), so start levels keep naming the same units however much is published."""
     lessons = list(published_lessons().prefetch_related("prerequisites"))
     published = {lesson.slug for lesson in lessons}
-    nodes, unit_rank, position = [], {}, {}
+    nodes, position = [], {}
     for lesson in lessons:
         course = lesson.unit.course_id
-        ranks = unit_rank.setdefault(course, {})
-        ranks.setdefault(lesson.unit_id, len(ranks))
         position[course] = position.get(course, -1) + 1
-        nodes.append(LessonNode(lesson.slug, lesson.unit.course.track, ranks[lesson.unit_id], position[course],
+        nodes.append(LessonNode(lesson.slug, lesson.unit.course.track, lesson.unit.order, position[course],
                                 frozenset(p.slug for p in lesson.prerequisites.all() if p.slug in published)))
     return nodes
 

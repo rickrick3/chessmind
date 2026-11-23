@@ -295,7 +295,8 @@ def _mates(board: chess.Board) -> list[chess.Move]:
 
 def _check_every_mate(c, s, board) -> None:
     """A find_move whose answer is a checkmate must accept every checkmate: a learner who mates is never wrong."""
-    taken = set(s.get("accept") or []) | {g.get("uci") for g in _dicts(s.get("also_good"))}
+    answers = list(s.get("accept") or []) + [g.get("uci") for g in _dicts(s.get("also_good"))]
+    taken = {a for a in answers if isinstance(a, str)}  # malformed entries are reported by the other checks
     mates = _mates(board)
     if not any(m.uci() in taken for m in mates):
         return
