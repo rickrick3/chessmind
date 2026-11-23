@@ -13,6 +13,7 @@ from django.conf import settings
 from puzzles.domain.glicko2 import expected
 
 PERFORMANCE_SPREAD = 400  # the performance stays within this many points of the puzzles it was measured on
+COMPARISON_MARGINS = 2  # stronger/weaker only beyond two margins
 
 
 @dataclass(frozen=True)
@@ -23,8 +24,8 @@ class SkillRules:
     reliable_observations: int = 25
     reliable_days: int = 3
     improving_split: int = 15
-    improving_points: int = 100
-    improving_rate: float = 0.20
+    improving_points: int = 250
+    improving_rate: float = 0.35
     lesson_weak: float = 0.5
     lesson_strong: float = 0.85
     repeated_misses: int = 3
@@ -90,6 +91,13 @@ def confidence(n: int, days: int, rules: SkillRules) -> str:
     return "early"
 
 
+def _reference(window: list[Observation], overall: float | None) -> float | None:
+    """What the area is compared with: the learner's own rating when those puzzles were played (so an improving
+    learner's older evidence doesn't read as a weakness), or the overall rating when that wasn't recorded."""
+    ratings = [o.learner_rating for o in window if o.learner_rating is not None]
+    return sum(ratings) / len(ratings) if ratings else overall
+
+
 def _days(observations: list[Observation]) -> int:
     return len({o.local_date for o in observations})
 
@@ -101,9 +109,10 @@ def estimate(puzzle_obs: list[Observation], lesson_obs: list[Observation], overa
         window = puzzle_obs[-rules.puzzle_window:]
         n, value = len(window), performance([(o.difficulty, o.success) for o in window])
         m = margin(n)
-        comparison = ""
-        if overall is not None:
-            comparison = "weaker" if value < overall - m else "stronger" if value > overall + m else "same"
+        comparison, reference = "", _reference(window, overall)
+        if reference is not None:
+            gap = COMPARISON_MARGINS * m  # about two standard errors: smaller gaps are noise, not a label
+            comparison = "weaker" if value < reference - gap else "stronger" if value > reference + gap else "same"
         days = _days(window)
         return Estimate("puzzle", value, round50(value - m), round50(value + m), n, days,
                         confidence(n, days, rules), comparison)

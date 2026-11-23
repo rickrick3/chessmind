@@ -1,7 +1,7 @@
 """Skill estimates and confidence: pure, no database."""
 import pytest
 
-from skills.domain.estimate import SkillRules, confidence, estimate, margin, performance, round50
+from skills.domain.estimate import Observation, SkillRules, confidence, estimate, margin, performance, round50
 from tests.skill_obs import obs
 
 R = SkillRules()
@@ -9,6 +9,7 @@ R = SkillRules()
 
 def test_rules_from_settings():
     assert SkillRules.from_settings() == R and (R.puzzle_window, R.min_observations, R.reliable_days) == (40, 10, 3)
+    assert (R.improving_points, R.improving_rate) == (250, 0.35)
 
 
 def test_performance():
@@ -48,8 +49,26 @@ def test_window_uses_newest_40():
 
 
 def test_range_and_comparison():
-    e = estimate(obs(20, solved=range(10)), [], 1800, R)
+    e = estimate(obs(20, solved=range(10), learner_rating=1800), [], None, R)
     assert e.value == pytest.approx(1500, abs=1) and (e.low, e.high, e.comparison) == (1400, 1600, "weaker")
-    assert estimate(obs(20, solved=range(10)), [], 1560, R).comparison == "same"
-    assert estimate(obs(20, solved=range(10)), [], 1300, R).comparison == "stronger"
-    assert estimate(obs(20, solved=range(10)), [], None, R).comparison == ""
+    assert estimate(obs(20, solved=range(10), learner_rating=1560), [], None, R).comparison == "same"
+    assert estimate(obs(20, solved=range(10), learner_rating=1300), [], None, R).comparison == "stronger"
+
+
+def _without_rating(observations):
+    return [Observation(o.success, o.local_date, o.difficulty, None) for o in observations]
+
+
+def test_comparison_uses_the_rating_at_the_time():
+    # Evidence from when the learner was rated 1500 is not "weaker" just because they are 1900 today.
+    assert estimate(obs(20, solved=range(10), learner_rating=1500), [], 1900, R).comparison == "same"
+
+
+def test_comparison_falls_back_to_the_overall_rating():
+    assert estimate(_without_rating(obs(20, solved=range(10))), [], 1800, R).comparison == "weaker"
+    assert estimate(_without_rating(obs(20, solved=range(10))), [], None, R).comparison == ""
+
+
+def test_noise_is_not_a_label():
+    # 7 of 20 at 1500 is about 108 points below: more than one margin (80), less than two.
+    assert estimate(obs(20, solved=range(7)), [], None, R).comparison == "same"

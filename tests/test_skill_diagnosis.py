@@ -51,3 +51,9 @@ def test_repeated_mistake_counts_only_expected_solves():
     assert repeated_mistake(misses(1400, (0, 3, 10)), today, R) is True
     assert repeated_mistake(misses(1700, (0, 3, 10)), today, R) is False
     assert repeated_mistake(misses(1400, (0, 10, 20)), today, R) is False
+
+
+def test_small_swings_are_not_improving():
+    # 6 of 15, then 9 of 15: about 140 points better, within the noise of 15 puzzles each.
+    o = obs(30, solved={0, 2, 4, 6, 8, 10} | {15, 16, 17, 19, 21, 23, 25, 27, 29}, days=4)
+    assert status(estimate(o, [], 1500, R), o, [], R) == ""
