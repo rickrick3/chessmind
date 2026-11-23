@@ -83,3 +83,25 @@ def test_idle_guest_cleanup_removes_puzzle_data(guest, puzzle_factory):
     delete_idle_guests()
     assert not PuzzleAttempt.objects.exists() and not PuzzleRating.objects.exists() and not Evidence.objects.exists()
     assert not SkillEstimate.objects.exists()
+
+
+def test_merge_keeps_the_start_of_an_existing_rating(guest, account, puzzle_factory):  # Review Focus 5
+    target = account.learner
+    for t in (T0, T1):
+        finish_puzzle(target, serve(target, puzzle_factory(rating=1000), t).pk, SOLVED, t)
+    before = PuzzleRating.objects.get(learner=target).rating
+    guest.start_level = "club"  # the guest chose a level; the account never did
+    guest.save()
+    merge_learners.send(sender=Learner, source=guest, target=target)
+    assert PuzzleRating.objects.get(learner=target).rating == pytest.approx(before, abs=0.01)
+
+
+def test_merge_keeps_the_guests_start_when_only_the_guest_has_a_rating(guest, account, puzzle_factory):
+    guest.start_level = "new"
+    guest.save()
+    finish_puzzle(guest, serve(guest, puzzle_factory(rating=700), T0).pk, SOLVED, T0)
+    before = PuzzleRating.objects.get(learner=guest).rating
+    account.learner.start_level = "club"
+    account.learner.save()
+    merge_learners.send(sender=Learner, source=guest, target=account.learner)
+    assert PuzzleRating.objects.get(learner=account.learner).rating == pytest.approx(before, abs=0.01)

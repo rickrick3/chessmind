@@ -131,7 +131,8 @@ def finish_puzzle(learner: Learner, attempt_id, body: dict, now: datetime) -> di
         if attempt.rated:
             start = start_rating(learner)
             cache, _ = PuzzleRating.objects.select_for_update().get_or_create(
-                learner=learner, defaults={"rating": start.rating, "rd": start.rd, "volatility": start.volatility})
+                learner=learner, defaults={"rating": start.rating, "rd": start.rd, "volatility": start.volatility,
+                                           "start": start.rating})
             before = Rating(cache.rating, cache.rd, cache.volatility)
             after = updated_rating(before, puzzle, outcome.solved, idle_periods(cache.last_rated_on, today))
             cache.rating, cache.rd, cache.volatility = after.rating, after.rd, after.volatility
@@ -158,21 +159,27 @@ def finish_puzzle(learner: Learner, attempt_id, body: dict, now: datetime) -> di
     return result
 
 
-def rebuild_rating(learner: Learner) -> PuzzleRating | None:
-    """Replay the learner's rated, finished attempts in order from their start rating; the cache follows."""
+def rebuild_rating(learner: Learner, start: float | None = None) -> PuzzleRating | None:
+    """Replay the learner's rated, finished attempts in order from their start rating; the cache follows.
+    The start is `start`, else the one the cache recorded, else the learner's start level."""
     attempts = list(PuzzleAttempt.objects.filter(learner=learner, rated=True, finished_at__isnull=False)
                     .select_related("puzzle").order_by("finished_at", "served_at"))
     if not attempts:
         PuzzleRating.objects.filter(learner=learner).delete()
         return None
-    rating, last, solved = start_rating(learner), None, 0
+    if start is None:
+        start = PuzzleRating.objects.filter(learner=learner).values_list("start", flat=True).first()
+    if start is None:
+        start = start_rating(learner).rating
+    rating = Rating(start, settings.PUZZLE_START_RD, settings.PUZZLE_START_VOLATILITY)
+    last, solved = None, 0
     for a in attempts:
         day = learner.local_date(a.finished_at)
         rating = updated_rating(rating, a.puzzle, bool(a.solved), idle_periods(last, day))
         last, solved = day, solved + int(bool(a.solved))
     cache, _ = PuzzleRating.objects.update_or_create(learner=learner, defaults={
-        "rating": rating.rating, "rd": rating.rd, "volatility": rating.volatility, "rated_count": len(attempts),
-        "solved_count": solved, "last_rated_on": last})
+        "rating": rating.rating, "rd": rating.rd, "volatility": rating.volatility, "start": start,
+        "rated_count": len(attempts), "solved_count": solved, "last_rated_on": last})
     return cache
 
 
@@ -191,5 +198,9 @@ def on_merge(sender, source: Learner, target: Learner, **kwargs) -> None:
     reported = PuzzleReport.objects.filter(learner=target).values_list("puzzle_id", flat=True)
     PuzzleReport.objects.filter(learner=source, puzzle_id__in=list(reported)).delete()
     PuzzleReport.objects.filter(learner=source).update(learner=target)
+    # An existing rating keeps its start: the account's if it had one, else the guest's. A start level the
+    # account only now adopts from the guest must not rebase a rating that already exists.
+    starts = dict(PuzzleRating.objects.filter(learner__in=(source, target)).values_list("learner_id", "start"))
+    start = starts.get(target.pk) if target.pk in starts else starts.get(source.pk)
     PuzzleRating.objects.filter(learner=source).delete()
-    rebuild_rating(target)
+    rebuild_rating(target, start)

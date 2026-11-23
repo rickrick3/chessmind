@@ -73,6 +73,7 @@ class PuzzleRating(models.Model):
     rating = models.FloatField()
     rd = models.FloatField()
     volatility = models.FloatField()
+    start = models.FloatField(null=True, blank=True)  # the rating it started from, kept through guest merges
     rated_count = models.IntegerField(default=0)
     solved_count = models.IntegerField(default=0)
     last_rated_on = models.DateField(null=True, blank=True)  # the learner's local day
