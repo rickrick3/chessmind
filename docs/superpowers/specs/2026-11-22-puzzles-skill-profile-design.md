@@ -387,3 +387,18 @@ Solve a few puzzles or finish a lesson to see your skills."
 - The uniqueness constraints around attempts (merged duplicates and unrated replays need a partial unique index or
   similar), and the order of the merge receivers relative to the XP cache rebuild.
 - An unrated replay of a puzzle (from the Skills detail) writes nothing.
+
+## 9. Changes after the final review (2026-11-23)
+
+- **§5.7 comparison.** An area or theme is compared with the learner's own puzzle rating *at the time* of the
+  observations in its window (the average of the ratings recorded with them), not with today's rating; otherwise
+  every improving learner's older evidence reads as a weakness. Falls back to the overall rating when none was recorded.
+- **§5.7–5.8 thresholds.** "Stronger" / "weaker" need a gap of two margins (about two standard errors); the shown
+  range stays ± one margin. "Improving" needs 250 points between the two 15-puzzle halves (lesson basis: +35 points
+  of success rate). The old values let ordinary noise produce labels.
+- **§5.1 review.** A puzzle staff turn off (admin action, or from a report) is flagged `disabled_by_staff`; a re-import
+  never turns it back on. Staff can turn it back on in the admin.
+- **§5.9 merge.** The puzzle rating cache records the rating it started from; a merge rebuilds from the account's
+  start (or the guest's, when only the guest had a rating), never from a start level the account adopts in the merge.
+- **§5.2 play.** An outcome is kept on the device before it is first sent and must be delivered before another
+  puzzle is requested; when a mode has no puzzle left, the page returns to the start panel with the message.
