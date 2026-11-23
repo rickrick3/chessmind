@@ -1,0 +1,66 @@
+/* The puzzle page: board full width on phones, beside the controls on wide screens. Touch targets ≥ 44 px. */
+.pz-head { margin-bottom: 16px; }
+.pz-rating { color: var(--cm-muted); font-weight: 700; margin: 0; }
+
+.pz-start .pz-go { width: 100%; max-width: 360px; min-height: 52px; font-size: 18px; }
+.pz-difficulty { display: inline-flex; margin-top: 16px; border: 2px solid var(--cm-border); border-radius: 12px; overflow: hidden; }
+.pz-difficulty button {
+  min-height: 44px; min-width: 88px; padding: 0 12px; border: 0; background: #fff; font-weight: 800; color: var(--cm-ink);
+}
+.pz-difficulty button + button { border-left: 2px solid var(--cm-border); }
+.pz-difficulty button.is-active { background: var(--cm-green-tint); color: var(--cm-green-ink); }
+
+.pz-group { margin-top: 12px; }
+.pz-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.pz-chip {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 2px solid var(--cm-border);
+  border-radius: 999px; font-weight: 800; color: var(--cm-ink) !important; text-decoration: none; background: #fff;
+}
+.pz-chip.is-active { border-color: var(--cm-purple); background: var(--cm-purple-tint); color: var(--cm-purple-dark) !important; }
+.pz-chip.is-static { min-height: 32px; font-size: 14px; }
+
+.pz-recent { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 8px 0 0; }
+.pz-recent li {
+  width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 900;
+}
+.pz-recent li[data-result="solved"] { background: var(--cm-green-tint); color: var(--cm-green-ink); }
+.pz-recent li[data-result="missed"] { background: var(--cm-red-tint); color: var(--cm-red); }
+
+.pz-play { display: flex; flex-direction: column; gap: 16px; }
+.pz-board-wrap { width: 100%; max-width: 560px; }
+.pz-board { width: 100%; }
+.pz-side { flex: 1; min-width: 0; }
+.pz-prompt { font-weight: 900; font-size: 18px; margin: 0 0 8px; }
+.pz-chips-moves { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.pz-chips-moves:empty { display: none; }
+.pz-move { border: 2px solid var(--cm-border); border-radius: 12px; padding: 6px 12px; font-weight: 800; }
+.pz-move.is-new { border-color: var(--cm-green); background: var(--cm-green-tint); color: var(--cm-green-ink); }
+.pz-coach-row { margin: 8px 0 12px; }
+.pz-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; margin-top: 12px; }
+.pz-hint-wrap { display: flex; flex-direction: column; gap: 4px; }
+.pz-note { font-size: 13px; color: var(--cm-muted); }
+.pz-actions .cm-btn { min-height: 44px; }
+
+.pz-result { margin-top: 12px; }
+.pz-result__title { font-size: 26px; font-weight: 900; margin: 0 0 8px; }
+.pz-result__title.is-ok { color: var(--cm-green-ink); }
+.pz-result__title.is-bad { color: var(--cm-red); }
+.pz-result__rating, .pz-result__meta, .pz-result__note { margin: 0 0 8px; }
+.pz-result__change { font-size: 20px; }
+.pz-result__xp { font-weight: 900; color: var(--cm-orange-ink); margin-bottom: 8px; }
+.pz-result__game { display: inline-block; margin-top: 8px; }
+.pz-result__actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 16px; }
+.pz-next { min-height: 52px; min-width: 200px; }
+.pz-report__choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.pz-report .cm-btn { min-height: 44px; }
+.pz-error { color: var(--cm-red); font-weight: 800; margin-top: 12px; }
+
+.lp-shake { animation: pz-shake 0.35s ease; }
+@keyframes pz-shake { 25% { transform: translateX(-6px); } 50% { transform: translateX(6px); } 75% { transform: translateX(-3px); } }
+@media (prefers-reduced-motion: reduce) { .lp-shake { animation: none; } }
+
+@media (min-width: 992px) {
+  .pz-play { flex-direction: row; align-items: flex-start; }
+  .pz-board-wrap { flex: 0 0 520px; }
+}

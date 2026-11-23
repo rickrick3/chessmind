@@ -1,0 +1,58 @@
+{% extends "base.html" %}{% load i18n static %}
+{% block title %}{% trans "Puzzles" %} · ChessMind{% endblock %}
+{% block head %}{% include "puzzles/_board_head.html" %}{% endblock %}
+{% block content %}
+<div class="pz" id="puzzles">
+  <header class="pz-head">
+    <h1 class="h3 mb-1">{% trans "Puzzles" %}{% if theme %} · {{ theme_label }}{% endif %}</h1>
+    <p class="pz-rating">{% include "puzzles/_rating_line.html" %}</p>
+  </header>
+
+  <section class="pz-start">
+    <button type="button" class="cm-btn cm-btn--primary pz-go">{% trans "Start puzzles" %}</button>
+    <div class="pz-difficulty" role="group" aria-label="{% trans 'Difficulty' %}">
+      <button type="button" data-difficulty="easier">{% trans "Easier" %}</button>
+      <button type="button" data-difficulty="normal" class="is-active">{% trans "Normal" %}</button>
+      <button type="button" data-difficulty="harder">{% trans "Harder" %}</button>
+    </div>
+
+    <h2 class="h5 mt-4">{% trans "Train a theme" %}</h2>
+    {% for group in picker %}
+    <div class="pz-group">
+      <div class="cm-label">{{ group.label }}</div>
+      <div class="pz-chips">{% for t in group.themes %}<a class="pz-chip{% if t.key == theme %} is-active{% endif %}" href="?theme={{ t.key }}">{{ t.label }}</a>{% endfor %}</div>
+    </div>
+    {% endfor %}
+    {% if theme %}<p class="mt-2"><a href="/train/puzzles/">{% trans "All puzzles" %}</a></p>{% endif %}
+
+    {% if recent %}
+    <h2 class="h5 mt-4">{% trans "Recent" %}</h2>
+    <ol class="pz-recent">{% for a in recent %}<li data-result="{% if a.solved %}solved{% else %}missed{% endif %}"><span aria-hidden="true">{% if a.solved %}&#10003;{% else %}&#10007;{% endif %}</span><span class="visually-hidden">{% if a.solved %}{% trans "Solved!" %}{% else %}{% trans "Missed" %}{% endif %}</span></li>{% endfor %}</ol>
+    {% endif %}
+  </section>
+
+  <section class="pz-play" hidden>
+    <div class="pz-board-wrap"><div id="board" class="pz-board"></div></div>
+    <div class="pz-side">
+      <p class="pz-prompt"></p>
+      <div class="cm-coach pz-coach-row" hidden>
+        <div class="cm-coach__avatar" aria-hidden="true">&#9822;</div>
+        <div class="cm-bubble pz-coach" aria-live="polite"></div>
+      </div>
+      <div class="pz-actions">
+        <div class="pz-hint-wrap">
+          <button type="button" class="cm-btn cm-btn--secondary pz-hint" aria-describedby="pz-hint-note">&#128161; {% trans "Hint" %}</button>
+          <span id="pz-hint-note" class="pz-note">{% trans "counts the puzzle as missed" %}</span>
+        </div>
+        <button type="button" class="cm-btn cm-btn--secondary pz-solution">{% trans "Show solution" %}</button>
+      </div>
+      <section class="pz-result" hidden aria-live="polite"></section>
+    </div>
+  </section>
+
+  <p class="pz-error" role="alert" hidden></p>
+  <p class="pz-credit small text-secondary mt-4">{% trans "Puzzles from the Lichess puzzle database (CC0)" %}</p>
+</div>
+{{ config|json_script:"puzzle-config" }}
+{% endblock %}
+{% block scripts %}<script type="module" src="{% static 'js/puzzles/main.js' %}"></script>{% endblock %}

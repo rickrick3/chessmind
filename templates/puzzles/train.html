@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "Train" %} · ChessMind{% endblock %}
+{% block content %}
+<h1 class="h3 mb-4">{% trans "Train" %}</h1>
+<a class="cm-row" href="/train/puzzles/">
+  <div class="cm-icon-tile cm-icon-tile--purple" aria-hidden="true">&#9822;</div>
+  <div class="cm-row__body">
+    <div class="cm-row__title">{% trans "Puzzles" %}</div>
+    <div class="cm-row__sub">{% include "puzzles/_rating_line.html" %}</div>
+  </div>
+</a>
+{% endblock %}

@@ -816,3 +816,116 @@ msgstr "Ces coups ne correspondent pas au problème."
 
 msgid "Pick a reason; the note can be up to 500 characters."
 msgstr "Choisissez une raison ; la note peut faire jusqu'à 500 caractères."
+
+msgid "Train"
+msgstr "S'entraîner"
+
+msgid "Puzzles"
+msgstr "Problèmes"
+
+msgid "Your rating about %(low)s–%(high)s"
+msgstr "Votre classement environ %(low)s–%(high)s"
+
+msgid "still settling"
+msgstr "encore en calcul"
+
+msgid "Not rated yet"
+msgstr "Pas encore classé"
+
+msgid "Start puzzles"
+msgstr "Commencer les problèmes"
+
+msgid "Difficulty"
+msgstr "Difficulté"
+
+msgid "Easier"
+msgstr "Plus facile"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Harder"
+msgstr "Plus difficile"
+
+msgid "Train a theme"
+msgstr "S'entraîner sur un thème"
+
+msgid "All puzzles"
+msgstr "Tous les problèmes"
+
+msgid "Recent"
+msgstr "Récents"
+
+msgid "Solved!"
+msgstr "Résolu !"
+
+msgid "Missed"
+msgstr "Manqué"
+
+msgid "counts the puzzle as missed"
+msgstr "compte le problème comme manqué"
+
+msgid "Show solution"
+msgstr "Voir la solution"
+
+msgid "Puzzles from the Lichess puzzle database (CC0)"
+msgstr "Problèmes issus de la base de problèmes Lichess (CC0)"
+
+msgid "Replay"
+msgstr "Rejouer"
+
+msgid "Back to puzzles"
+msgstr "Retour aux problèmes"
+
+msgid "Mates"
+msgstr "Mats"
+
+msgid "White to play — find the best move."
+msgstr "Les blancs jouent — trouvez le meilleur coup."
+
+msgid "Black to play — find the best move."
+msgstr "Les noirs jouent — trouvez le meilleur coup."
+
+msgid "Not this time — this puzzle counts as missed. Keep going to learn the idea."
+msgstr "Pas cette fois — ce problème compte comme manqué. Continuez pour comprendre l'idée."
+
+msgid "That mates too!"
+msgstr "Ça fait mat aussi !"
+
+msgid "Next puzzle"
+msgstr "Problème suivant"
+
+msgid "Report a problem"
+msgstr "Signaler un problème"
+
+msgid "The solution is wrong"
+msgstr "La solution est fausse"
+
+msgid "Something else"
+msgstr "Autre chose"
+
+msgid "Thanks, we'll check this puzzle."
+msgstr "Merci, nous allons vérifier ce problème."
+
+msgid "See the game on Lichess"
+msgstr "Voir la partie sur Lichess"
+
+msgid "Puzzle rating"
+msgstr "Classement du problème"
+
+msgid "Your rating"
+msgstr "Votre classement"
+
+msgid "about {low}–{high}"
+msgstr "environ {low}–{high}"
+
+msgid "The puzzle could not load. Try again in a moment."
+msgstr "Le problème n'a pas pu se charger. Réessayez dans un instant."
+
+msgid "Line complete. This replay doesn't change your rating."
+msgstr "Ligne terminée. Cette révision ne change pas votre classement."
+
+msgid "%(n)s puzzle"
+msgid_plural "%(n)s puzzles"
+msgstr[0] "%(n)s problème"
+msgstr[1] "%(n)s problèmes"

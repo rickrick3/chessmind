@@ -1,0 +1,31 @@
+{% extends "base.html" %}{% load i18n static %}
+{% block title %}{% trans "Puzzles" %} · ChessMind{% endblock %}
+{% block head %}{% include "puzzles/_board_head.html" %}{% endblock %}
+{% block content %}
+<div class="pz" id="puzzles">
+  <header class="pz-head">
+    <h1 class="h3 mb-1">{% trans "Replay" %} · {{ puzzle.rating }}</h1>
+    <p class="pz-rating">{{ themes|join:" · " }}</p>
+  </header>
+  <section class="pz-play">
+    <div class="pz-board-wrap"><div id="board" class="pz-board"></div></div>
+    <div class="pz-side">
+      <p class="pz-prompt"></p>
+      <div class="cm-coach pz-coach-row" hidden>
+        <div class="cm-coach__avatar" aria-hidden="true">&#9822;</div>
+        <div class="cm-bubble pz-coach" aria-live="polite"></div>
+      </div>
+      <div class="pz-actions">
+        <button type="button" class="cm-btn cm-btn--secondary pz-hint">&#128161; {% trans "Hint" %}</button>
+        <button type="button" class="cm-btn cm-btn--secondary pz-solution">{% trans "Show solution" %}</button>
+      </div>
+      <section class="pz-result" hidden aria-live="polite"></section>
+      <p class="mt-3"><a class="cm-btn cm-btn--secondary" href="/train/puzzles/">{% trans "Back to puzzles" %}</a></p>
+    </div>
+  </section>
+  <p class="pz-error" role="alert" hidden></p>
+  <p class="pz-credit small text-secondary mt-4">{% trans "Puzzles from the Lichess puzzle database (CC0)" %}</p>
+</div>
+{{ config|json_script:"puzzle-config" }}
+{% endblock %}
+{% block scripts %}<script type="module" src="{% static 'js/puzzles/replay.js' %}"></script>{% endblock %}

@@ -36,3 +36,25 @@ def e2e_line(transactional_db, lesson_factory, publish):
     lesson = lesson_factory("e2e-line", course="openings", unit="italian", track="openings", kind="opening")
     publish(lesson, json.loads(LINE.read_text(encoding="utf-8")))
     return lesson
+
+
+@pytest.fixture
+def mate2_puzzle(transactional_db, puzzle_factory):
+    """The only active puzzle: MATE2 (1...Kd7 2.Be6+ Kd8 3.Qf8#), White to play."""
+    from tests.puzzle_data import MATE2
+
+    return puzzle_factory(data=MATE2, rating=1000)
+
+
+@pytest.fixture
+def alt_mate_puzzle(transactional_db, puzzle_factory):
+    from tests.puzzle_data import ALT_MATE
+
+    return puzzle_factory(data=ALT_MATE, rating=1000)
+
+
+@pytest.fixture
+def promotion_puzzle(transactional_db, puzzle_factory):
+    from tests.puzzle_data import PROMOTION
+
+    return puzzle_factory(data=PROMOTION, rating=1000)
