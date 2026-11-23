@@ -994,3 +994,6 @@ msgid "%(n)s lesson answer"
 msgid_plural "%(n)s lesson answers"
 msgstr[0] "%(n)s réponse de leçon"
 msgstr[1] "%(n)s réponses de leçon"
+
+msgid "Your last puzzle isn't saved yet. Check your connection, then try again."
+msgstr "Votre dernier problème n'est pas encore enregistré. Vérifiez votre connexion, puis réessayez."

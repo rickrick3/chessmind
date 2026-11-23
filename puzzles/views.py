@@ -50,6 +50,7 @@ def _strings() -> dict:
         "puzzleRating": g("Puzzle rating"), "yourRating": g("Your rating"), "settling": g("still settling"),
         "about": g("about {low}–{high}"), "loadError": g("The puzzle could not load. Try again in a moment."),
         "notSaved": g("Not saved"), "savedLater": g("We'll save this when you're back online."),
+        "stillOffline": g("Your last puzzle isn't saved yet. Check your connection, then try again."),
         "replayDone": g("Line complete. This replay doesn't change your rating."),
     }
 

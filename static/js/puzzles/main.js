@@ -14,9 +14,9 @@ function storage() {
     try { return window.localStorage } catch (e) { return null }
 }
 
-async function post(url, body) {
+async function post(url, body, keepalive = false) {
     const r = await fetch(url, {
-        method: "POST", credentials: "same-origin",
+        method: "POST", credentials: "same-origin", keepalive,
         headers: {"Content-Type": "application/json", "X-CSRFToken": cfg.csrfToken},
         body: JSON.stringify(body),
     })
@@ -25,31 +25,45 @@ async function post(url, body) {
     return {ok: r.ok, status: r.status, data}
 }
 
+function forget(key) {
+    try { storage()?.removeItem(key) } catch (e) { /* private mode */ }
+}
+
+// Send every outcome kept from an earlier visit or a dropped connection. True when none is left unsent.
 async function resendPending() {
     const store = storage()
-    if (!store) return
+    if (!store) return true
     let keys = []
-    try { keys = Object.keys(store).filter(k => k.startsWith(PENDING)) } catch (e) { return }
+    try { keys = Object.keys(store).filter(k => k.startsWith(PENDING)) } catch (e) { return true }
+    let left = 0
     for (const key of keys) {
         try {
-            const r = await post(cfg.finishUrl.replace("{id}", key.slice(PENDING.length)), JSON.parse(store.getItem(key)))
-            if (r.ok || (r.status >= 400 && r.status < 500)) store.removeItem(key)
-        } catch (e) { /* still offline: keep it for next time */ }
+            const body = JSON.parse(store.getItem(key))
+            const r = await post(cfg.finishUrl.replace("{id}", key.slice(PENDING.length)), body, true)
+            if (r.ok || (r.status >= 400 && r.status < 500)) forget(key)
+            else left += 1
+        } catch (e) { left += 1 /* still offline: keep it for next time */ }
     }
+    return left === 0
 }
 
 async function finish(attemptId, body) {
-    // Up to 3 retries (1 s, 3 s, 9 s); then keep the outcome and send it on the next visit.
+    // Kept on the device before the first send, so closing the tab or losing the network never drops a miss.
+    // Up to 3 retries (1 s, 3 s, 9 s); after that it stays kept and goes out before the next puzzle or visit.
+    const key = PENDING + attemptId
+    try { storage()?.setItem(key, JSON.stringify(body)) } catch (e) { /* private mode */ }
     const url = cfg.finishUrl.replace("{id}", attemptId)
     for (const wait of [0, 1000, 3000, 9000]) {
         if (wait) await sleep(wait)
         try {
-            const r = await post(url, body)
-            if (r.ok) return r.data
-            if (r.status >= 400 && r.status < 500) return {rejected: r.data?.error?.message || t.notSaved}
+            const r = await post(url, body, true)
+            if (r.ok) { forget(key); return r.data }
+            if (r.status >= 400 && r.status < 500) {
+                forget(key)
+                return {rejected: r.data?.error?.message || t.notSaved}
+            }
         } catch (e) { /* network error: retry */ }
     }
-    try { storage()?.setItem(PENDING + attemptId, JSON.stringify(body)) } catch (e) { /* private mode */ }
     return {offline: true}
 }
 
@@ -124,42 +138,66 @@ function reportControls(ui, puzzleId) {
     return wrap
 }
 
+const clicked = button => new Promise(resolve => button.addEventListener("click", resolve, {once: true}))
+
 async function main() {
     const root = document.getElementById("puzzles")
     const ui = createUi(root, t)
     setupDifficulty(root)
-    resendPending()
     const go = root.querySelector(".pz-go")
-    await new Promise(resolve => go.addEventListener("click", resolve, {once: true}))
-    ui.showBoard()
-    const board = createBoard(document.getElementById("board"), {orientation: "white", assetsUrl: cfg.assets, lang: cfg.lang})
+    let board = null
     let timezone = "UTC"
     try { timezone = Intl.DateTimeFormat().resolvedOptions().timeZone } catch (e) { /* keep UTC */ }
+    const sent = resendPending()
 
-    for (;;) {
-        const r = await post(cfg.nextUrl, {mode: cfg.mode, theme: cfg.theme, difficulty: difficulty(), timezone})
-            .catch(() => null)
-        if (!r || !r.ok) {
-            ui.error(r?.data?.error?.message || t.loadError)
-            return
+    for (;;) {  // the start panel; a session that runs out of puzzles comes back here
+        await clicked(go)
+        ui.clearError()
+        ui.showBoard()
+        board ||= createBoard(document.getElementById("board"), {orientation: "white", assetsUrl: cfg.assets, lang: cfg.lang})
+        await sent
+        let next = null
+        for (;;) {
+            // Never ask for a new puzzle while an earlier outcome is unsent: the server would serve that puzzle
+            // again, and the learner would already know its answer.
+            if (!(await resendPending())) {
+                ui.error(t.stillOffline)
+                if (!next) { ui.showStart(); break }
+                await clicked(next)
+                continue
+            }
+            ui.clearError()
+            const r = await post(cfg.nextUrl, {mode: cfg.mode, theme: cfg.theme, difficulty: difficulty(), timezone})
+                .catch(() => null)
+            if (r && r.status === 404 && r.data?.error?.code === "no_puzzle") {
+                ui.showStart()
+                ui.error(r.data.error.message)
+                break
+            }
+            if (!r || !r.ok) {
+                ui.error(r?.data?.error?.message || t.loadError)
+                if (!next) { ui.showStart(); break }
+                await clicked(next)
+                continue
+            }
+            const attemptId = r.data.attempt_id
+            let outcome = null
+            const {solved} = await runPuzzle(r.data.puzzle, {
+                board, ui, t, lang: cfg.lang,
+                onDecided: body => { outcome = finish(attemptId, body) },
+            })
+            const result = outcome ? await outcome : {offline: true}
+            const box = resultCard(ui, result, solved)
+            next = ui.el("button", "cm-btn cm-btn--primary pz-next", t.next)
+            next.type = "button"
+            const actions = ui.el("div", "pz-result__actions")
+            actions.append(next)
+            if (result.puzzle) actions.append(reportControls(ui, result.puzzle.id))
+            box.push(actions)
+            ui.result(box)
+            next.focus({preventScroll: true})
+            await clicked(next)
         }
-        const attemptId = r.data.attempt_id
-        let outcome = null
-        const {solved} = await runPuzzle(r.data.puzzle, {
-            board, ui, t, lang: cfg.lang,
-            onDecided: body => { outcome = finish(attemptId, body) },
-        })
-        const result = outcome ? await outcome : {offline: true}
-        const box = resultCard(ui, result, solved)
-        const next = ui.el("button", "cm-btn cm-btn--primary pz-next", t.next)
-        next.type = "button"
-        const actions = ui.el("div", "pz-result__actions")
-        actions.append(next)
-        if (result.puzzle) actions.append(reportControls(ui, result.puzzle.id))
-        box.push(actions)
-        ui.result(box)
-        next.focus({preventScroll: true})
-        await new Promise(resolve => next.addEventListener("click", resolve, {once: true}))
     }
 }
 

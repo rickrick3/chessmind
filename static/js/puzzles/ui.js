@@ -25,6 +25,10 @@ export function createUi(root, t) {
             if (els.start) els.start.hidden = true
             els.play.hidden = false
         },
+        showStart() {
+            els.play.hidden = true
+            if (els.start) els.start.hidden = false
+        },
         reset() {
             api.prompt("")
             api.coach("")
@@ -47,6 +51,7 @@ export function createUi(root, t) {
         onHint(handler) { onHint = handler; (els.hint.closest(".pz-hint-wrap") || els.hint).hidden = !handler },
         onSolution(handler) { onSolution = handler; els.solution.hidden = !handler },
         error(message) { els.error.textContent = message; els.error.hidden = false },
+        clearError() { els.error.textContent = ""; els.error.hidden = true },
         // The result card; resolves when the learner asks for the next puzzle.
         result(box) {
             els.actions.hidden = true
