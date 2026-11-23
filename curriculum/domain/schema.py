@@ -269,6 +269,7 @@ def _check_find_move(c, s, board, allowed):
         c.add("schema", "fail", "missing accept", sid)
     else:
         c.moves_legal(board, accept, "accept", sid)
+    _check_every_mate(c, s, board)
     for field, text_field in (("also_good", "note"), ("wrong", "feedback")):
         items = s.get(field, [])
         if not isinstance(items, list):
@@ -280,6 +281,27 @@ def _check_find_move(c, s, board, allowed):
                 continue
             c.moves_legal(board, [item.get("uci")], f"{field}[{n}]", sid)
             c.text(item.get(text_field), f"{field}[{n}].{text_field}", sid, allowed)
+
+
+def _mates(board: chess.Board) -> list[chess.Move]:
+    out = []
+    for move in list(board.legal_moves):
+        board.push(move)
+        if board.is_checkmate():
+            out.append(move)
+        board.pop()
+    return out
+
+
+def _check_every_mate(c, s, board) -> None:
+    """A find_move whose answer is a checkmate must accept every checkmate: a learner who mates is never wrong."""
+    taken = set(s.get("accept") or []) | {g.get("uci") for g in _dicts(s.get("also_good"))}
+    mates = _mates(board)
+    if not any(m.uci() in taken for m in mates):
+        return
+    missing = [board.san(m) for m in mates if m.uci() not in taken]
+    if missing:
+        c.add("missing_mate", "fail", ", ".join(missing), s["id"])
 
 
 def _check_choice(c, s, board, allowed):

@@ -40,7 +40,8 @@ def test_mate_in_one_answer_passes():
 def test_wrong_move_that_is_fine_warns():
     issues = engine_issues(lesson_with({"type": "find_move", "fen": START, "accept": ["e2e4"],
                                         "wrong": [{"uci": "d2d4", "feedback": T}]}))
-    assert codes(issues) == {("wrong_move_is_fine", "warn")}
+    # d4 is fine: it is flagged as a wrong answer that's fine, and as a good answer the step doesn't accept
+    assert codes(issues) == {("wrong_move_is_fine", "warn"), ("unaccepted_good_answer", "warn")}
 
 
 def test_line_blunder_fails_but_opponent_moves_are_not_graded():
@@ -93,3 +94,16 @@ def test_engine_crash_returns_to_draft(lesson_factory, staff, valid_content, moc
         request_validation(v, staff)
     v.refresh_from_db()
     assert v.status == DRAFT and "engine died" in v.error
+
+
+def test_an_unaccepted_equal_capture_is_flagged():
+    # two pieces can take the undefended black queen: Rxd5 and Nxd5
+    step = {"type": "find_move", "fen": "4k3/8/8/3q4/8/4N3/8/3RK3 w - - 0 1", "accept": ["d1d5"]}
+    issues = engine_issues(lesson_with(step))
+    assert [(i.check, i.level) for i in issues] == [("unaccepted_good_answer", "warn")] and "Nxd5" in issues[0].detail
+    step["accept"] = ["d1d5", "e3d5"]
+    assert engine_issues(lesson_with(step)) == []
+
+
+def test_a_single_mate_gives_no_warning():
+    assert engine_issues(lesson_with({"type": "find_move", "fen": BACK_RANK, "accept": ["a1a8"]})) == []

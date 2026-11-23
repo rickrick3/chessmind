@@ -162,3 +162,13 @@ def test_seed_lessons_have_no_unknown_tags():
     tags = [t for c in seed["courses"] for u in c["units"] for les in u["lessons"]
             for s in les["content"]["steps"] for t in s.get("skills", [])]
     assert tags and unknown_tags(tags) == []
+
+
+def test_every_mate_must_be_accepted(valid):
+    t = {"fr": "x", "en": "x"}
+    valid["steps"].append({"id": "two-mates", "type": "find_move", "fen": "7k/2p3pp/2p5/8/8/8/5PPP/RR4K1 w - - 0 1",
+                           "prompt": t, "correct": t, "hint": t, "accept": ["a1a8"]})
+    issues = [i for i in check_structure(valid) if i.check == "missing_mate"]
+    assert len(issues) == 1 and issues[0].level == "fail" and "Rb8#" in issues[0].detail
+    valid["steps"][-1]["also_good"] = [{"uci": "b1b8", "note": t}]
+    assert not [i for i in check_structure(valid) if i.check == "missing_mate"]
