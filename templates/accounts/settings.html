@@ -1,0 +1,44 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% trans "Settings" %} · ChessMind{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-md-7 col-lg-6">
+  <h1 class="h3 mt-4">{% trans "Settings" %}</h1>
+  <form method="post" novalidate>{% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label" for="id_display_name">{{ form.display_name.label }}</label>
+      <input class="form-control" id="id_display_name" name="display_name" maxlength="40" value="{{ form.display_name.value|default:'' }}">
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id_language">{{ form.language.label }}</label>
+      <select class="form-select" id="id_language" name="language">
+        {% for value, label in form.fields.language.choices %}<option value="{{ value }}"{% if form.language.value == value %} selected{% endif %}>{{ label }}</option>{% endfor %}
+      </select>
+      {% for e in form.language.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id_daily_goal_xp">{{ form.daily_goal_xp.label }}</label>
+      <select class="form-select" id="id_daily_goal_xp" name="daily_goal_xp">
+        {% for value, label in form.fields.daily_goal_xp.choices %}<option value="{{ value }}"{% if form.daily_goal_xp.value|stringformat:"s" == value|stringformat:"s" %} selected{% endif %}>{{ label }}</option>{% endfor %}
+      </select>
+      {% for e in form.daily_goal_xp.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="id_timezone">{{ form.timezone.label }}</label>
+      <input class="form-control" id="id_timezone" name="timezone" value="{{ form.timezone.value|default:'' }}" autocapitalize="none">
+      {% for e in form.timezone.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+    </div>
+    <button class="btn btn-primary">{% trans "Save" %}</button>
+  </form>
+  <hr>
+  <ul class="list-unstyled">
+    <li><a href="{% url 'chesscom_link' %}">{% trans "Chess.com account" %}</a>{% if learner.player %} · {{ learner.player.chesscom_username }}{% endif %}</li>
+    {% if learner and not learner.is_guest %}<li><a href="{% url 'password_change' %}">{% trans "Change my password" %}</a></li>{% endif %}
+    <li><a class="text-danger" href="{% url 'delete_account' %}">{% trans "Delete my account" %}</a></li>
+  </ul>
+  {% if user.is_authenticated %}
+  <form method="post" action="{% url 'logout' %}">{% csrf_token %}
+    <button class="cm-btn cm-btn--secondary cm-btn--sm">{% trans "Log out" %}</button>
+  </form>
+  {% endif %}
+</div></div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% load i18n %}<h2 class="h4 mb-2">{% trans "Skills" %}</h2>
+{% if skills.rating %}<p class="text-secondary fw-bold">{% blocktrans with low=skills.rating.low high=skills.rating.high %}Puzzle rating about {{ low }}–{{ high }}{% endblocktrans %}{% if skills.rating.settling %} · {% trans "still settling" %}{% endif %}</p>{% endif %}
+{% if not skills.has_evidence %}
+<div class="cm-card cm-card--tint mb-3"><p class="mb-2">{% trans "We're still learning how you play. Solve a few puzzles or finish a lesson to see your skills." %}</p>
+  <a class="cm-btn cm-btn--primary" href="/train/puzzles/">{% trans "Start puzzles" %}</a></div>
+{% endif %}
+{% for row in skills.areas %}
+{% if row.observations %}<a class="cm-row cm-skill" data-area="{{ row.key }}" href="/profile/skills/{{ row.key }}/">{% else %}<div class="cm-row cm-row--plain cm-skill" data-area="{{ row.key }}">{% endif %}
+  <div class="cm-row__body">
+    <div class="cm-row__title">{{ row.label }} {% include "skills/_status.html" %}</div>
+    <div class="cm-row__sub">{% include "skills/_estimate.html" %}</div>
+  </div>
+{% if row.observations %}</a>{% else %}</div>{% endif %}
+{% endfor %}

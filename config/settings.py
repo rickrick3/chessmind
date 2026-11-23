@@ -18,6 +18,7 @@ ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = [o for o in env("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o]
 
 INSTALLED_APPS = [
+    "django.contrib.admin",
     "django.contrib.contenttypes",
     "django.contrib.auth",
     "django.contrib.sessions",
@@ -26,12 +27,20 @@ INSTALLED_APPS = [
     "players",
     "games",
     "analysis",
+    "accounts",
+    "curriculum",
+    "learning",
+    "gamification",
+    "puzzles",
+    "skills",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "accounts.middleware.LearnerMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -48,9 +57,12 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
                 "django.template.context_processors.i18n",
                 "django.contrib.messages.context_processors.messages",
                 "players.context.player",
+                "accounts.context.learner",
+                "gamification.context.header",
             ]
         },
     }
@@ -70,6 +82,64 @@ DATABASES = {
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
+# Accounts: guests keep their progress in a long-lived session.
+SESSION_COOKIE_AGE = 365 * 24 * 3600
+LOGIN_URL = "/login/"
+GUEST_IDLE_DAYS = 180
+DAILY_GOAL_CHOICES = (10, 20, 30, 50)
+DAILY_GOAL_DEFAULT = 20
+LOGIN_FAILURE_LIMIT = 5
+ATTEMPT_EXPIRY_HOURS = 24
+API_MAX_BODY = 64 * 1024  # bytes
+# XP (gamification.domain.xp)
+XP_LESSON_FIRST = 10
+XP_ACCURACY_BONUS = 5
+XP_ACCURACY_BONUS_MIN = 0.9
+XP_LESSON_REPLAY = 3
+XP_PUZZLE_SOLVED = 3  # a rated puzzle solved; a miss earns nothing
+
+# Puzzles (design 5.2 and 5.4): Glicko-2 rating, start by level, target a little below the rating by default
+PUZZLE_START_RATINGS = {"new": 700, "rules": 1000, "club": 1500}
+PUZZLE_DEFAULT_START = 1000
+PUZZLE_START_RD = 350
+PUZZLE_START_VOLATILITY = 0.06
+PUZZLE_TAU = 0.5
+PUZZLE_RD_FLOOR = 45
+PUZZLE_RD_MAX = 350
+PUZZLE_SETTLING_RD = 110  # above this, the rating is shown as "still settling"
+PUZZLE_DIFFICULTY_OFFSETS = {"easier": -300, "normal": -100, "harder": 200}
+PUZZLE_WINDOWS = (100, 200, 400, 600)
+
+# Skill profile: how evidence becomes an estimate (design 5.7 and 5.8)
+SKILL_PUZZLE_WINDOW = 40  # newest puzzle observations an estimate uses
+SKILL_LESSON_WINDOW = 30
+SKILL_MIN_OBSERVATIONS = 10  # fewer: "not enough evidence yet"
+SKILL_RELIABLE_OBSERVATIONS = 25
+SKILL_RELIABLE_DAYS = 3  # reliable needs evidence from at least this many different days
+SKILL_IMPROVING_SPLIT = 15
+SKILL_IMPROVING_POINTS = 250  # about two standard errors of the difference of two 15-puzzle performances
+SKILL_IMPROVING_RATE = 0.35
+SKILL_LESSON_WEAK = 0.5
+SKILL_LESSON_STRONG = 0.85
+SKILL_REPEATED_MISSES = 3
+SKILL_REPEATED_DAYS = 14
+LOGIN_FAILURE_WINDOW = 15 * 60  # seconds
+
+# Email (password reset). Console in development; any SMTP service in production.
+EMAIL_BACKEND = env("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = env("EMAIL_HOST", "localhost")
+EMAIL_PORT = int(env("EMAIL_PORT", "587"))
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS", "1") == "1"
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", "ChessMind <no-reply@localhost>")
+AUTH_PASSWORD_VALIDATORS = [
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+]
+
 LANGUAGE_CODE = "en"
 LANGUAGES = [("fr", "Français"), ("en", "English")]
 LOCALE_PATHS = [BASE_DIR / "locale"]
@@ -81,9 +151,18 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": env("REDIS_URL", "redis://localhost:6379/0"),
+    }
+}
+
 CELERY_BROKER_URL = env("REDIS_URL", "redis://localhost:6379/0")
 CELERY_TASK_ALWAYS_EAGER = env("CELERY_TASK_ALWAYS_EAGER", "0") == "1"
 CELERY_TASK_EAGER_PROPAGATES = False
+# Lesson generation and validation run on their own queue so game reviews stay fast.
+CELERY_TASK_ROUTES = {"curriculum.tasks.*": {"queue": "content"}}
 
 # Engine
 ENGINE_PATH = env("ENGINE_PATH", "/usr/games/stockfish")

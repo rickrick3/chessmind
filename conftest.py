@@ -17,6 +17,137 @@ def _packet(**kw):
     return FactPacket(**base)
 
 
+@pytest.fixture(autouse=True)
+def _clear_cache():
+    """The test cache is in-process: clear it so one test's login failures can't block another's login."""
+    from django.core.cache import cache
+
+    cache.clear()
+    yield
+    cache.clear()
+
+
+@pytest.fixture
+def rf_with_session(rf):
+    """Build a request that has a session, a LANGUAGE_CODE and no learner yet, as the middleware leaves it."""
+    from django.contrib.sessions.middleware import SessionMiddleware
+    from django.utils.translation import get_language_from_request
+
+    def build(path="/", **headers):
+        req = rf.get(path, **headers)
+        SessionMiddleware(lambda r: None).process_request(req)
+        req.session.save()
+        req.LANGUAGE_CODE = get_language_from_request(req)
+        req.learner = None
+        return req
+
+    return build
+
+
+@pytest.fixture
+def guest(db):
+    from accounts.models import Learner
+
+    return Learner.objects.create()
+
+
+@pytest.fixture
+def guest_client(client, guest):
+    """A test client whose session holds a guest learner. Returns (client, guest)."""
+    s = client.session
+    s["learner_id"] = guest.id
+    s.save()
+    return client, guest
+
+
+@pytest.fixture
+def account(db, django_user_model):
+    """User farel@example.com / Chess-is-fun-42 with a learner."""
+    from accounts.models import Learner
+
+    user = django_user_model.objects.create_user("farel@example.com", "farel@example.com", "Chess-is-fun-42")
+    Learner.objects.create(user=user, display_name="Farel")
+    return user
+
+
+@pytest.fixture
+def staff(db, django_user_model):
+    return django_user_model.objects.create_user("staff@example.com", "staff@example.com", "Staff-pass-123",
+                                                 is_staff=True)
+
+
+@pytest.fixture
+def lesson_factory(db):
+    """lesson_factory(slug=..., course=..., unit=..., order=..., kind=..., track=...) -> Lesson."""
+    from curriculum.models import Course, Lesson, Unit
+
+    counter = {"n": 0}
+
+    def make(slug=None, *, course="fundamentals", unit="basics", order=None, kind="concept", track="path",
+             unit_order=1, prerequisites=()):
+        counter["n"] += 1
+        c, _ = Course.objects.get_or_create(slug=course, defaults={
+            "track": track, "order": 1, "title": {"fr": course, "en": course}})
+        u, _ = Unit.objects.get_or_create(course=c, slug=unit, defaults={
+            "order": unit_order, "title": {"fr": unit, "en": unit}})
+        lesson = Lesson.objects.create(unit=u, slug=slug or f"lesson-{counter['n']}",
+                                       order=counter["n"] if order is None else order, kind=kind, difficulty=1)
+        for p in prerequisites:
+            lesson.prerequisites.add(Lesson.objects.get(slug=p))
+        return lesson
+
+    return make
+
+
+@pytest.fixture
+def publish(db):
+    """publish(lesson, content) -> LessonVersion: a new version, published straight away (test setup only)."""
+    from curriculum import services
+    from curriculum.domain.workflow import APPROVED
+    from curriculum.models import LessonVersion
+
+    def make(lesson, content):
+        version = services.new_version(lesson, None, content=content)
+        LessonVersion.objects.filter(pk=version.pk).update(status=APPROVED)
+        version.refresh_from_db()
+        return services.publish(version, None)
+
+    return make
+
+
+@pytest.fixture
+def valid_content():
+    """A 7-step lesson using all five step types (tests/fixtures/lessons/valid_lesson.json), fresh each time."""
+    import json
+    from pathlib import Path
+
+    path = Path(__file__).parent / "tests" / "fixtures" / "lessons" / "valid_lesson.json"
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+@pytest.fixture
+def puzzle_factory(db):
+    """puzzle_factory(lichess_id=None, *, data=MATE2, rating=1500, rd=80, themes=None, is_active=True) -> Puzzle.
+
+    `data` is one of the positions in tests/puzzle_data.py; themes default to the position's own."""
+    from puzzles.domain.lichess import derive
+    from puzzles.models import Puzzle
+    from tests.puzzle_data import MATE2
+
+    counter = {"n": 0}
+
+    def make(lichess_id=None, *, data=MATE2, rating=1500, rd=80, themes=None, is_active=True):
+        counter["n"] += 1
+        side, start_fen = derive(data["fen"], data["moves"])
+        return Puzzle.objects.create(
+            lichess_id=lichess_id or f"t{counter['n']:05d}", fen=data["fen"], moves=list(data["moves"]),
+            rating=rating, rating_deviation=rd, popularity=90, plays=1000,
+            themes=list(data["themes"] if themes is None else themes), game_url="https://lichess.org/abcdefgh#1",
+            side=side, start_fen=start_fen, is_active=is_active)
+
+    return make
+
+
 @pytest.fixture
 def packet_good():
     return _packet()

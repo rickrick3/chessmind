@@ -26,7 +26,7 @@ def _own_review(request, review_id):
 def start_review_view(request, game_id):
     player = current_player(request)
     if not player:
-        return redirect("signin")
+        return redirect("chesscom_link")
     game = get_object_or_404(Game, id=game_id)
     if player.chesscom_username not in (game.white, game.black):
         raise Http404
@@ -41,14 +41,14 @@ def start_review_view(request, game_id):
 def review_page(request, review_id):
     player, review = _own_review(request, review_id)
     if not player:
-        return redirect("signin")
+        return redirect("chesscom_link")
     return render(request, "review.html", {"review": review, "game": review.game})
 
 
 def review_status(request, review_id):
     player, review = _own_review(request, review_id)
     if not player:
-        return redirect("signin")
+        return redirect("chesscom_link")
     texts = dict(MoveExplanation.objects.filter(id__in=[m["explanation_id"] for m in review.moves])
                  .values_list("id", "text"))
     moves = [{

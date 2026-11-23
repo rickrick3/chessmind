@@ -16,7 +16,7 @@ from .models import Game
 def game_list(request):
     player = current_player(request)
     if not player:
-        return redirect("signin")
+        return redirect("chesscom_link")
     try:
         games = import_recent_games(player, timezone.now().date())
     except chesscom.ChessComUnavailable:

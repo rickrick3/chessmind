@@ -1,0 +1,9 @@
+{% for field in form.visible_fields %}
+  <div class="mb-3">
+    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+    <input class="form-control{% if field.errors %} is-invalid{% endif %}" id="{{ field.id_for_label }}" name="{{ field.html_name }}"
+           type="{{ field.field.widget.input_type }}" value="{% if field.field.widget.input_type != 'password' %}{{ field.value|default:'' }}{% endif %}"
+           {% if field.field.required %}required{% endif %} {% if field.html_name == 'email' %}autocomplete="email" autocapitalize="none"{% endif %}>
+    {% for e in field.errors %}<div class="invalid-feedback d-block">{{ e }}</div>{% endfor %}
+  </div>
+{% endfor %}

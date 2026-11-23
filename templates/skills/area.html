@@ -1,0 +1,36 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{{ detail.area.label }} · ChessMind{% endblock %}
+{% block content %}
+{% with row=detail.area %}
+<p><a href="/profile/?tab=skills">&larr; {% trans "Skills" %}</a></p>
+<h1 class="h3 mb-1">{{ row.label }} {% include "skills/_status.html" %}</h1>
+<p class="text-secondary fw-bold">{% include "skills/_estimate.html" %}</p>
+{% endwith %}
+<p>{% blocktrans with p=detail.sources.puzzle l=detail.sources.lesson %}From {{ p }} puzzles and {{ l }} lesson answers.{% endblocktrans %}</p>
+
+{% if detail.themes %}
+<h2 class="h5 mt-4">{% trans "Themes" %}</h2>
+{% for row in detail.themes %}
+<div class="cm-row cm-row--plain cm-skill" data-theme="{{ row.key }}">
+  <div class="cm-row__body">
+    <div class="cm-row__title">{{ row.label }} {% include "skills/_status.html" %}</div>
+    <div class="cm-row__sub">{% include "skills/_estimate.html" %}</div>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+
+{% if detail.recent %}
+<h2 class="h5 mt-4">{% trans "Latest evidence" %}</h2>
+<ol class="cm-evidence">
+  {% for item in detail.recent %}
+  <li data-result="{% if item.success %}solved{% else %}missed{% endif %}">
+    <span class="cm-evidence__mark" aria-hidden="true">{% if item.success %}&#10003;{% else %}&#10007;{% endif %}</span>
+    <span class="visually-hidden">{% if item.success %}{% trans "Right" %}{% else %}{% trans "Missed" %}{% endif %}</span>
+    <a href="{{ item.url }}">{{ item.label }}</a>
+    <span class="text-secondary small">{{ item.date|date:"SHORT_DATE_FORMAT" }}</span>
+  </li>
+  {% endfor %}
+</ol>
+{% endif %}
+{% endblock %}

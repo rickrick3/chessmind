@@ -12,7 +12,27 @@ docker compose up --build
 
 Open http://localhost:8000.
 
-## Run tests (without Docker)
+## Run tests
+
+The `test` service mounts the code, so there is no rebuild between runs:
+
+```bash
+docker compose run --rm test pytest              # everything
+docker compose run --rm test pytest tests/test_setup.py -v
+```
+
+### End-to-end tests
+
+A real browser (Chromium, Playwright) plays a lesson on a phone-sized screen against Django's live server:
+
+```bash
+docker compose --profile e2e build e2e     # once; Playwright image + app requirements
+docker compose --profile e2e run --rm e2e  # pytest e2e -v
+```
+
+The image tag in `Dockerfile.e2e` must match the `playwright` version in `requirements-dev.txt`.
+
+### Without Docker
 
 Needs Postgres (user/db `chess`, password `chess` on localhost), Stockfish at `/usr/games/stockfish`
 (`apt install stockfish`), and Python 3.12+.
@@ -23,6 +43,49 @@ pytest
 ```
 
 Tests use engine depth 8, no AI calls, and run Celery tasks inline (see `conftest.py`).
+
+## Lessons
+
+Lessons live in the database and reach learners only after review:
+
+```bash
+docker compose run --rm web python manage.py import_lessons curriculum/seed/foundation.json
+```
+
+Then, as a staff user, open `/studio/`: validate each draft (the `content` queue runs the checks with Stockfish),
+read the report, preview it, approve and publish.
+
+The beginner course (30 more lessons in six units of the same course) comes in its own file; import it after
+`foundation.json`:
+
+```bash
+docker compose run --rm web python manage.py import_lessons curriculum/seed/beginner.json
+```
+
+## Puzzles
+
+Puzzles from the Lichess puzzle database (CC0). Download the file on your machine, then import a sample of it:
+2,000 well-liked puzzles per 100-point band from 400 to 2,800, about 48,000 in all.
+
+```bash
+curl -LO https://database.lichess.org/lichess_db_puzzle.csv.zst
+docker compose run --rm -v "$PWD:/data" web python manage.py import_puzzles /data/lichess_db_puzzle.csv.zst
+```
+
+It reads all 6 million rows, so it takes a while (about 25 minutes on a laptop); with the default filters every
+band from 400 to 2,700 fills to 2,000. The command reads `.zst` through the `zstd` tool (installed in the Docker image; elsewhere install it, or run
+`zstd -d` first and import the `.csv`). Options: `--per-band`, `--min-popularity` (80), `--min-plays` (300),
+`--max-rd` (90), `--seed`. Rerunning it is safe: puzzles left out are deactivated, never deleted. Staff can
+deactivate a reported puzzle in the Django admin (Puzzle reports → "Deactivate the reported puzzles").
+
+## Skill profile
+
+Every rated puzzle and the first finished attempt at each lesson become evidence for the learner's skill areas.
+After deploying this feature, run once to turn lessons finished earlier into evidence:
+
+```bash
+docker compose run --rm web python manage.py backfill_evidence
+```
 
 ## Gemini (free tier)
 

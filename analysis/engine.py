@@ -1,4 +1,6 @@
 """Server Stockfish over UCI (separate GPL process), with a shared cache keyed by normalised FEN."""
+import threading
+
 import chess
 import chess.engine
 from django.conf import settings
@@ -18,6 +20,10 @@ def get_engine() -> chess.engine.SimpleEngine:
     global _engine
     if _engine is None:
         _engine = chess.engine.SimpleEngine.popen_uci(settings.ENGINE_PATH)
+        # python-chess talks to Stockfish on a non-daemon thread, which Python waits for at exit before plain
+        # atexit handlers run. This hook (the one concurrent.futures uses) runs first, so scripts and management
+        # commands that use the engine can exit.
+        threading._register_atexit(close_engine)
     return _engine
 
 

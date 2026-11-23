@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}ChessMind · {% trans "Learn chess, one short lesson a day" %}{% endblock %}
+{% block content %}
+<section class="cm-hero">
+  <div class="cm-coach__avatar mx-auto" aria-hidden="true">&#9822;</div>
+  <h1>{% trans "Learn chess, one short lesson a day" %}</h1>
+  <p>{% trans "Openings, endgames and tactics in five-minute lessons. Keep your streak, earn XP, and watch your game grow." %}</p>
+  <div class="cm-hero__actions">
+    <a class="cm-btn cm-btn--primary" href="/start/">{% trans "Start" %}</a>
+    <a class="cm-btn cm-btn--secondary" href="/login/">{% trans "I already have an account" %}</a>
+  </div>
+</section>
+{% endblock %}

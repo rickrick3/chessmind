@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ lesson.slug }} v{{ version.number }} · Studio{% endblock %}
+{% block content %}
+<p class="small"><a href="{% url 'studio_lessons' %}">Studio</a> › <code>{{ lesson.slug }}</code></p>
+<div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+  <h1 class="h4 mb-0">{{ lesson.slug }} v{{ version.number }}</h1>
+  <span class="badge text-bg-dark">{{ version.status }}</span>
+  <a class="btn btn-sm btn-outline-primary" href="/lessons/{{ lesson.slug }}/?version={{ version.pk }}" target="_blank">Preview</a>
+</div>
+{% if version.error %}<div class="alert alert-danger">{{ version.error }}</div>{% endif %}
+
+{% if actions %}
+<div class="card mb-3"><div class="card-body d-flex flex-wrap gap-2 align-items-end">
+  {% for to, label in actions %}
+  <form method="post" action="{% url 'studio_version_transition' version.pk %}" class="d-flex gap-2 align-items-end">{% csrf_token %}
+    <input type="hidden" name="to" value="{{ to }}">
+    {% if to == "rejected" %}<input class="form-control form-control-sm" name="note" placeholder="Why? (required)">{% endif %}
+    <button class="btn btn-sm {% if to == 'rejected' %}btn-outline-danger{% else %}btn-primary{% endif %}">{{ label }}</button>
+  </form>
+  {% endfor %}
+</div></div>
+{% endif %}
+
+<h2 class="h6">Validation report</h2>
+{% if issues %}
+<table class="table table-sm">
+  <thead><tr><th>Level</th><th>Step</th><th>Check</th><th>Detail</th></tr></thead>
+  <tbody>{% for i in issues %}
+    <tr class="{% if i.level == 'fail' %}table-danger{% else %}table-warning{% endif %}"><td>{{ i.level }}</td><td>{{ i.step_id|default:"–" }}</td><td><code>{{ i.check }}</code></td><td>{{ i.detail }}</td></tr>
+  {% endfor %}</tbody>
+</table>
+{% elif version.validation_report.checked_at %}<p class="small text-success">No issues (engine depth {{ version.validation_report.engine_depth }}).</p>
+{% else %}<p class="small text-secondary">Not validated yet.</p>{% endif %}
+
+<h2 class="h6 mt-4">Content</h2>
+<form method="post" action="{% url 'studio_version_content' version.pk %}">{% csrf_token %}
+  <textarea class="form-control font-monospace small" name="content" rows="24" {% if not editable %}readonly{% endif %}>{{ content_json }}</textarea>
+  {% if editable %}<button class="btn btn-sm btn-secondary mt-2">Save{% if version.status == "pending_review" %} and re-validate{% endif %}</button>{% endif %}
+</form>
+
+<h2 class="h6 mt-4">History</h2>
+<table class="table table-sm small">
+  <tbody>{% for e in events %}
+    <tr><td>{{ e.at|date:"Y-m-d H:i" }}</td><td>{% if e.actor %}{{ e.actor.email }}{% else %}system{% endif %}</td>
+        <td>{% if e.kind == "edit" %}edited{% else %}{{ e.from_status|default:"·" }} → {{ e.to_status }}{% endif %}</td><td>{{ e.note }}</td></tr>
+  {% endfor %}</tbody>
+</table>
+{% endblock %}

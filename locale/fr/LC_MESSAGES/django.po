@@ -132,3 +132,868 @@ msgstr "Pseudo Chess.com"
 #: templates/signin.html:10
 msgid "Start"
 msgstr "Commencer"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Name (optional)"
+msgstr "Prénom (facultatif)"
+
+msgid "This email already has an account."
+msgstr "Cet e-mail a déjà un compte."
+
+msgid "Too many attempts. Try again in 15 minutes."
+msgstr "Trop d'essais. Réessaie dans 15 minutes."
+
+msgid "Wrong email or password."
+msgstr "E-mail ou mot de passe incorrect."
+
+msgid "Create your account"
+msgstr "Crée ton compte"
+
+msgid "Your lessons, streak and XP follow you on every device."
+msgstr "Tes leçons, ta série et tes XP te suivent sur tous tes appareils."
+
+msgid "Create account"
+msgstr "Créer mon compte"
+
+msgid "Already have an account?"
+msgstr "Tu as déjà un compte ?"
+
+msgid "Log in"
+msgstr "Se connecter"
+
+msgid "Forgot your password?"
+msgstr "Mot de passe oublié ?"
+
+msgid "New here?"
+msgstr "Nouveau ici ?"
+
+msgid "Create an account"
+msgstr "Créer un compte"
+
+msgid "Reset your password"
+msgstr "Réinitialise ton mot de passe"
+
+msgid "Type your email. We'll send you a link to choose a new password."
+msgstr "Tape ton e-mail. On t'envoie un lien pour choisir un nouveau mot de passe."
+
+msgid "Send the link"
+msgstr "Envoyer le lien"
+
+msgid "Check your email"
+msgstr "Regarde tes e-mails"
+
+msgid "If an account uses this email, a link to reset the password is on its way."
+msgstr "Si un compte utilise cet e-mail, un lien pour changer le mot de passe arrive."
+
+msgid "Choose a new password"
+msgstr "Choisis un nouveau mot de passe"
+
+msgid "Save the password"
+msgstr "Enregistrer le mot de passe"
+
+msgid "This link has expired"
+msgstr "Ce lien a expiré"
+
+msgid "Ask for a new link"
+msgstr "Demander un nouveau lien"
+
+msgid "Password saved"
+msgstr "Mot de passe enregistré"
+
+msgid "Reset your ChessMind password"
+msgstr "Réinitialise ton mot de passe ChessMind"
+
+msgid "Someone asked to reset the password of your ChessMind account."
+msgstr "Quelqu'un a demandé à changer le mot de passe de ton compte ChessMind."
+
+msgid "Choose a new password here:"
+msgstr "Choisis un nouveau mot de passe ici :"
+
+msgid "If it wasn't you, ignore this email."
+msgstr "Si ce n'était pas toi, ignore cet e-mail."
+
+msgid "Name"
+msgstr "Prénom"
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "Daily goal"
+msgstr "Objectif du jour"
+
+msgid "Time zone"
+msgstr "Fuseau horaire"
+
+msgid "Unknown time zone."
+msgstr "Fuseau horaire inconnu."
+
+msgid "Settings saved."
+msgstr "Réglages enregistrés."
+
+msgid "Wrong password."
+msgstr "Mot de passe incorrect."
+
+msgid "Password changed."
+msgstr "Mot de passe changé."
+
+msgid "Settings"
+msgstr "Réglages"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Chess.com account"
+msgstr "Compte Chess.com"
+
+msgid "Change my password"
+msgstr "Changer mon mot de passe"
+
+msgid "Delete my account"
+msgstr "Supprimer mon compte"
+
+msgid "Connect Chess.com"
+msgstr "Connecte Chess.com"
+
+msgid "Type your Chess.com username to review your recent games, every move explained."
+msgstr "Tape ton pseudo Chess.com pour analyser tes parties récentes, chaque coup expliqué."
+
+#, python-format
+msgid "Linked to %(name)s."
+msgstr "Relié à %(name)s."
+
+msgid "Unlink"
+msgstr "Délier"
+
+msgid "Connect"
+msgstr "Connecter"
+
+msgid "Your progress, XP and streak are deleted for good. This can't be undone."
+msgstr "Ta progression, tes XP et ta série sont supprimés pour de bon. Impossible de revenir en arrière."
+
+msgid "Delete everything"
+msgstr "Tout supprimer"
+
+msgid "The request is too large."
+msgstr "La requête est trop grande."
+
+msgid "The request is not valid JSON."
+msgstr "La requête n'est pas du JSON valide."
+
+msgid "The request must be a JSON object."
+msgstr "La requête doit être un objet JSON."
+
+msgid "Pick one of the three levels."
+msgstr "Choisis un des trois niveaux."
+
+#, python-format
+msgid "Invalid value: %(field)s"
+msgstr "Valeur invalide : %(field)s"
+
+msgid "This lesson does not exist."
+msgstr "Cette leçon n'existe pas."
+
+msgid "Finish the lessons before this one first."
+msgstr "Termine d'abord les leçons d'avant."
+
+msgid "This attempt does not exist."
+msgstr "Cette tentative n'existe pas."
+
+msgid "This lesson was started too long ago. Start it again."
+msgstr "Cette leçon a commencé il y a trop longtemps. Recommence-la."
+
+msgid "These answers don't match the lesson."
+msgstr "Ces réponses ne correspondent pas à la leçon."
+
+msgid "Learn"
+msgstr "Apprendre"
+
+msgid "Analysis"
+msgstr "Analyse"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Main menu"
+msgstr "Menu principal"
+
+msgid "Day streak"
+msgstr "Série de jours"
+
+msgid "day streak"
+msgstr "jours de série"
+
+msgid "Log out"
+msgstr "Se déconnecter"
+
+msgid "Learn chess, one short lesson a day"
+msgstr "Apprends les échecs, une courte leçon par jour"
+
+msgid "Openings, endgames and tactics in five-minute lessons. Keep your streak, earn XP, and watch your game grow."
+msgstr "Ouvertures, finales et tactique en leçons de cinq minutes. Garde ta série, gagne des XP et regarde ton jeu progresser."
+
+msgid "I already have an account"
+msgstr "J'ai déjà un compte"
+
+msgid "Where do you start?"
+msgstr "Par où commences-tu ?"
+
+msgid "Pick the closest. You can change it later."
+msgstr "Choisis le plus proche. Tu pourras changer plus tard."
+
+msgid "I'm new to chess"
+msgstr "Je débute aux échecs"
+
+msgid "Start from the very first lesson."
+msgstr "Commence par la toute première leçon."
+
+msgid "I know the rules"
+msgstr "Je connais les règles"
+
+msgid "Every lesson of the first unit is open."
+msgstr "Toutes les leçons du premier niveau sont ouvertes."
+
+msgid "I play regularly"
+msgstr "Je joue souvent"
+
+msgid "The first two units are open."
+msgstr "Les deux premiers niveaux sont ouverts."
+
+msgid "Something went wrong. Try again."
+msgstr "Un problème est survenu. Réessaie."
+
+msgid "Path"
+msgstr "Parcours"
+
+msgid "Openings"
+msgstr "Ouvertures"
+
+msgid "Endgames"
+msgstr "Finales"
+
+msgid "Tactics"
+msgstr "Tactique"
+
+msgid "Ready for today's lesson?"
+msgstr "Prêt pour la leçon du jour ?"
+
+#, python-format
+msgid "Level %(n)s"
+msgstr "Niveau %(n)s"
+
+msgid "lessons"
+msgstr "leçons"
+
+msgid "next:"
+msgstr "ensuite :"
+
+msgid "locked"
+msgstr "verrouillée"
+
+msgid "The first lessons are on their way. Come back soon!"
+msgstr "Les premières leçons arrivent. Reviens vite !"
+
+#, python-format
+msgid "record %(n)s"
+msgstr "record %(n)s"
+
+msgid "Guest"
+msgstr "Invité"
+
+#, python-format
+msgid "Level %(level)s · %(xp)s XP"
+msgstr "Niveau %(level)s · %(xp)s XP"
+
+msgid "Profile sections"
+msgstr "Sections du profil"
+
+msgid "Performance"
+msgstr "Performance"
+
+msgid "Mastery"
+msgstr "Maîtrise"
+
+msgid "Statistics"
+msgstr "Statistiques"
+
+msgid "d"
+msgstr "j"
+
+msgid "Streak"
+msgstr "Série"
+
+msgid "record"
+msgstr "record"
+
+msgid "Level"
+msgstr "Niveau"
+
+msgid "Lessons"
+msgstr "Leçons"
+
+#, python-format
+msgid "perfect: %(n)s"
+msgstr "parfaites : %(n)s"
+
+msgid "Accuracy"
+msgstr "Précision"
+
+msgid "No lessons yet."
+msgstr "Pas encore de leçons."
+
+msgid "Name, language, daily goal, time zone"
+msgstr "Prénom, langue, objectif du jour, fuseau horaire"
+
+msgid "Not connected"
+msgstr "Pas connecté"
+
+msgid "My level"
+msgstr "Mon niveau"
+
+msgid "Where you start on the path."
+msgstr "Où tu commences le parcours."
+
+msgid "To review your games, every move explained."
+msgstr "Pour analyser tes parties, chaque coup expliqué."
+
+msgid "My game reviews"
+msgstr "Bilan de mes parties"
+
+msgid "Your strong points and what costs you points."
+msgstr "Tes points forts et ce qui te coûte des points."
+
+msgid "Keep your progress"
+msgstr "Garde ta progression"
+
+msgid "Continue"
+msgstr "Continuer"
+
+msgid "Check"
+msgstr "Vérifier"
+
+msgid "Hint"
+msgstr "Indice"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Excellent!"
+msgstr "Excellent !"
+
+msgid "Not quite"
+msgstr "Pas tout à fait"
+
+msgid "Try again."
+msgstr "Réessaie."
+
+msgid "Here is the move. Play it."
+msgstr "Voici le coup. Joue-le."
+
+msgid "That also works. We'll follow the lesson's line."
+msgstr "Ça marche aussi. On suit la ligne de la leçon."
+
+msgid "Line complete"
+msgstr "Ligne terminée"
+
+msgid "Your move."
+msgstr "À toi de jouer."
+
+msgid "This lesson could not load."
+msgstr "Cette leçon n'a pas pu se charger."
+
+msgid "Lesson complete!"
+msgstr "Leçon terminée !"
+
+msgid "Almost there. Try this lesson again."
+msgstr "Presque ! Refais cette leçon."
+
+msgid "Time"
+msgstr "Temps"
+
+msgid "Level up!"
+msgstr "Niveau supérieur !"
+
+msgid "Create an account to keep your progress"
+msgstr "Crée un compte pour garder ta progression"
+
+msgid "Preview: nothing was saved."
+msgstr "Aperçu : rien n'a été enregistré."
+
+msgid "Saving…"
+msgstr "Enregistrement…"
+
+msgid "We'll save this when you're back online."
+msgstr "On enregistrera dès que tu seras de nouveau en ligne."
+
+msgid "First lesson"
+msgstr "Première leçon"
+
+msgid "First unit complete"
+msgstr "Premier niveau terminé"
+
+msgid "3-day streak"
+msgstr "Série de 3 jours"
+
+msgid "7-day streak"
+msgstr "Série de 7 jours"
+
+msgid "30-day streak"
+msgstr "Série de 30 jours"
+
+msgid "10 perfect lessons"
+msgstr "10 leçons parfaites"
+
+msgid "Lesson"
+msgstr "Leçon"
+
+msgid "Right answers in a row"
+msgstr "Bonnes réponses d'affilée"
+
+msgid "Moves"
+msgstr "Coups"
+
+msgid "Not saved"
+msgstr "Non enregistré"
+
+msgid "Start again"
+msgstr "Recommencer"
+
+msgid "Calculation"
+msgstr "Calcul"
+
+msgid "Positional play"
+msgstr "Jeu positionnel"
+
+msgid "Strategy"
+msgstr "Stratégie"
+
+msgid "Defence"
+msgstr "Défense"
+
+msgid "Decisions"
+msgstr "Décisions"
+
+msgid "Time management"
+msgstr "Gestion du temps"
+
+msgid "Advanced pawn"
+msgstr "Pion avancé"
+
+msgid "Winning an advantage"
+msgstr "Prendre l'avantage"
+
+msgid "Anastasia's mate"
+msgstr "Mat d'Anastasia"
+
+msgid "Arabian mate"
+msgstr "Mat arabe"
+
+msgid "Attacking f2 or f7"
+msgstr "Attaque sur f2 ou f7"
+
+msgid "Attraction"
+msgstr "Attraction"
+
+msgid "Back-rank mate"
+msgstr "Mat du couloir"
+
+msgid "Balestra mate"
+msgstr "Mat de Balestra"
+
+msgid "Blind swine mate"
+msgstr "Mat des cochons aveugles"
+
+msgid "Bishop endgame"
+msgstr "Finale de fous"
+
+msgid "Boden's mate"
+msgstr "Mat de Boden"
+
+msgid "Castling"
+msgstr "Roque"
+
+msgid "Capturing the defender"
+msgstr "Capture du défenseur"
+
+msgid "Collinear move"
+msgstr "Coup colinéaire"
+
+msgid "Corner mate"
+msgstr "Mat dans le coin"
+
+msgid "Crushing"
+msgstr "Écrasant"
+
+msgid "Discovered check"
+msgstr "Échec à la découverte"
+
+msgid "Double bishop mate"
+msgstr "Mat des deux fous"
+
+msgid "Dovetail mate"
+msgstr "Mat en queue d'aronde"
+
+msgid "Saving the game"
+msgstr "Sauver la partie"
+
+msgid "Kingside attack"
+msgstr "Attaque à l'aile roi"
+
+msgid "Clearance"
+msgstr "Dégagement"
+
+msgid "Defensive move"
+msgstr "Coup défensif"
+
+msgid "Deflection"
+msgstr "Déviation"
+
+msgid "Discovered attack"
+msgstr "Attaque à la découverte"
+
+msgid "Double check"
+msgstr "Échec double"
+
+msgid "Endgame"
+msgstr "Finale"
+
+msgid "En passant"
+msgstr "Prise en passant"
+
+msgid "Epaulette mate"
+msgstr "Mat des épaulettes"
+
+msgid "Exposed king"
+msgstr "Roi exposé"
+
+msgid "Fork"
+msgstr "Fourchette"
+
+msgid "Hanging piece"
+msgstr "Pièce en prise"
+
+msgid "Hook mate"
+msgstr "Mat du crochet"
+
+msgid "Interference"
+msgstr "Interférence"
+
+msgid "In-between move"
+msgstr "Coup intermédiaire"
+
+msgid "Kill box mate"
+msgstr "Mat de la boîte"
+
+msgid "Pillsbury's mate"
+msgstr "Mat de Pillsbury"
+
+msgid "Morphy's mate"
+msgstr "Mat de Morphy"
+
+msgid "Swallow's tail mate"
+msgstr "Mat en queue d'hirondelle"
+
+msgid "Triangle mate"
+msgstr "Mat du triangle"
+
+msgid "Vukovic mate"
+msgstr "Mat de Vukovic"
+
+msgid "Knight endgame"
+msgstr "Finale de cavaliers"
+
+msgid "Long puzzle"
+msgstr "Problème long"
+
+msgid "Master game"
+msgstr "Partie de maître"
+
+msgid "Master vs master"
+msgstr "Maître contre maître"
+
+msgid "Checkmate"
+msgstr "Échec et mat"
+
+msgid "Mate in 1"
+msgstr "Mat en 1"
+
+msgid "Mate in 2"
+msgstr "Mat en 2"
+
+msgid "Mate in 3"
+msgstr "Mat en 3"
+
+msgid "Mate in 4"
+msgstr "Mat en 4"
+
+msgid "Mate in 5 or more"
+msgstr "Mat en 5 ou plus"
+
+msgid "Middlegame"
+msgstr "Milieu de partie"
+
+msgid "One move"
+msgstr "Un coup"
+
+msgid "Opening"
+msgstr "Ouverture"
+
+msgid "Opera mate"
+msgstr "Mat de l'Opéra"
+
+msgid "Pawn endgame"
+msgstr "Finale de pions"
+
+msgid "Pin"
+msgstr "Clouage"
+
+msgid "Promotion"
+msgstr "Promotion"
+
+msgid "Queen endgame"
+msgstr "Finale de dames"
+
+msgid "Queen and rook endgame"
+msgstr "Finale dame et tour"
+
+msgid "Queenside attack"
+msgstr "Attaque à l'aile dame"
+
+msgid "Quiet move"
+msgstr "Coup tranquille"
+
+msgid "Rook endgame"
+msgstr "Finale de tours"
+
+msgid "Sacrifice"
+msgstr "Sacrifice"
+
+msgid "Short puzzle"
+msgstr "Problème court"
+
+msgid "Skewer"
+msgstr "Enfilade"
+
+msgid "Smothered mate"
+msgstr "Mat à l'étouffée"
+
+msgid "Super GM game"
+msgstr "Partie de super GM"
+
+msgid "Trapped piece"
+msgstr "Pièce piégée"
+
+msgid "Underpromotion"
+msgstr "Sous-promotion"
+
+msgid "Very long puzzle"
+msgstr "Problème très long"
+
+msgid "X-ray attack"
+msgstr "Attaque aux rayons X"
+
+msgid "Zugzwang"
+msgstr "Zugzwang"
+
+msgid "Unknown mode, theme or difficulty."
+msgstr "Mode, thème ou difficulté inconnu."
+
+msgid "You've seen every puzzle here. Try another theme or difficulty."
+msgstr "Vous avez vu tous les problèmes ici. Essayez un autre thème ou une autre difficulté."
+
+msgid "This puzzle does not exist."
+msgstr "Ce problème n'existe pas."
+
+msgid "This puzzle was opened too long ago."
+msgstr "Ce problème a été ouvert il y a trop longtemps."
+
+msgid "These moves don't match the puzzle."
+msgstr "Ces coups ne correspondent pas au problème."
+
+msgid "Pick a reason; the note can be up to 500 characters."
+msgstr "Choisissez une raison ; la note peut faire jusqu'à 500 caractères."
+
+msgid "Train"
+msgstr "S'entraîner"
+
+msgid "Puzzles"
+msgstr "Problèmes"
+
+msgid "Your rating about %(low)s–%(high)s"
+msgstr "Votre classement environ %(low)s–%(high)s"
+
+msgid "still settling"
+msgstr "encore en calcul"
+
+msgid "Not rated yet"
+msgstr "Pas encore classé"
+
+msgid "Start puzzles"
+msgstr "Commencer les problèmes"
+
+msgid "Difficulty"
+msgstr "Difficulté"
+
+msgid "Easier"
+msgstr "Plus facile"
+
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Harder"
+msgstr "Plus difficile"
+
+msgid "Train a theme"
+msgstr "S'entraîner sur un thème"
+
+msgid "All puzzles"
+msgstr "Tous les problèmes"
+
+msgid "Recent"
+msgstr "Récents"
+
+msgid "Solved!"
+msgstr "Résolu !"
+
+msgid "Missed"
+msgstr "Manqué"
+
+msgid "counts the puzzle as missed"
+msgstr "compte le problème comme manqué"
+
+msgid "Show solution"
+msgstr "Voir la solution"
+
+msgid "Puzzles from the Lichess puzzle database (CC0)"
+msgstr "Problèmes issus de la base de problèmes Lichess (CC0)"
+
+msgid "Replay"
+msgstr "Rejouer"
+
+msgid "Back to puzzles"
+msgstr "Retour aux problèmes"
+
+msgid "Mates"
+msgstr "Mats"
+
+msgid "White to play — find the best move."
+msgstr "Les blancs jouent — trouvez le meilleur coup."
+
+msgid "Black to play — find the best move."
+msgstr "Les noirs jouent — trouvez le meilleur coup."
+
+msgid "Not this time — this puzzle counts as missed. Keep going to learn the idea."
+msgstr "Pas cette fois — ce problème compte comme manqué. Continuez pour comprendre l'idée."
+
+msgid "That mates too!"
+msgstr "Ça fait mat aussi !"
+
+msgid "Next puzzle"
+msgstr "Problème suivant"
+
+msgid "Report a problem"
+msgstr "Signaler un problème"
+
+msgid "The solution is wrong"
+msgstr "La solution est fausse"
+
+msgid "Something else"
+msgstr "Autre chose"
+
+msgid "Thanks, we'll check this puzzle."
+msgstr "Merci, nous allons vérifier ce problème."
+
+msgid "See the game on Lichess"
+msgstr "Voir la partie sur Lichess"
+
+msgid "Puzzle rating"
+msgstr "Classement du problème"
+
+msgid "Your rating"
+msgstr "Votre classement"
+
+msgid "about {low}–{high}"
+msgstr "environ {low}–{high}"
+
+msgid "The puzzle could not load. Try again in a moment."
+msgstr "Le problème n'a pas pu se charger. Réessayez dans un instant."
+
+msgid "Line complete. This replay doesn't change your rating."
+msgstr "Ligne terminée. Cette révision ne change pas votre classement."
+
+msgid "%(n)s puzzle"
+msgid_plural "%(n)s puzzles"
+msgstr[0] "%(n)s problème"
+msgstr[1] "%(n)s problèmes"
+
+msgid "Skills"
+msgstr "Compétences"
+
+msgid "Weakness"
+msgstr "Point faible"
+
+msgid "Weakness forming"
+msgstr "Point faible possible"
+
+msgid "Improving"
+msgstr "En progrès"
+
+msgid "Strength"
+msgstr "Point fort"
+
+msgid "stronger than your usual level"
+msgstr "plus fort que votre niveau habituel"
+
+msgid "about your level"
+msgstr "à votre niveau"
+
+msgid "weaker than your usual level"
+msgstr "plus faible que votre niveau habituel"
+
+msgid "reliable"
+msgstr "fiable"
+
+msgid "early estimate"
+msgstr "première estimation"
+
+msgid "not enough evidence yet"
+msgstr "pas encore assez d'éléments"
+
+msgid "about %(low)s–%(high)s"
+msgstr "environ %(low)s–%(high)s"
+
+msgid "%(percent)s%% right on the first try"
+msgstr "%(percent)s %% de bonnes réponses du premier coup"
+
+msgid "Puzzle rating about %(low)s–%(high)s"
+msgstr "Classement aux problèmes environ %(low)s–%(high)s"
+
+msgid "We're still learning how you play. Solve a few puzzles or finish a lesson to see your skills."
+msgstr "Nous apprenons encore comment vous jouez. Résolvez quelques problèmes ou terminez une leçon pour voir vos compétences."
+
+msgid "From %(p)s puzzles and %(l)s lesson answers."
+msgstr "D'après %(p)s problèmes et %(l)s réponses de leçon."
+
+msgid "Themes"
+msgstr "Thèmes"
+
+msgid "Latest evidence"
+msgstr "Derniers éléments"
+
+msgid "Right"
+msgstr "Juste"
+
+msgid "Puzzle"
+msgstr "Problème"
+
+msgid "%(n)s lesson answer"
+msgid_plural "%(n)s lesson answers"
+msgstr[0] "%(n)s réponse de leçon"
+msgstr[1] "%(n)s réponses de leçon"
+
+msgid "Your last puzzle isn't saved yet. Check your connection, then try again."
+msgstr "Votre dernier problème n'est pas encore enregistré. Vérifiez votre connexion, puis réessayez."

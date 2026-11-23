@@ -1,0 +1,1 @@
+{% load i18n %}{% if rating %}{% blocktrans with low=rating.low high=rating.high %}Your rating about {{ low }}–{{ high }}{% endblocktrans %}{% if rating.settling %} · {% trans "still settling" %}{% endif %} · {% blocktrans count n=rating.count %}{{ n }} puzzle{% plural %}{{ n }} puzzles{% endblocktrans %}{% else %}{% trans "Not rated yet" %}{% endif %}

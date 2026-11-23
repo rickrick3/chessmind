@@ -1,0 +1,50 @@
+{% load static i18n %}<!doctype html>
+{% get_current_language as LANG %}
+<html lang="{{ LANG }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{% trans "Lesson" %} · ChessMind</title>
+  <link rel="preload" href="{% static 'fonts/nunito/nunito-latin-wght-normal.woff2' %}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{% static 'vendor/cm-chessboard/assets/chessboard.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/cm-chessboard/assets/extensions/arrows/arrows.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/cm-chessboard/assets/extensions/markers/markers.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/cm-chessboard/assets/extensions/promotion-dialog/promotion-dialog.css' %}">
+  <link rel="stylesheet" href="{% static 'css/chessmind.css' %}">
+  <link rel="stylesheet" href="{% static 'css/player.css' %}">
+</head>
+<body class="cm lp-body">
+<div class="lp" id="player">
+  <header class="lp-top">
+    <a class="lp-close" href="/learn/" aria-label="{% trans 'Close' %}">&times;</a>
+    <div class="lp-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+    <div class="lp-combo" title="{% trans 'Right answers in a row' %}"><span aria-hidden="true">&#128293;</span> <span class="lp-combo__n">0</span></div>
+  </header>
+  <main class="lp-main">
+    <section class="lp-text">
+      <div class="lp-tag">{{ lesson_title }}</div>
+      <h1 class="lp-prompt" hidden></h1>
+      <div class="cm-coach lp-coach-row" hidden>
+        <div class="cm-coach__avatar" aria-hidden="true">&#9822;</div>
+        <div class="cm-bubble lp-coach" aria-live="polite"></div>
+      </div>
+      <div class="lp-chips" aria-label="{% trans 'Moves' %}"></div>
+      <div class="lp-options"></div>
+      <div class="lp-actions"><button type="button" class="cm-btn cm-btn--secondary lp-hint" hidden>&#128161; {% trans "Hint" %}</button></div>
+    </section>
+    <section class="lp-board-wrap"><div id="board" class="lp-board"></div></section>
+  </main>
+  <footer class="lp-feedback" hidden aria-live="polite">
+    <div class="lp-feedback__inner">
+      <div class="lp-feedback__icon" aria-hidden="true"></div>
+      <div class="lp-feedback__words"><div class="lp-feedback__title"></div><div class="lp-feedback__text"></div></div>
+      <button type="button" class="cm-btn cm-btn--primary lp-continue">{% trans "Continue" %}</button>
+    </div>
+  </footer>
+  <section class="lp-summary" hidden aria-live="polite"></section>
+  <p class="lp-error" role="alert" hidden></p>
+</div>
+{{ config|json_script:"player-config" }}
+<script type="module" src="{% static 'js/player/main.js' %}"></script>
+</body>
+</html>

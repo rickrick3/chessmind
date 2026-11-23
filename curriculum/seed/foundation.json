@@ -1,0 +1,728 @@
+{
+ "courses": [
+  {
+   "slug": "fundamentals",
+   "track": "path",
+   "order": 1,
+   "title": {
+    "fr": "Fondamentaux",
+    "en": "Fundamentals"
+   },
+   "description": {
+    "fr": "Les bases pour bien commencer.",
+    "en": "The basics to start well."
+   },
+   "units": [
+    {
+     "slug": "basics",
+     "order": 1,
+     "title": {
+      "fr": "Les bases",
+      "en": "The basics"
+     },
+     "description": {
+      "fr": "Valeur des pièces, menaces et premiers mats.",
+      "en": "Piece values, threats and first mates."
+     },
+     "lessons": [
+      {
+       "slug": "piece-values",
+       "order": 1,
+       "kind": "concept",
+       "difficulty": 1,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "La valeur des pièces",
+          "en": "What the pieces are worth"
+         },
+         "description": {
+          "fr": "Compte en pions pour savoir quels échanges sont bons.",
+          "en": "Count in pawns to know which trades are good."
+         },
+         "objectives": [
+          {
+           "fr": "Connaître la valeur de chaque pièce",
+           "en": "Know what each piece is worth"
+          },
+          {
+           "fr": "Prendre la pièce qui vaut le plus",
+           "en": "Capture the piece worth the most"
+          }
+         ],
+         "difficulty": 1,
+         "estimated_minutes": 4,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "intro",
+          "type": "explain",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "text": {
+           "fr": "Chaque pièce vaut un nombre de pions : pion 1, cavalier 3, fou 3, tour 5, dame 9. Le roi ne s'échange jamais.",
+           "en": "Each piece is worth a number of pawns: pawn 1, knight 3, bishop 3, rook 5, queen 9. The king is never traded."
+          },
+          "highlights": [
+           "d1",
+           "a1",
+           "b1",
+           "c1"
+          ],
+          "skills": [
+           "piece-values"
+          ]
+         },
+         {
+          "id": "rook",
+          "type": "choice",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "question": {
+           "fr": "Combien de pions vaut une tour ?",
+           "en": "How many pawns is a rook worth?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "3",
+             "en": "3"
+            }
+           },
+           {
+            "text": {
+             "fr": "5",
+             "en": "5"
+            }
+           },
+           {
+            "text": {
+             "fr": "9",
+             "en": "9"
+            }
+           }
+          ],
+          "answer": 1,
+          "explanation": {
+           "fr": "Une tour vaut 5 pions : plus qu'un cavalier ou un fou.",
+           "en": "A rook is worth 5 pawns: more than a knight or a bishop."
+          },
+          "hint": {
+           "fr": "Elle vaut moins que la dame, plus que le fou.",
+           "en": "Less than the queen, more than a bishop."
+          },
+          "skills": [
+           "piece-values"
+          ]
+         },
+         {
+          "id": "trade",
+          "type": "choice",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "question": {
+           "fr": "Quel échange te fait gagner du matériel ?",
+           "en": "Which trade wins material for you?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Ton cavalier contre sa tour",
+             "en": "Your knight for their rook"
+            }
+           },
+           {
+            "text": {
+             "fr": "Ta tour contre son cavalier",
+             "en": "Your rook for their knight"
+            }
+           },
+           {
+            "text": {
+             "fr": "Ta dame contre son fou",
+             "en": "Your queen for their bishop"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Tu donnes 3 et tu reçois 5 : tu gagnes 2 pions.",
+           "en": "You give 3 and get 5: you win 2 pawns."
+          },
+          "hint": {
+           "fr": "Donne peu, prends beaucoup.",
+           "en": "Give little, take a lot."
+          },
+          "skills": [
+           "piece-values",
+           "trades"
+          ]
+         },
+         {
+          "id": "free-rook",
+          "type": "find_move",
+          "fen": "6k1/5ppp/8/1r6/4p3/2N5/5PPP/6K1 w - - 0 1",
+          "prompt": {
+           "fr": "Les Blancs jouent. Quelle prise gagne le plus ?",
+           "en": "White to play. Which capture wins the most?"
+          },
+          "accept": [
+           "c3b5"
+          ],
+          "wrong": [
+           {
+            "uci": "c3e4",
+            "feedback": {
+             "fr": "Tu gagnes un pion, mais la tour était gratuite.",
+             "en": "That wins a pawn, but the rook was free."
+            }
+           }
+          ],
+          "correct": {
+           "fr": "Nxb5 gagne une tour : 5 pions d'un coup.",
+           "en": "Nxb5 wins a rook: 5 pawns at once."
+          },
+          "hint": {
+           "fr": "Ton cavalier attaque deux pièces. Laquelle vaut le plus ?",
+           "en": "Your knight attacks two pieces. Which one is worth more?"
+          },
+          "arrows": [
+           [
+            "c3",
+            "b5"
+           ],
+           [
+            "c3",
+            "e4"
+           ]
+          ],
+          "skills": [
+           "piece-values",
+           "captures"
+          ]
+         },
+         {
+          "id": "defended",
+          "type": "find_move",
+          "fen": "6k1/8/3p4/4n3/1b1Q4/8/8/6K1 w - - 0 1",
+          "prompt": {
+           "fr": "Les Blancs jouent. Ta dame peut prendre deux pièces. Laquelle ?",
+           "en": "White to play. Your queen can take two pieces. Which one?"
+          },
+          "accept": [
+           "d4b4"
+          ],
+          "wrong": [
+           {
+            "uci": "d4e5",
+            "feedback": {
+             "fr": "Le pion d6 reprend : tu donnes 9 pour 3.",
+             "en": "The pawn on d6 takes back: you give 9 for 3."
+            }
+           }
+          ],
+          "correct": {
+           "fr": "Qxb4 prend un fou que personne ne défend.",
+           "en": "Qxb4 takes a bishop nobody defends."
+          },
+          "hint": {
+           "fr": "Avant de prendre, regarde qui peut reprendre.",
+           "en": "Before you capture, check who can take back."
+          },
+          "skills": [
+           "piece-values",
+           "defenders"
+          ]
+         },
+         {
+          "id": "wrap",
+          "type": "explain",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "text": {
+           "fr": "Avant chaque prise, compte : ce que tu prends, et ce que tu peux perdre.",
+           "en": "Before every capture, count: what you take, and what you could lose."
+          },
+          "skills": [
+           "piece-values"
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "slug": "checks-captures-threats",
+       "order": 2,
+       "kind": "concept",
+       "difficulty": 1,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Échecs, prises, menaces",
+          "en": "Checks, captures, threats"
+         },
+         "description": {
+          "fr": "Avant chaque coup, cherche les échecs, les prises et les menaces.",
+          "en": "Before every move, look for checks, captures and threats."
+         },
+         "objectives": [
+          {
+           "fr": "Voir la menace de l'adversaire",
+           "en": "Spot your opponent's threat"
+          },
+          {
+           "fr": "Trouver un échec qui gagne du matériel",
+           "en": "Find a check that wins material"
+          }
+         ],
+         "difficulty": 1,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "intro",
+          "type": "explain",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "text": {
+           "fr": "Avant chaque coup, pose trois questions : quels échecs ? quelles prises ? quelles menaces ? Pour toi, et pour ton adversaire.",
+           "en": "Before every move, ask three questions: which checks? which captures? which threats? For you, and for your opponent."
+          },
+          "skills": [
+           "cct"
+          ]
+         },
+         {
+          "id": "scholar",
+          "type": "show_moves",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "text": {
+           "fr": "Regarde une menace passer inaperçue.",
+           "en": "Watch a threat go unnoticed."
+          },
+          "moves": [
+           {
+            "uci": "e2e4",
+            "caption": {
+             "fr": "1.e4 ouvre la diagonale de la dame.",
+             "en": "1.e4 opens the queen's diagonal."
+            }
+           },
+           {
+            "uci": "e7e5",
+            "caption": {
+             "fr": "Les Noirs répondent e5.",
+             "en": "Black answers e5."
+            }
+           },
+           {
+            "uci": "f1c4",
+            "caption": {
+             "fr": "Bc4 vise f7.",
+             "en": "Bc4 aims at f7."
+            }
+           },
+           {
+            "uci": "b8c6",
+            "caption": {
+             "fr": "Nc6 sort un cavalier.",
+             "en": "Nc6 develops a knight."
+            }
+           },
+           {
+            "uci": "d1h5",
+            "caption": {
+             "fr": "Qh5 menace Qxf7#.",
+             "en": "Qh5 threatens Qxf7#."
+            }
+           },
+           {
+            "uci": "g8f6",
+            "caption": {
+             "fr": "Nf6?? attaque la dame mais oublie la menace.",
+             "en": "Nf6?? attacks the queen but misses the threat."
+            }
+           },
+           {
+            "uci": "h5f7",
+            "caption": {
+             "fr": "Qxf7# : échec et mat.",
+             "en": "Qxf7#: checkmate."
+            }
+           }
+          ],
+          "skills": [
+           "cct",
+           "threats"
+          ]
+         },
+         {
+          "id": "stop-mate",
+          "type": "find_move",
+          "fen": "r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 3 3",
+          "prompt": {
+           "fr": "Les Noirs jouent. Les Blancs menacent mat sur f7. Arrête-les !",
+           "en": "Black to play. White threatens mate on f7. Stop it!"
+          },
+          "accept": [
+           "g7g6",
+           "d8e7",
+           "d8f6",
+           "g8h6"
+          ],
+          "wrong": [
+           {
+            "uci": "g8f6",
+            "feedback": {
+             "fr": "Nf6 ne bloque rien : la dame prend f7 avec mat.",
+             "en": "Nf6 blocks nothing: the queen takes on f7 with mate."
+            }
+           }
+          ],
+          "correct": {
+           "fr": "Bien vu : f7 est protégé, la menace est arrêtée.",
+           "en": "Well spotted: f7 is safe, the threat is gone."
+          },
+          "hint": {
+           "fr": "Bloque la dame, ou défends f7 une fois de plus.",
+           "en": "Block the queen, or defend f7 once more."
+          },
+          "arrows": [
+           [
+            "h5",
+            "f7"
+           ],
+           [
+            "c4",
+            "f7"
+           ]
+          ],
+          "skills": [
+           "threats",
+           "defence"
+          ]
+         },
+         {
+          "id": "order",
+          "type": "choice",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "question": {
+           "fr": "Ton adversaire vient de jouer. Que regardes-tu d'abord ?",
+           "en": "Your opponent just moved. What do you look at first?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Ses échecs, prises et menaces",
+             "en": "Their checks, captures and threats"
+            }
+           },
+           {
+            "text": {
+             "fr": "Le coup que tu avais prévu",
+             "en": "The move you had planned"
+            }
+           },
+           {
+            "text": {
+             "fr": "La pendule",
+             "en": "The clock"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Son dernier coup crée peut-être une menace. Vois-la avant de jouer ton plan.",
+           "en": "Their last move may create a threat. See it before you play your plan."
+          },
+          "hint": {
+           "fr": "Qu'est-ce que son coup veut faire ?",
+           "en": "What does their move want to do?"
+          },
+          "skills": [
+           "cct"
+          ]
+         },
+         {
+          "id": "fork",
+          "type": "find_move",
+          "fen": "q3k3/8/8/1N6/8/8/8/6K1 w - - 0 1",
+          "prompt": {
+           "fr": "Les Blancs jouent. Un échec gagne la dame. Lequel ?",
+           "en": "White to play. One check wins the queen. Which one?"
+          },
+          "accept": [
+           "b5c7"
+          ],
+          "wrong": [
+           {
+            "uci": "b5d6",
+            "feedback": {
+             "fr": "C'est un échec, mais il ne gagne rien.",
+             "en": "That's a check, but it wins nothing."
+            }
+           }
+          ],
+          "correct": {
+           "fr": "Nc7+ attaque le roi et la dame en même temps : une fourchette.",
+           "en": "Nc7+ attacks the king and the queen at once: a fork."
+          },
+          "hint": {
+           "fr": "Cherche une case d'où le cavalier touche e8 et a8.",
+           "en": "Find a square where the knight hits both e8 and a8."
+          },
+          "arrows": [
+           [
+            "b5",
+            "c7"
+           ]
+          ],
+          "skills": [
+           "checks",
+           "fork"
+          ]
+         },
+         {
+          "id": "defend-line",
+          "type": "play_line",
+          "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+          "side": "black",
+          "prompt": {
+           "fr": "Joue les Noirs et arrête chaque menace.",
+           "en": "Play Black and stop every threat."
+          },
+          "moves": [
+           "e2e4",
+           "e7e5",
+           "f1c4",
+           "b8c6",
+           "d1h5",
+           "g7g6",
+           "h5f3",
+           "g8f6"
+          ],
+          "also_accept": {
+           "5": [
+            "d8e7"
+           ]
+          },
+          "notes": {
+           "5": {
+            "fr": "g6 bloque la dame et l'attaque.",
+            "en": "g6 blocks the queen and attacks it."
+           },
+           "7": {
+            "fr": "Nf6 ferme la colonne devant f7.",
+            "en": "Nf6 closes the file in front of f7."
+           }
+          },
+          "hint": {
+           "fr": "À chaque coup, regarde ce que vise la dame blanche.",
+           "en": "On every move, look at what the white queen is aiming at."
+          },
+          "skills": [
+           "threats",
+           "defence"
+          ]
+         },
+         {
+          "id": "wrap",
+          "type": "explain",
+          "fen": "r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 3 3",
+          "text": {
+           "fr": "Échecs, prises, menaces : trois questions avant chaque coup.",
+           "en": "Checks, captures, threats: three questions before every move."
+          },
+          "skills": [
+           "cct"
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "slug": "mate-in-one",
+       "order": 3,
+       "kind": "tactic",
+       "difficulty": 1,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Mat en 1",
+          "en": "Mate in 1"
+         },
+         "description": {
+          "fr": "Trouve le coup qui donne échec et mat.",
+          "en": "Find the move that gives checkmate."
+         },
+         "objectives": [
+          {
+           "fr": "Reconnaître un échec et mat",
+           "en": "Recognise checkmate"
+          },
+          {
+           "fr": "Trouver le mat du couloir",
+           "en": "Find the back-rank mate"
+          }
+         ],
+         "difficulty": 1,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "intro",
+          "type": "explain",
+          "fen": "6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1",
+          "text": {
+           "fr": "Échec et mat : le roi est en échec et ne peut pas s'échapper. Regarde d'abord chaque échec.",
+           "en": "Checkmate: the king is in check and cannot escape. Look at every check first."
+          },
+          "skills": [
+           "mate"
+          ]
+         },
+         {
+          "id": "back-rank",
+          "type": "show_moves",
+          "fen": "6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1",
+          "moves": [
+           {
+            "uci": "a1a8",
+            "caption": {
+             "fr": "Ra8# : ses propres pions enferment le roi.",
+             "en": "Ra8#: the king's own pawns lock it in."
+            }
+           }
+          ],
+          "skills": [
+           "mate",
+           "back-rank"
+          ]
+         },
+         {
+          "id": "rook-mate",
+          "type": "find_move",
+          "fen": "6k1/5ppp/8/8/8/8/5PPP/3R2K1 w - - 0 1",
+          "prompt": {
+           "fr": "Les Blancs jouent et font mat.",
+           "en": "White to play and mate."
+          },
+          "accept": [
+           "d1d8"
+          ],
+          "correct": {
+           "fr": "Rd8# : le roi n'a aucune case.",
+           "en": "Rd8#: the king has no square left."
+          },
+          "hint": {
+           "fr": "La dernière rangée est vide.",
+           "en": "The back rank is empty."
+          },
+          "skills": [
+           "mate",
+           "back-rank"
+          ]
+         },
+         {
+          "id": "queen-mate",
+          "type": "find_move",
+          "fen": "k7/8/1K6/8/8/8/7Q/8 w - - 0 1",
+          "prompt": {
+           "fr": "Les Blancs jouent et font mat.",
+           "en": "White to play and mate."
+          },
+          "accept": [
+           "h2h8"
+          ],
+          "correct": {
+           "fr": "Qh8# : ton roi garde a7 et b7, la dame prend la rangée.",
+           "en": "Qh8#: your king guards a7 and b7, the queen takes the back rank."
+          },
+          "hint": {
+           "fr": "Ton roi contrôle a7 et b7.",
+           "en": "Your king controls a7 and b7."
+          },
+          "skills": [
+           "mate",
+           "queen"
+          ]
+         },
+         {
+          "id": "which-mate",
+          "type": "choice",
+          "fen": "6k1/5ppp/8/8/8/8/1Q3PPP/6K1 w - - 0 1",
+          "question": {
+           "fr": "Lequel de ces coups est mat ?",
+           "en": "Which of these moves is mate?"
+          },
+          "options": [
+           {
+            "uci": "b2b8"
+           },
+           {
+            "uci": "b2g7"
+           },
+           {
+            "uci": "b2b7"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Qb8+ : le roi est enfermé par ses pions. Qxg7+ ne marche pas, le roi reprend.",
+           "en": "Qb8+: the king is shut in by its pawns. Qxg7+ fails, the king takes back."
+          },
+          "hint": {
+           "fr": "Cherche la dernière rangée.",
+           "en": "Look at the back rank."
+          },
+          "skills": [
+           "mate",
+           "back-rank"
+          ]
+         },
+         {
+          "id": "smothered",
+          "type": "find_move",
+          "fen": "6rk/6pp/8/6N1/8/8/8/6K1 w - - 0 1",
+          "prompt": {
+           "fr": "Les Blancs jouent et font mat avec le cavalier.",
+           "en": "White to play and mate with the knight."
+          },
+          "accept": [
+           "g5f7"
+          ],
+          "correct": {
+           "fr": "Nf7# : le roi est étouffé par ses propres pièces.",
+           "en": "Nf7#: the king is smothered by its own pieces."
+          },
+          "hint": {
+           "fr": "Le roi n'a aucune case libre. Un échec suffit.",
+           "en": "The king has no free square. One check is enough."
+          },
+          "skills": [
+           "mate",
+           "smothered"
+          ]
+         },
+         {
+          "id": "wrap",
+          "type": "explain",
+          "fen": "6rk/6pp/8/6N1/8/8/8/6K1 w - - 0 1",
+          "text": {
+           "fr": "Pour trouver un mat, regarde les échecs et compte les cases de fuite du roi.",
+           "en": "To find a mate, look at the checks and count the king's escape squares."
+          },
+          "skills": [
+           "mate"
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
