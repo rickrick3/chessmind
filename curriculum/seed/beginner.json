@@ -1,0 +1,1020 @@
+{
+ "courses": [
+  {
+   "slug": "fundamentals",
+   "track": "path",
+   "order": 1,
+   "title": {
+    "fr": "Fondamentaux",
+    "en": "Fundamentals"
+   },
+   "description": {
+    "fr": "Les bases pour bien commencer.",
+    "en": "The basics to start well."
+   },
+   "units": [
+    {
+     "slug": "pieces",
+     "order": 0,
+     "title": {
+      "fr": "Comment bougent les pièces",
+      "en": "How the pieces move"
+     },
+     "description": {
+      "fr": "Chaque pièce, comment elle bouge et prend, et comment se termine une partie.",
+      "en": "Each piece, how it moves and captures, and how a game ends."
+     },
+     "lessons": [
+      {
+       "slug": "rook-bishop",
+       "order": 1,
+       "kind": "concept",
+       "difficulty": 1,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "La tour et le fou",
+          "en": "The rook and the bishop"
+         },
+         "description": {
+          "fr": "Les lignes droites et les diagonales.",
+          "en": "Straight lines and diagonals."
+         },
+         "objectives": [
+          {
+           "fr": "Déplacer une tour sur les rangées et les colonnes",
+           "en": "Move a rook along ranks and files"
+          },
+          {
+           "fr": "Déplacer un fou sur les diagonales",
+           "en": "Move a bishop along diagonals"
+          }
+         ],
+         "difficulty": 1,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "rook",
+          "type": "explain",
+          "fen": "4k3/8/8/8/3R4/8/8/4K3 w - - 0 1",
+          "text": {
+           "fr": "La tour avance en ligne droite : en haut, en bas, à gauche ou à droite, aussi loin qu'elle veut.",
+           "en": "The rook moves in straight lines: up, down, left or right, as far as it likes."
+          },
+          "arrows": [
+           [
+            "d4",
+            "d8"
+           ],
+           [
+            "d4",
+            "d1"
+           ],
+           [
+            "d4",
+            "a4"
+           ],
+           [
+            "d4",
+            "h4"
+           ]
+          ]
+         },
+         {
+          "id": "no-jump",
+          "type": "show_moves",
+          "fen": "4k3/8/8/8/R2p4/8/8/4K3 w - - 0 1",
+          "moves": [
+           {
+            "uci": "a4d4",
+            "caption": {
+             "fr": "Rxd4 : la tour ne saute pas. Elle s'arrête sur la pièce qu'elle prend.",
+             "en": "Rxd4: the rook cannot jump. It stops on the piece it takes."
+            }
+           }
+          ]
+         },
+         {
+          "id": "rook-take",
+          "type": "find_move",
+          "fen": "4k3/8/n7/8/8/8/8/R6K w - - 0 1",
+          "prompt": {
+           "fr": "Prends le cavalier noir avec ta tour.",
+           "en": "Take the black knight with your rook."
+          },
+          "correct": {
+           "fr": "Rxa6 : la tour remonte la colonne et capture.",
+           "en": "Rxa6: the rook slides up the file and captures."
+          },
+          "hint": {
+           "fr": "Regarde la colonne a.",
+           "en": "Look up the a-file."
+          },
+          "accept": [
+           "a1a6"
+          ],
+          "skills": [
+           "tactics",
+           "hangingPiece"
+          ]
+         },
+         {
+          "id": "bishop",
+          "type": "explain",
+          "fen": "4k3/8/8/8/3B4/8/8/4K3 w - - 0 1",
+          "text": {
+           "fr": "Le fou se déplace en diagonale, aussi loin qu'il veut. Il reste toujours sur des cases d'une seule couleur.",
+           "en": "The bishop moves diagonally, as far as it likes. It always stays on squares of one colour."
+          },
+          "arrows": [
+           [
+            "d4",
+            "h8"
+           ],
+           [
+            "d4",
+            "a7"
+           ],
+           [
+            "d4",
+            "a1"
+           ],
+           [
+            "d4",
+            "g1"
+           ]
+          ]
+         },
+         {
+          "id": "bishop-take",
+          "type": "find_move",
+          "fen": "4k3/8/8/1q6/8/8/4B3/4K3 w - - 0 1",
+          "prompt": {
+           "fr": "La dame noire est seule. Prends-la avec ton fou.",
+           "en": "The black queen is left alone. Take it with your bishop."
+          },
+          "correct": {
+           "fr": "Bxb5+ : en diagonale, et c'est échec.",
+           "en": "Bxb5+: along the diagonal, and it gives check."
+          },
+          "hint": {
+           "fr": "Suis la diagonale depuis ton fou.",
+           "en": "Follow the diagonal from your bishop."
+          },
+          "accept": [
+           "e2b5"
+          ],
+          "skills": [
+           "tactics",
+           "hangingPiece"
+          ]
+         },
+         {
+          "id": "colour",
+          "type": "choice",
+          "fen": "4k3/8/8/8/8/8/8/2B1K3 w - - 0 1",
+          "question": {
+           "fr": "Ce fou est sur une case noire. Quelles cases peut-il atteindre ?",
+           "en": "This bishop stands on a dark square. Which squares can it ever reach?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Seulement des cases noires",
+             "en": "Only dark squares"
+            }
+           },
+           {
+            "text": {
+             "fr": "Seulement des cases blanches",
+             "en": "Only light squares"
+            }
+           },
+           {
+            "text": {
+             "fr": "N'importe quelle case",
+             "en": "Any square"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Un fou va en diagonale, il ne change donc jamais de couleur.",
+           "en": "A bishop moves diagonally, so it never changes colour."
+          },
+          "hint": {
+           "fr": "Les diagonales gardent la même couleur.",
+           "en": "Diagonals keep the same colour."
+          },
+          "skills": [
+           "tactics"
+          ]
+         },
+         {
+          "id": "both",
+          "type": "play_line",
+          "fen": "7k/n7/8/8/5r2/8/8/R1B1K3 w - - 0 1",
+          "side": "white",
+          "moves": [
+           "c1f4",
+           "h8g7",
+           "a1a7"
+          ],
+          "prompt": {
+           "fr": "Gagne les deux pièces noires : prends d'abord la tour, puis le cavalier.",
+           "en": "Win both black pieces: take the rook first, then the knight."
+          },
+          "hint": {
+           "fr": "Le fou peut atteindre la tour.",
+           "en": "The bishop can reach the rook."
+          },
+          "skills": [
+           "tactics",
+           "hangingPiece"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Bxf4 : la tour vaut plus, prends-la d'abord.",
+            "en": "Bxf4: the rook is worth more, so take it first."
+           },
+           "2": {
+            "fr": "Rxa7+ : et le cavalier aussi.",
+            "en": "Rxa7+: and the knight too."
+           }
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "queen-king",
+       "order": 2,
+       "kind": "concept",
+       "difficulty": 1,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "La dame et le roi",
+          "en": "The queen and the king"
+         },
+         "description": {
+          "fr": "La pièce la plus forte et la plus précieuse.",
+          "en": "The strongest piece and the most precious one."
+         },
+         "objectives": [
+          {
+           "fr": "Déplacer la dame comme une tour et un fou",
+           "en": "Move the queen like a rook and a bishop"
+          },
+          {
+           "fr": "Déplacer le roi d'une case à la fois",
+           "en": "Move the king one square at a time"
+          }
+         ],
+         "difficulty": 1,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "queen",
+          "type": "explain",
+          "fen": "4k3/8/8/8/3Q4/8/8/4K3 w - - 0 1",
+          "text": {
+           "fr": "La dame se déplace comme une tour et un fou réunis : lignes droites et diagonales.",
+           "en": "The queen moves like a rook and a bishop together: straight lines and diagonals."
+          },
+          "arrows": [
+           [
+            "d4",
+            "d8"
+           ],
+           [
+            "d4",
+            "h4"
+           ],
+           [
+            "d4",
+            "a7"
+           ],
+           [
+            "d4",
+            "g1"
+           ]
+          ]
+         },
+         {
+          "id": "queen-take",
+          "type": "find_move",
+          "fen": "4k3/8/8/8/8/1r6/8/3QK3 w - - 0 1",
+          "prompt": {
+           "fr": "Prends la tour noire avec ta dame.",
+           "en": "Take the black rook with your queen."
+          },
+          "correct": {
+           "fr": "Qxb3 : la dame utilise la diagonale.",
+           "en": "Qxb3: the queen uses the diagonal."
+          },
+          "hint": {
+           "fr": "Ta dame peut aussi aller en diagonale.",
+           "en": "Your queen can also move diagonally."
+          },
+          "accept": [
+           "d1b3"
+          ],
+          "skills": [
+           "tactics",
+           "hangingPiece"
+          ]
+         },
+         {
+          "id": "king",
+          "type": "explain",
+          "fen": "4k3/8/8/8/3K4/8/8/8 w - - 0 1",
+          "text": {
+           "fr": "Le roi se déplace d'une case dans n'importe quelle direction. C'est la pièce la plus importante : il ne doit jamais être pris.",
+           "en": "The king moves one square in any direction. It is the most important piece: never let it be taken."
+          },
+          "arrows": [
+           [
+            "d4",
+            "d5"
+           ],
+           [
+            "d4",
+            "e5"
+           ],
+           [
+            "d4",
+            "e4"
+           ],
+           [
+            "d4",
+            "c3"
+           ]
+          ]
+         },
+         {
+          "id": "safe-king",
+          "type": "choice",
+          "fen": "4k3/8/8/8/3K4/8/8/8 w - - 0 1",
+          "question": {
+           "fr": "Le roi peut-il aller sur une case où une pièce ennemie pourrait le prendre ?",
+           "en": "Can a king move to a square where an enemy piece could take it?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Non, jamais",
+             "en": "No, never"
+            }
+           },
+           {
+            "text": {
+             "fr": "Oui, s'il est courageux",
+             "en": "Yes, if it is brave"
+            }
+           },
+           {
+            "text": {
+             "fr": "Oui, une fois par partie",
+             "en": "Yes, once per game"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Un roi ne peut jamais se mettre en échec. Ce coup est interdit.",
+           "en": "A king may never move into check. Such a move is not allowed."
+          },
+          "hint": {
+           "fr": "Le roi doit toujours rester en sécurité.",
+           "en": "The king must always stay safe."
+          },
+          "skills": [
+           "defense"
+          ]
+         },
+         {
+          "id": "king-take",
+          "type": "find_move",
+          "fen": "4k3/8/8/8/3q4/3K4/8/8 w - - 0 1",
+          "prompt": {
+           "fr": "La dame noire fait échec, mais rien ne la protège. Que joues-tu ?",
+           "en": "The black queen gives check, but nothing protects it. What do you play?"
+          },
+          "correct": {
+           "fr": "Kxd4 : le roi peut prendre une pièce que rien ne défend.",
+           "en": "Kxd4: the king can take a piece that nothing defends."
+          },
+          "hint": {
+           "fr": "Ton roi a le droit de capturer.",
+           "en": "Your king may capture."
+          },
+          "accept": [
+           "d3d4"
+          ],
+          "skills": [
+           "defense",
+           "hangingPiece"
+          ]
+         },
+         {
+          "id": "queen-run",
+          "type": "play_line",
+          "fen": "1k5n/8/8/8/3r4/8/8/Q3K3 w - - 0 1",
+          "side": "white",
+          "moves": [
+           "a1d4",
+           "b8b7",
+           "d4h8"
+          ],
+          "prompt": {
+           "fr": "Prends la tour, puis le cavalier, avec ta dame.",
+           "en": "Take the rook, then the knight, with your queen."
+          },
+          "hint": {
+           "fr": "Les deux sont sur la même grande diagonale.",
+           "en": "Both are on the same long diagonal."
+          },
+          "skills": [
+           "tactics",
+           "hangingPiece"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Qxd4 : la tour d'abord.",
+            "en": "Qxd4: the rook first."
+           },
+           "2": {
+            "fr": "Qxh8 : sur la même diagonale.",
+            "en": "Qxh8: down the same diagonal."
+           }
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "knight",
+       "order": 3,
+       "kind": "concept",
+       "difficulty": 1,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Le cavalier",
+          "en": "The knight"
+         },
+         "description": {
+          "fr": "La pièce qui saute.",
+          "en": "The piece that jumps."
+         },
+         "objectives": [
+          {
+           "fr": "Déplacer le cavalier en L",
+           "en": "Move the knight in an L"
+          },
+          {
+           "fr": "Utiliser son saut par-dessus les pièces",
+           "en": "Use its jump over other pieces"
+          }
+         ],
+         "difficulty": 1,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "l-shape",
+          "type": "explain",
+          "fen": "4k3/8/8/8/3N4/8/8/4K3 w - - 0 1",
+          "text": {
+           "fr": "Le cavalier se déplace en L : deux cases dans une direction, puis une sur le côté.",
+           "en": "The knight moves in an L: two squares in one direction, then one to the side."
+          },
+          "arrows": [
+           [
+            "d4",
+            "c6"
+           ],
+           [
+            "d4",
+            "e6"
+           ],
+           [
+            "d4",
+            "f5"
+           ],
+           [
+            "d4",
+            "f3"
+           ],
+           [
+            "d4",
+            "b3"
+           ]
+          ]
+         },
+         {
+          "id": "jump",
+          "type": "show_moves",
+          "fen": "4k3/8/8/8/8/8/PPP5/1N2K3 w - - 0 1",
+          "moves": [
+           {
+            "uci": "b1c3",
+            "caption": {
+             "fr": "Nc3 : c'est la seule pièce qui peut sauter par-dessus les autres.",
+             "en": "Nc3: it is the only piece that can jump over others."
+            }
+           }
+          ]
+         },
+         {
+          "id": "which-knight",
+          "type": "choice",
+          "fen": "4k3/8/8/8/8/8/8/R3K1N1 w - - 0 1",
+          "question": {
+           "fr": "Lequel de ces coups est joué par le cavalier ?",
+           "en": "Which of these moves is played by the knight?"
+          },
+          "options": [
+           {
+            "uci": "g1f3"
+           },
+           {
+            "uci": "a1a3"
+           },
+           {
+            "uci": "e1d2"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Nf3 : deux cases vers le haut, une sur le côté.",
+           "en": "Nf3: two squares up, one to the side."
+          },
+          "hint": {
+           "fr": "Cherche la forme en L.",
+           "en": "Look for the L shape."
+          },
+          "skills": [
+           "tactics"
+          ]
+         },
+         {
+          "id": "knight-take",
+          "type": "find_move",
+          "fen": "4k3/8/8/3q4/8/4N3/8/4K3 w - - 0 1",
+          "prompt": {
+           "fr": "Prends la dame noire avec ton cavalier.",
+           "en": "Take the black queen with your knight."
+          },
+          "correct": {
+           "fr": "Nxd5 : un saut en L sur la dame.",
+           "en": "Nxd5: an L-jump onto the queen."
+          },
+          "hint": {
+           "fr": "Deux cases vers le haut, une à gauche.",
+           "en": "Two squares up, one to the left."
+          },
+          "accept": [
+           "e3d5"
+          ],
+          "skills": [
+           "tactics",
+           "hangingPiece"
+          ]
+         },
+         {
+          "id": "two-jumps",
+          "type": "play_line",
+          "fen": "4k3/8/5r2/3b4/8/2N5/8/4K3 w - - 0 1",
+          "side": "white",
+          "moves": [
+           "c3d5",
+           "e8d7",
+           "d5f6"
+          ],
+          "prompt": {
+           "fr": "Prends le fou, puis la tour.",
+           "en": "Take the bishop, then the rook."
+          },
+          "hint": {
+           "fr": "Depuis c3, le cavalier atteint le fou.",
+           "en": "From c3 the knight reaches the bishop."
+          },
+          "skills": [
+           "tactics",
+           "hangingPiece"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Nxd5 : et maintenant le cavalier attaque aussi la tour.",
+            "en": "Nxd5: and now the knight also attacks the rook."
+           },
+           "2": {
+            "fr": "Nxf6+ : avec échec.",
+            "en": "Nxf6+: with check."
+           }
+          }
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "4k3/8/8/8/3N4/8/8/4K3 w - - 0 1",
+          "text": {
+           "fr": "Un cavalier au centre atteint huit cases. Sur le bord, il en atteint beaucoup moins.",
+           "en": "A knight in the centre reaches eight squares. On the edge it reaches far fewer."
+          },
+          "arrows": [
+           [
+            "d4",
+            "b5"
+           ],
+           [
+            "d4",
+            "e2"
+           ],
+           [
+            "d4",
+            "c2"
+           ]
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "slug": "pawn",
+       "order": 4,
+       "kind": "concept",
+       "difficulty": 1,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Le pion",
+          "en": "The pawn"
+         },
+         "description": {
+          "fr": "Tout droit pour avancer, en diagonale pour prendre, une dame au bout.",
+          "en": "Forward to move, diagonal to take, a queen at the end."
+         },
+         "objectives": [
+          {
+           "fr": "Avancer et prendre avec un pion",
+           "en": "Move and capture with a pawn"
+          },
+          {
+           "fr": "Promouvoir un pion",
+           "en": "Promote a pawn"
+          },
+          {
+           "fr": "Connaître la prise en passant",
+           "en": "Know the en passant capture"
+          }
+         ],
+         "difficulty": 1,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "forward",
+          "type": "explain",
+          "fen": "4k3/8/8/8/8/8/4P3/4K3 w - - 0 1",
+          "text": {
+           "fr": "Un pion avance tout droit d'une case. Depuis sa case de départ, il peut avancer de deux.",
+           "en": "A pawn moves straight forward one square. From its first square it may move two."
+          },
+          "arrows": [
+           [
+            "e2",
+            "e3"
+           ],
+           [
+            "e2",
+            "e4"
+           ]
+          ]
+         },
+         {
+          "id": "pawn-take",
+          "type": "find_move",
+          "fen": "4k3/8/8/3q4/4P3/8/8/4K3 w - - 0 1",
+          "prompt": {
+           "fr": "Les pions prennent en diagonale. Prends la dame !",
+           "en": "Pawns capture diagonally. Take the queen!"
+          },
+          "correct": {
+           "fr": "exd5 : une case en avant, en diagonale.",
+           "en": "exd5: one square forward on the diagonal."
+          },
+          "hint": {
+           "fr": "La dame est en diagonale devant ton pion.",
+           "en": "The queen is diagonally in front of your pawn."
+          },
+          "accept": [
+           "e4d5"
+          ],
+          "skills": [
+           "tactics",
+           "hangingPiece"
+          ]
+         },
+         {
+          "id": "promote",
+          "type": "show_moves",
+          "fen": "8/4P3/8/8/8/8/k7/4K3 w - - 0 1",
+          "moves": [
+           {
+            "uci": "e7e8q",
+            "caption": {
+             "fr": "e8=Q : sur la dernière rangée, le pion devient une dame (ou une tour, un fou, un cavalier).",
+             "en": "e8=Q: on the last rank the pawn becomes a queen (or a rook, bishop or knight)."
+            }
+           }
+          ]
+         },
+         {
+          "id": "promote-take",
+          "type": "find_move",
+          "fen": "3r4/4P1k1/8/8/8/8/8/4K3 w - - 0 1",
+          "prompt": {
+           "fr": "Promeus ton pion et gagne la tour en même temps.",
+           "en": "Promote your pawn and win the rook at the same time."
+          },
+          "correct": {
+           "fr": "exd8=Q : le pion prend et devient une dame.",
+           "en": "exd8=Q: the pawn takes and becomes a queen."
+          },
+          "hint": {
+           "fr": "Un pion peut se promouvoir en prenant.",
+           "en": "A pawn can promote by capturing."
+          },
+          "accept": [
+           "e7d8q"
+          ],
+          "skills": [
+           "promotion"
+          ],
+          "also_good": [
+           {
+            "uci": "e7d8r",
+            "note": {
+             "fr": "Ça marche aussi, mais une dame est en général plus forte.",
+             "en": "That works too, but a queen is usually stronger."
+            }
+           }
+          ]
+         },
+         {
+          "id": "en-passant",
+          "type": "choice",
+          "fen": "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1",
+          "question": {
+           "fr": "Le pion noir vient d'avancer de deux cases, à côté du tien. Quel coup le prend ?",
+           "en": "Black's pawn has just moved two squares and landed next to yours. Which move takes it?"
+          },
+          "options": [
+           {
+            "uci": "e5d6"
+           },
+           {
+            "uci": "e5e6"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "exd6 : la prise en passant. Elle n'est permise que juste après l'avance de deux cases.",
+           "en": "exd6: the en passant capture. It is only allowed right after the two-square move."
+          },
+          "hint": {
+           "fr": "Ton pion prend comme si le pion noir n'avait avancé que d'une case.",
+           "en": "Your pawn takes as if the black pawn had moved one square."
+          },
+          "skills": [
+           "enPassant"
+          ]
+         },
+         {
+          "id": "march",
+          "type": "play_line",
+          "fen": "8/8/8/4P3/8/k7/8/4K3 w - - 0 1",
+          "side": "white",
+          "moves": [
+           "e5e6",
+           "a3b4",
+           "e6e7",
+           "b4c5",
+           "e7e8q"
+          ],
+          "prompt": {
+           "fr": "Le roi noir est trop loin. Pousse ton pion jusqu'au bout et fais une dame.",
+           "en": "The black king is too far away. Push your pawn all the way and make a queen."
+          },
+          "hint": {
+           "fr": "Une case à la fois.",
+           "en": "One square at a time."
+          },
+          "skills": [
+           "promotion",
+           "endgames"
+          ],
+          "notes": {
+           "4": {
+            "fr": "e8=Q : une nouvelle dame !",
+            "en": "e8=Q: a new queen!"
+           }
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "check-castling-mate",
+       "order": 5,
+       "kind": "concept",
+       "difficulty": 1,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Échec, roque et fin de partie",
+          "en": "Check, castling and the end of the game"
+         },
+         "description": {
+          "fr": "Comment on gagne, on fait nulle, et comment le roi se met à l'abri.",
+          "en": "How a game is won, drawn, and how the king hides."
+         },
+         "objectives": [
+          {
+           "fr": "Reconnaître l'échec, l'échec et mat et le pat",
+           "en": "Recognise check, checkmate and stalemate"
+          },
+          {
+           "fr": "Roquer",
+           "en": "Castle"
+          }
+         ],
+         "difficulty": 1,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "check",
+          "type": "show_moves",
+          "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
+          "moves": [
+           {
+            "uci": "a1a8",
+            "caption": {
+             "fr": "Ra8+ : échec ! Le roi est attaqué et doit s'en sortir tout de suite.",
+             "en": "Ra8+: check! The king is attacked and must get out of it at once."
+            }
+           }
+          ]
+         },
+         {
+          "id": "in-check",
+          "type": "choice",
+          "fen": "R3k3/8/8/8/8/8/8/4K3 b - - 0 1",
+          "question": {
+           "fr": "Les Noirs sont en échec. Que doivent-ils faire ?",
+           "en": "Black is in check. What must Black do?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Sortir de l'échec tout de suite",
+             "en": "Get out of check right away"
+            }
+           },
+           {
+            "text": {
+             "fr": "L'ignorer et attaquer",
+             "en": "Ignore it and attack"
+            }
+           },
+           {
+            "text": {
+             "fr": "Passer son tour",
+             "en": "Pass the turn"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Un joueur en échec doit parer l'échec dès son prochain coup.",
+           "en": "A player in check must stop the check with their very next move."
+          },
+          "hint": {
+           "fr": "L'échec passe toujours en premier.",
+           "en": "Check always comes first."
+          },
+          "skills": [
+           "defense"
+          ]
+         },
+         {
+          "id": "mate",
+          "type": "explain",
+          "fen": "6k1/5ppp/8/8/8/8/8/3QK3 w - - 0 1",
+          "text": {
+           "fr": "Échec et mat : le roi est en échec et ne peut pas s'en sortir. Celui qui fait mat gagne la partie.",
+           "en": "Checkmate: the king is in check and has no way out. Whoever gives checkmate wins the game."
+          }
+         },
+         {
+          "id": "give-mate",
+          "type": "find_move",
+          "fen": "6k1/5ppp/8/8/8/8/8/3QK3 w - - 0 1",
+          "prompt": {
+           "fr": "Les Blancs jouent et font échec et mat.",
+           "en": "White to play and give checkmate."
+          },
+          "correct": {
+           "fr": "Qd8# : les pions bloquent leur propre roi.",
+           "en": "Qd8#: the pawns block their own king."
+          },
+          "hint": {
+           "fr": "Le roi noir ne peut pas quitter la dernière rangée.",
+           "en": "The black king cannot leave the back rank."
+          },
+          "accept": [
+           "d1d8"
+          ],
+          "skills": [
+           "mate",
+           "mateIn1",
+           "backRankMate"
+          ]
+         },
+         {
+          "id": "stalemate",
+          "type": "explain",
+          "fen": "7k/5Q2/6K1/8/8/8/8/8 b - - 0 1",
+          "text": {
+           "fr": "Pat : les Noirs n'ont aucun coup légal mais ne sont pas en échec. La partie est nulle, attention quand tu gagnes.",
+           "en": "Stalemate: Black has no legal move but is not in check. The game is a draw, so watch out when you are winning."
+          }
+         },
+         {
+          "id": "castle",
+          "type": "show_moves",
+          "fen": "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+          "moves": [
+           {
+            "uci": "e1g1",
+            "caption": {
+             "fr": "O-O : le roque. Le roi avance de deux cases, la tour saute par-dessus. Le roi est plus à l'abri.",
+             "en": "O-O: castling. The king moves two squares, the rook jumps over it. The king is safer."
+            }
+           }
+          ]
+         },
+         {
+          "id": "castle-which",
+          "type": "choice",
+          "fen": "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+          "question": {
+           "fr": "Lequel de ces coups est un roque ?",
+           "en": "Which of these moves is castling?"
+          },
+          "options": [
+           {
+            "uci": "e1g1"
+           },
+           {
+            "uci": "e1f1"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "O-O : le roi saute de deux cases vers la tour. On ne peut roquer que si ni l'un ni l'autre n'a bougé.",
+           "en": "O-O: the king jumps two squares towards the rook. You may castle only if neither piece has moved."
+          },
+          "hint": {
+           "fr": "Le roi avance de deux cases quand il roque.",
+           "en": "The king moves two squares when it castles."
+          },
+          "skills": [
+           "castling"
+          ]
+         }
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
