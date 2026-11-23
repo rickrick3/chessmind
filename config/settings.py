@@ -97,6 +97,18 @@ XP_ACCURACY_BONUS = 5
 XP_ACCURACY_BONUS_MIN = 0.9
 XP_LESSON_REPLAY = 3
 
+# Puzzles (design 5.2 and 5.4): Glicko-2 rating, start by level, target a little below the rating by default
+PUZZLE_START_RATINGS = {"new": 700, "rules": 1000, "club": 1500}
+PUZZLE_DEFAULT_START = 1000
+PUZZLE_START_RD = 350
+PUZZLE_START_VOLATILITY = 0.06
+PUZZLE_TAU = 0.5
+PUZZLE_RD_FLOOR = 45
+PUZZLE_RD_MAX = 350
+PUZZLE_SETTLING_RD = 110  # above this, the rating is shown as "still settling"
+PUZZLE_DIFFICULTY_OFFSETS = {"easier": -300, "normal": -100, "harder": 200}
+PUZZLE_WINDOWS = (100, 200, 400, 600)
+
 # Skill profile: how evidence becomes an estimate (design 5.7 and 5.8)
 SKILL_PUZZLE_WINDOW = 40  # newest puzzle observations an estimate uses
 SKILL_LESSON_WINDOW = 30
