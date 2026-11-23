@@ -14,12 +14,13 @@ from curriculum.domain.schema import localize
 from curriculum.models import Lesson, LessonVersion
 from curriculum.services import published_content
 from gamification.services import summary
+from skills.services import overview as skills_overview
 
 from . import services
 from .models import LessonProgress
 
 TRACK_LABELS = {"path": _("Path"), "openings": _("Openings"), "endgames": _("Endgames"), "tactics": _("Tactics")}
-PROFILE_TABS = ("performance", "mastery", "settings")
+PROFILE_TABS = ("performance", "mastery", "skills", "settings")
 
 
 def _text(value, lang: str) -> str:
@@ -93,6 +94,7 @@ def profile(request):
         "tab": tab, "tabs": PROFILE_TABS, "me": summary(learner, timezone.now()),
         "stats": services.progress_stats(learner), "accuracy": accuracy,
         "units": _units(learner, services.states_for(learner)) if tab == "mastery" else [],
+        "skills": skills_overview(learner) if tab == "skills" else None,
     })
 
 

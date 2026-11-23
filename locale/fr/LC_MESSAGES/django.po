@@ -929,3 +929,68 @@ msgid "%(n)s puzzle"
 msgid_plural "%(n)s puzzles"
 msgstr[0] "%(n)s problème"
 msgstr[1] "%(n)s problèmes"
+
+msgid "Skills"
+msgstr "Compétences"
+
+msgid "Weakness"
+msgstr "Point faible"
+
+msgid "Weakness forming"
+msgstr "Point faible possible"
+
+msgid "Improving"
+msgstr "En progrès"
+
+msgid "Strength"
+msgstr "Point fort"
+
+msgid "stronger than your usual level"
+msgstr "plus fort que votre niveau habituel"
+
+msgid "about your level"
+msgstr "à votre niveau"
+
+msgid "weaker than your usual level"
+msgstr "plus faible que votre niveau habituel"
+
+msgid "reliable"
+msgstr "fiable"
+
+msgid "early estimate"
+msgstr "première estimation"
+
+msgid "not enough evidence yet"
+msgstr "pas encore assez d'éléments"
+
+msgid "about %(low)s–%(high)s"
+msgstr "environ %(low)s–%(high)s"
+
+msgid "%(percent)s%% right on the first try"
+msgstr "%(percent)s %% de bonnes réponses du premier coup"
+
+msgid "Puzzle rating about %(low)s–%(high)s"
+msgstr "Classement aux problèmes environ %(low)s–%(high)s"
+
+msgid "We're still learning how you play. Solve a few puzzles or finish a lesson to see your skills."
+msgstr "Nous apprenons encore comment vous jouez. Résolvez quelques problèmes ou terminez une leçon pour voir vos compétences."
+
+msgid "From %(p)s puzzles and %(l)s lesson answers."
+msgstr "D'après %(p)s problèmes et %(l)s réponses de leçon."
+
+msgid "Themes"
+msgstr "Thèmes"
+
+msgid "Latest evidence"
+msgstr "Derniers éléments"
+
+msgid "Right"
+msgstr "Juste"
+
+msgid "Puzzle"
+msgstr "Problème"
+
+msgid "%(n)s lesson answer"
+msgid_plural "%(n)s lesson answers"
+msgstr[0] "%(n)s réponse de leçon"
+msgstr[1] "%(n)s réponses de leçon"

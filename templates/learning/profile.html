@@ -12,6 +12,7 @@
 <nav class="cm-tabs my-4" aria-label="{% trans 'Profile sections' %}">
   <a {% if tab == "performance" %}class="is-active" {% endif %}href="?tab=performance">{% trans "Performance" %}</a>
   <a {% if tab == "mastery" %}class="is-active" {% endif %}href="?tab=mastery">{% trans "Mastery" %}</a>
+  <a {% if tab == "skills" %}class="is-active" {% endif %}href="?tab=skills">{% trans "Skills" %}</a>
   <a {% if tab == "settings" %}class="is-active" {% endif %}href="?tab=settings">{% trans "Settings" %}</a>
 </nav>
 
@@ -33,6 +34,8 @@
       <div class="cm-label">{% trans "Accuracy" %}</div><div class="small text-secondary">{{ row.label }}</div></div></div>
   {% endfor %}
 </div>
+{% elif tab == "skills" %}
+{% include "skills/_tab.html" %}
 {% elif tab == "mastery" %}
 <h2 class="h4 mb-3">{% trans "Mastery" %}</h2>
 {% for unit in units %}

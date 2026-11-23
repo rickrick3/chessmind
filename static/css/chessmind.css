@@ -238,3 +238,14 @@ body.cm {
   .cm-path__item--o1 { transform: translateX(40px); }
   .cm-path__item--o3 { transform: translateX(-40px); }
 }
+
+/* Skills tab and skill area page */
+.cm-row--plain::after { content: none; }
+.cm-skill__status { margin-left: 6px; font-size: 13px; vertical-align: middle; }
+.cm-skill__status.is-weak { background: var(--cm-orange-tint); color: var(--cm-orange-ink); }
+.cm-skill__status.is-strong { background: var(--cm-green-tint); color: var(--cm-green-ink); }
+.cm-evidence { list-style: none; padding: 0; margin: 8px 0 0; }
+.cm-evidence li { display: flex; align-items: center; gap: 10px; min-height: 44px; border-bottom: 1px solid var(--cm-border); }
+.cm-evidence__mark { width: 28px; height: 28px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; }
+.cm-evidence li[data-result="solved"] .cm-evidence__mark { background: var(--cm-green-tint); color: var(--cm-green-ink); }
+.cm-evidence li[data-result="missed"] .cm-evidence__mark { background: var(--cm-red-tint); color: var(--cm-red); }

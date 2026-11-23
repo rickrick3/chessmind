@@ -1,13 +1,20 @@
 """The evidence ledger and the skill profile built from it. Callers own the transaction."""
+from dataclasses import dataclass
 from datetime import date, datetime
+
+from django.utils.translation import gettext
 
 from accounts.models import Learner
 from learning.models import LessonAttempt, StepResult
 from puzzles.models import PuzzleAttempt, PuzzleRating
 
-from .domain.areas import AREAS, canonical_tags, diagnosable, lesson_step_areas, puzzle_areas
+from .domain.areas import (
+    AREAS, ENDGAME_TYPES, MOTIF_THEMES, PUZZLE_AREA_THEMES, TACTICS_THEMES, canonical_tags, diagnosable,
+    lesson_step_areas, puzzle_areas,
+)
 from .domain.diagnosis import repeated_mistake, status
 from .domain.estimate import Estimate, Observation, SkillRules, estimate
+from .labels import area_label, theme_label
 from .models import Evidence, SkillEstimate, SkillHistory
 
 ESTIMATE_FIELDS = ["basis", "value", "low", "high", "observations", "days", "confidence", "comparison", "status",
@@ -118,3 +125,86 @@ def on_merge(sender, source: Learner, target: Learner, **kwargs) -> None:
     SkillEstimate.objects.filter(learner=source).delete()
     SkillHistory.objects.filter(learner=source).delete()
     recompute(target, timezone.now())
+
+
+# --- what the Skills pages show ------------------------------------------------------------------------------
+
+RECENT = 20
+
+
+@dataclass(frozen=True)
+class AreaRow:
+    key: str
+    label: str
+    basis: str
+    low: int | None
+    high: int | None
+    percent: int | None
+    observations: int
+    confidence: str
+    comparison: str
+    status: str
+
+
+def _area_themes(area: str) -> frozenset[str]:
+    if area == "tactics":
+        return TACTICS_THEMES
+    if area == "calculation":
+        return PUZZLE_AREA_THEMES["calculation"] & MOTIF_THEMES
+    if area == "defense":
+        return frozenset({"defensiveMove"})
+    if area == "endgames":
+        return ENDGAME_TYPES | {"zugzwang"}
+    return frozenset()
+
+
+def _as_row(key: str, label: str, est: SkillEstimate | None) -> AreaRow:
+    if est is None:
+        return AreaRow(key, label, "none", None, None, None, 0, "none", "", "")
+    percent = round(est.value * 100) if est.basis == "lesson" and est.value is not None else None
+    return AreaRow(key, label, est.basis, est.low, est.high, percent, est.observations, est.confidence,
+                   est.comparison, est.status)
+
+
+def overview(learner: Learner) -> dict:
+    from puzzles.domain.glicko2 import Rating
+    from puzzles.services import rating_view
+
+    cached = PuzzleRating.objects.filter(learner=learner).first()
+    rating = rating_view(Rating(cached.rating, cached.rd, cached.volatility)) if cached else None
+    estimates = {e.key: e for e in SkillEstimate.objects.filter(learner=learner, kind="area")}
+    return {"rating": rating, "rated_count": cached.rated_count if cached else 0,
+            "areas": [_as_row(a, area_label(a), estimates.get(a)) for a in AREAS],
+            "has_evidence": Evidence.objects.filter(learner=learner).exists()}
+
+
+def area_detail(learner: Learner, area: str) -> dict:
+    """The area's estimate, its themes, where its evidence came from and the last observations. KeyError if the
+    area does not exist."""
+    if area not in AREAS:
+        raise KeyError(area)
+    est = SkillEstimate.objects.filter(learner=learner, kind="area", key=area).first()
+    keys = _area_themes(area)
+    themes = [_as_row(e.key, theme_label(e.key), e)
+              for e in SkillEstimate.objects.filter(learner=learner, kind="theme", key__in=list(keys)).order_by("key")]
+    rows = Evidence.objects.filter(learner=learner, area=area)
+    sources = {"puzzle": rows.filter(source="puzzle").count(), "lesson": rows.filter(source="lesson").count()}
+    recent = []
+    for e in (rows.select_related("puzzle_attempt__puzzle", "step_result__attempt__lesson__published_version")
+              .order_by("-created_at", "-id")[:RECENT]):
+        if e.source == "puzzle":
+            puzzle = e.puzzle_attempt.puzzle
+            label = " · ".join([gettext("Puzzle"), str(puzzle.rating)] + [theme_label(t) for t in puzzle.themes
+                                                                         if diagnosable(t)])
+            url = f"/train/puzzles/{puzzle.lichess_id}/"
+        else:
+            lesson = e.step_result.attempt.lesson
+            label, url = _lesson_title(lesson, learner.language), f"/lessons/{lesson.slug}/"
+        recent.append({"date": e.local_date, "success": e.success, "source": e.source, "label": label, "url": url})
+    return {"area": _as_row(area, area_label(area), est), "themes": themes, "sources": sources, "recent": recent}
+
+
+def _lesson_title(lesson, lang: str) -> str:
+    version = lesson.published_version
+    title = (version.content.get("meta", {}).get("title") if version else None) or {}
+    return (title.get(lang) or title.get("en") or lesson.slug) if isinstance(title, dict) else str(title)

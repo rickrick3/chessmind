@@ -32,7 +32,6 @@ def test_guest_solves_a_puzzle(page: Page, live_server, mate2_puzzle):
     expect(page.locator(".pz-result__change")).to_contain_text("+")
 
 
-@pytest.mark.xfail(strict=True, reason="the Skills tab arrives in Task 12")
 def test_skills_tab_after_a_puzzle(page: Page, live_server, mate2_puzzle):
     start(page, live_server)
     play(page, "a2e6")
