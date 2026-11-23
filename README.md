@@ -70,6 +70,15 @@ The command reads `.zst` through the `zstd` tool (installed in the Docker image;
 `--max-rd` (90), `--seed`. Rerunning it is safe: puzzles left out are deactivated, never deleted. Staff can
 deactivate a reported puzzle in the Django admin (Puzzle reports → "Deactivate the reported puzzles").
 
+## Skill profile
+
+Every rated puzzle and the first finished attempt at each lesson become evidence for the learner's skill areas.
+After deploying this feature, run once to turn lessons finished earlier into evidence:
+
+```bash
+docker compose run --rm web python manage.py backfill_evidence
+```
+
 ## Gemini (free tier)
 
 Create a key in Google AI Studio and put it in `GEMINI_API_KEY`. Ordinary moves never call the AI.

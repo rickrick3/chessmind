@@ -8,6 +8,7 @@ from curriculum.models import Lesson
 from curriculum.services import published_content
 from gamification.domain.achievements import ProgressStats
 from gamification.services import award_for_attempt
+from skills.services import recompute, record_lesson_evidence
 
 from .domain.scoring import score_attempt
 from .domain.unlock import LessonNode, lesson_states, next_up
@@ -135,7 +136,7 @@ def finish_attempt(learner, attempt_id, steps: list[dict], now: datetime) -> dic
 
         nodes = path_nodes()
         before = states_for(learner, nodes)
-        StepResult.objects.bulk_create([
+        step_results = StepResult.objects.bulk_create([
             StepResult(attempt=attempt, step_id=s.step_id, step_type=s.step_type, correct=s.correct,
                        cleared=s.cleared, tries=s.tries, hints=s.hints, ms=s.ms, skills=s.skills)
             for s in scored.steps])
@@ -160,4 +161,6 @@ def finish_attempt(learner, attempt_id, steps: list[dict], now: datetime) -> dic
         attempt.finished_at, attempt.completed, attempt.accuracy = now, scored.completed, scored.accuracy
         attempt.xp_awarded, attempt.result = award["xp"]["awarded"], result
         attempt.save(update_fields=["finished_at", "completed", "accuracy", "xp_awarded", "result"])
+        record_lesson_evidence(attempt, step_results, learner.local_date(now))
+        recompute(learner, now)
     return result
