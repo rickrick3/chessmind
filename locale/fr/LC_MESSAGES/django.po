@@ -798,3 +798,21 @@ msgstr "Attaque aux rayons X"
 
 msgid "Zugzwang"
 msgstr "Zugzwang"
+
+msgid "Unknown mode, theme or difficulty."
+msgstr "Mode, thème ou difficulté inconnu."
+
+msgid "You've seen every puzzle here. Try another theme or difficulty."
+msgstr "Vous avez vu tous les problèmes ici. Essayez un autre thème ou une autre difficulté."
+
+msgid "This puzzle does not exist."
+msgstr "Ce problème n'existe pas."
+
+msgid "This puzzle was opened too long ago."
+msgstr "Ce problème a été ouvert il y a trop longtemps."
+
+msgid "These moves don't match the puzzle."
+msgstr "Ces coups ne correspondent pas au problème."
+
+msgid "Pick a reason; the note can be up to 500 characters."
+msgstr "Choisissez une raison ; la note peut faire jusqu'à 500 caractères."
