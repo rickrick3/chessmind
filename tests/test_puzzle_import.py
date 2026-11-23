@@ -85,3 +85,43 @@ def test_reimport_deactivates_missing_and_keeps_attempted(db, tmp_path, guest):
     call_command("import_puzzles", str(path))
     alt = Puzzle.objects.get(lichess_id="pAlt1")
     assert alt.is_active is False and Puzzle.objects.filter(is_active=True).count() == 2
+
+
+def test_reimport_keeps_puzzles_staff_deactivated(db):
+    from django.contrib import admin
+
+    from puzzles.admin import PuzzleAdmin, PuzzleReportAdmin
+    from puzzles.models import PuzzleReport
+
+    call_command("import_puzzles", str(SAMPLE))
+    PuzzleAdmin(Puzzle, admin.site).deactivate(None, Puzzle.objects.filter(lichess_id="pMate2"))
+    call_command("import_puzzles", str(SAMPLE))
+    assert Puzzle.objects.get(lichess_id="pMate2").is_active is False
+    assert Puzzle.objects.filter(is_active=True).count() == 2
+
+
+def test_reported_puzzle_stays_off_after_reimport(db, guest):
+    from django.contrib import admin
+
+    from puzzles.admin import PuzzleReportAdmin
+    from puzzles.models import PuzzleReport
+
+    call_command("import_puzzles", str(SAMPLE))
+    report = PuzzleReport.objects.create(learner=guest, puzzle=Puzzle.objects.get(lichess_id="pAlt1"),
+                                         reason="wrong_solution")
+    PuzzleReportAdmin(PuzzleReport, admin.site).deactivate_puzzles(None, PuzzleReport.objects.filter(pk=report.pk))
+    call_command("import_puzzles", str(SAMPLE))
+    assert Puzzle.objects.get(lichess_id="pAlt1").is_active is False
+
+
+def test_staff_can_turn_a_puzzle_back_on(db):
+    from django.contrib import admin
+
+    from puzzles.admin import PuzzleAdmin
+
+    call_command("import_puzzles", str(SAMPLE))
+    pa = PuzzleAdmin(Puzzle, admin.site)
+    pa.deactivate(None, Puzzle.objects.filter(lichess_id="pMate2"))
+    pa.reactivate(None, Puzzle.objects.filter(lichess_id="pMate2"))
+    call_command("import_puzzles", str(SAMPLE))
+    assert Puzzle.objects.get(lichess_id="pMate2").is_active is True

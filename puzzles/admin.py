@@ -5,14 +5,18 @@ from .models import Puzzle, PuzzleAttempt, PuzzleRating, PuzzleReport
 
 @admin.register(Puzzle)
 class PuzzleAdmin(admin.ModelAdmin):
-    list_display = ("lichess_id", "rating", "is_active", "themes")
-    list_filter = ("is_active",)
+    list_display = ("lichess_id", "rating", "is_active", "disabled_by_staff", "themes")
+    list_filter = ("is_active", "disabled_by_staff")
     search_fields = ("lichess_id",)
-    actions = ["deactivate"]
+    actions = ["deactivate", "reactivate"]
 
     @admin.action(description="Deactivate selected puzzles")
     def deactivate(self, request, queryset):
-        queryset.update(is_active=False)
+        queryset.update(is_active=False, disabled_by_staff=True)
+
+    @admin.action(description="Turn selected puzzles back on")
+    def reactivate(self, request, queryset):
+        queryset.update(is_active=True, disabled_by_staff=False)
 
 
 @admin.register(PuzzleReport)
@@ -23,7 +27,7 @@ class PuzzleReportAdmin(admin.ModelAdmin):
 
     @admin.action(description="Deactivate the reported puzzles")
     def deactivate_puzzles(self, request, queryset):
-        Puzzle.objects.filter(reports__in=queryset).update(is_active=False)
+        Puzzle.objects.filter(reports__in=queryset).update(is_active=False, disabled_by_staff=True)
 
 
 class ReadOnlyAdmin(admin.ModelAdmin):

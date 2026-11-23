@@ -25,6 +25,8 @@ class Puzzle(models.Model):
     side = models.CharField(max_length=5, choices=SIDES)  # the learner's side
     start_fen = models.CharField(max_length=100)  # the position the learner sees, after the opponent's move
     is_active = models.BooleanField(default=True)
+    # Set when staff turn a puzzle off (e.g. after a report). An import never clears it, so it stays off.
+    disabled_by_staff = models.BooleanField(default=False)
     imported_at = models.DateTimeField(default=timezone.now)
 
     class Meta:

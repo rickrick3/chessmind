@@ -3,7 +3,7 @@
     python manage.py import_puzzles lichess_db_puzzle.csv.zst [--per-band 2000]
 
 A .zst file is read through the `zstd` command-line tool. Puzzles left out of a new import are deactivated, never
-deleted, so attempts that point at them stay valid. The same file and seed always give the same sample.
+deleted, so attempts that point at them stay valid; puzzles staff turned off stay off. The same file and seed always give the same sample.
 """
 import contextlib
 import csv
@@ -94,6 +94,7 @@ class Command(BaseCommand):
             Puzzle.objects.update(is_active=False)
             Puzzle.objects.bulk_create(puzzles, update_conflicts=True, unique_fields=["lichess_id"],
                                        update_fields=UPDATE_FIELDS, batch_size=1000)
+            Puzzle.objects.filter(disabled_by_staff=True).update(is_active=False)  # staff decisions stand
 
         for b in range(LOWEST_BAND, TOP, 100):
             count = len(chosen.get(b, []))
