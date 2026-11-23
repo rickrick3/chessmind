@@ -1013,6 +1013,900 @@
        }
       }
      ]
+    },
+    {
+     "slug": "material",
+     "order": 2,
+     "title": {
+      "fr": "Gagner du matériel",
+      "en": "Winning material"
+     },
+     "description": {
+      "fr": "Pièces gratuites, fourchettes, clouages, enfilades et attaques à la découverte.",
+      "en": "Free pieces, forks, pins, skewers and discovered attacks."
+     },
+     "lessons": [
+      {
+       "slug": "free-pieces",
+       "order": 1,
+       "kind": "tactic",
+       "difficulty": 1,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Les pièces gratuites",
+          "en": "Free pieces"
+         },
+         "description": {
+          "fr": "Prends ce qui n'est pas défendu, et compte avant de prendre.",
+          "en": "Take what is not defended, and count before you take."
+         },
+         "objectives": [
+          {
+           "fr": "Repérer une pièce que rien ne défend",
+           "en": "Spot a piece that nothing defends"
+          },
+          {
+           "fr": "Compter les attaquants et les défenseurs",
+           "en": "Count attackers and defenders"
+          }
+         ],
+         "difficulty": 1,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "free",
+          "type": "explain",
+          "fen": "6k1/5ppp/8/8/3n4/8/5PPP/3R2K1 w - - 0 1",
+          "text": {
+           "fr": "Une pièce est gratuite (on dit en prise) quand tu peux la prendre et que rien ne peut reprendre.",
+           "en": "A piece is free (we say hanging) when you can take it and nothing can take back."
+          },
+          "highlights": [
+           "d4"
+          ]
+         },
+         {
+          "id": "take-free",
+          "type": "find_move",
+          "fen": "6k1/5ppp/8/8/3n4/8/5PPP/3R2K1 w - - 0 1",
+          "prompt": {
+           "fr": "Le cavalier noir est seul. Prends-le.",
+           "en": "The black knight is alone. Take it."
+          },
+          "correct": {
+           "fr": "Rxd4 : un cavalier entier pour rien.",
+           "en": "Rxd4: a whole knight for nothing."
+          },
+          "hint": {
+           "fr": "Rien ne défend le cavalier.",
+           "en": "Nothing defends the knight."
+          },
+          "accept": [
+           "d1d4"
+          ],
+          "skills": [
+           "tactics",
+           "hangingPiece"
+          ]
+         },
+         {
+          "id": "defended",
+          "type": "choice",
+          "fen": "6k1/5ppp/4p3/3n4/8/8/5PPP/3R2K1 w - - 0 1",
+          "question": {
+           "fr": "Ta tour peut-elle prendre ce cavalier gratuitement ?",
+           "en": "Can your rook take this knight for free?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Non : le pion e6 prendrait ta tour",
+             "en": "No: the pawn on e6 would take your rook"
+            }
+           },
+           {
+            "text": {
+             "fr": "Oui, il est gratuit",
+             "en": "Yes, it is free"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Le cavalier est défendu par un pion. Tu donnerais une tour pour un cavalier.",
+           "en": "The knight is defended by a pawn. You would give a rook for a knight."
+          },
+          "hint": {
+           "fr": "Regarde ce qui protège le cavalier.",
+           "en": "Look at what protects the knight."
+          },
+          "skills": [
+           "tactics",
+           "hangingPiece"
+          ]
+         },
+         {
+          "id": "bad-trade",
+          "type": "show_moves",
+          "fen": "6k1/5ppp/4p3/3n4/8/8/5PPP/3R2K1 w - - 0 1",
+          "moves": [
+           {
+            "uci": "d1d5",
+            "caption": {
+             "fr": "Rxd5 ?",
+             "en": "Rxd5?"
+            }
+           },
+           {
+            "uci": "e6d5",
+            "caption": {
+             "fr": "exd5 : une tour donnée pour un cavalier. Mauvaise affaire.",
+             "en": "exd5: a rook given for a knight. Bad deal."
+            }
+           }
+          ]
+         },
+         {
+          "id": "count",
+          "type": "explain",
+          "fen": "r5k1/5ppp/4p3/3n4/8/2N4P/5PP1/3R2K1 w - - 0 1",
+          "text": {
+           "fr": "Compte : deux de tes pièces attaquent le cavalier, un pion le défend. Deux contre un : prends, avec la pièce la moins chère d'abord.",
+           "en": "Count: two of your pieces attack the knight, one pawn defends it. Two beats one, so take, cheapest piece first."
+          },
+          "arrows": [
+           [
+            "c3",
+            "d5"
+           ],
+           [
+            "d1",
+            "d5"
+           ]
+          ]
+         },
+         {
+          "id": "win-pawn",
+          "type": "play_line",
+          "fen": "r5k1/5ppp/4p3/3n4/8/2N4P/5PP1/3R2K1 w - - 0 1",
+          "side": "white",
+          "moves": [
+           "c3d5",
+           "e6d5",
+           "d1d5"
+          ],
+          "prompt": {
+           "fr": "Prends en d5 avec la pièce la moins chère, puis reprends.",
+           "en": "Take on d5 with the cheaper piece first, then take again."
+          },
+          "hint": {
+           "fr": "Ton cavalier vaut moins que ta tour.",
+           "en": "Your knight is worth less than your rook."
+          },
+          "skills": [
+           "tactics",
+           "hangingPiece"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Nxd5 : cavalier contre cavalier.",
+            "en": "Nxd5: knight for knight."
+           },
+           "2": {
+            "fr": "Rxd5 : et tu gagnes un pion.",
+            "en": "Rxd5: and you are a pawn up."
+           }
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "forks",
+       "order": 2,
+       "kind": "tactic",
+       "difficulty": 1,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Les fourchettes",
+          "en": "Forks"
+         },
+         "description": {
+          "fr": "Une pièce en attaque deux à la fois.",
+          "en": "One piece attacks two at once."
+         },
+         "objectives": [
+          {
+           "fr": "Reconnaître une fourchette",
+           "en": "Recognise a fork"
+          },
+          {
+           "fr": "Faire une fourchette avec un cavalier, un pion et une dame",
+           "en": "Fork with a knight, a pawn and a queen"
+          }
+         ],
+         "difficulty": 1,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "r3k3/8/8/1N6/8/8/8/4K3 w - - 0 1",
+          "text": {
+           "fr": "Une fourchette : une pièce attaque deux pièces ennemies en même temps. Une seule peut s'échapper.",
+           "en": "A fork: one piece attacks two enemy pieces at the same time. Only one of them can escape."
+          }
+         },
+         {
+          "id": "which-fork",
+          "type": "choice",
+          "fen": "r3k3/8/8/1N6/8/8/8/4K3 w - - 0 1",
+          "question": {
+           "fr": "Quel coup de cavalier attaque le roi et la tour en même temps ?",
+           "en": "Which knight move attacks the king and the rook together?"
+          },
+          "options": [
+           {
+            "uci": "b5c7"
+           },
+           {
+            "uci": "b5d6"
+           },
+           {
+            "uci": "b5a7"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Nc7+ : échec, et le cavalier attaque aussi la tour en a8.",
+           "en": "Nc7+: check, and the knight also hits the rook on a8."
+          },
+          "hint": {
+           "fr": "Trouve la case qui atteint e8 et a8.",
+           "en": "Find the square that reaches both e8 and a8."
+          },
+          "skills": [
+           "fork"
+          ]
+         },
+         {
+          "id": "fork-shown",
+          "type": "show_moves",
+          "fen": "r3k3/8/8/1N6/8/8/8/4K3 w - - 0 1",
+          "moves": [
+           {
+            "uci": "b5c7",
+            "caption": {
+             "fr": "Nc7+ : échec !",
+             "en": "Nc7+: check!"
+            }
+           },
+           {
+            "uci": "e8d7",
+            "caption": {
+             "fr": "Le roi doit bouger.",
+             "en": "The king has to move."
+            }
+           },
+           {
+            "uci": "c7a8",
+            "caption": {
+             "fr": "Nxa8 : la tour tombe.",
+             "en": "Nxa8: the rook falls."
+            }
+           }
+          ]
+         },
+         {
+          "id": "queen-fork",
+          "type": "find_move",
+          "fen": "4q1k1/5p1p/8/8/4N3/8/5PPP/6K1 w - - 0 1",
+          "prompt": {
+           "fr": "Fais une fourchette sur le roi et la dame.",
+           "en": "Fork the king and the queen."
+          },
+          "correct": {
+           "fr": "Nf6+ : échec, et la dame en e8 est attaquée.",
+           "en": "Nf6+: check, and the queen on e8 is attacked."
+          },
+          "hint": {
+           "fr": "Un échec du cavalier peut attaquer autre chose aussi.",
+           "en": "A knight check can attack something else too."
+          },
+          "accept": [
+           "e4f6"
+          ],
+          "skills": [
+           "fork"
+          ]
+         },
+         {
+          "id": "pawn-fork",
+          "type": "find_move",
+          "fen": "6k1/6pp/2n1b3/8/2PPP3/8/6PP/6K1 w - - 0 1",
+          "prompt": {
+           "fr": "Même un pion peut faire une fourchette. Attaque les deux pièces noires.",
+           "en": "Even a pawn can fork. Attack both black pieces."
+          },
+          "correct": {
+           "fr": "d5 : le pion attaque le cavalier et le fou, et tes autres pions le protègent.",
+           "en": "d5: the pawn attacks the knight and the bishop, and your other pawns protect it."
+          },
+          "hint": {
+           "fr": "Avance le pion entre les deux.",
+           "en": "Push the pawn between them."
+          },
+          "accept": [
+           "d4d5"
+          ],
+          "skills": [
+           "fork"
+          ]
+         },
+         {
+          "id": "queen-line",
+          "type": "play_line",
+          "fen": "6k1/5pp1/7p/r7/8/8/5PPP/3Q2K1 w - - 0 1",
+          "side": "white",
+          "moves": [
+           "d1d8",
+           "g8h7",
+           "d8a5"
+          ],
+          "prompt": {
+           "fr": "Fais échec et attaque la tour d'un seul coup, puis prends-la.",
+           "en": "Check the king and attack the rook in one move, then take it."
+          },
+          "hint": {
+           "fr": "La dame peut faire échec depuis la dernière rangée.",
+           "en": "The queen can check from the back rank."
+          },
+          "skills": [
+           "fork"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Qd8+ : échec, et la tour en a5 est attaquée aussi.",
+            "en": "Qd8+: check, and the rook on a5 is attacked too."
+           },
+           "2": {
+            "fr": "Qxa5 : fourchette réussie.",
+            "en": "Qxa5: forked and won."
+           }
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "pins",
+       "order": 3,
+       "kind": "tactic",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Les clouages",
+          "en": "Pins"
+         },
+         "description": {
+          "fr": "Une pièce qui ne peut pas bouger sans découvrir plus gros.",
+          "en": "A piece that cannot move without exposing something bigger."
+         },
+         "objectives": [
+          {
+           "fr": "Reconnaître une pièce clouée",
+           "en": "Recognise a pinned piece"
+          },
+          {
+           "fr": "Attaquer une pièce clouée",
+           "en": "Attack a pinned piece"
+          },
+          {
+           "fr": "Clouer une pièce toi-même",
+           "en": "Pin a piece yourself"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "4k3/8/2n5/1B6/8/8/8/4K3 w - - 0 1",
+          "text": {
+           "fr": "Le cavalier ne peut pas bouger : le roi derrière lui serait en échec. Le cavalier est cloué.",
+           "en": "The knight cannot move: the king behind it would be in check. The knight is pinned."
+          },
+          "highlights": [
+           "c6"
+          ]
+         },
+         {
+          "id": "which-pinned",
+          "type": "choice",
+          "fen": "4k3/8/2n5/1B6/8/8/8/4K3 w - - 0 1",
+          "question": {
+           "fr": "Quelle pièce est clouée ?",
+           "en": "Which piece is pinned?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Le cavalier en c6",
+             "en": "The knight on c6"
+            }
+           },
+           {
+            "text": {
+             "fr": "Le fou en b5",
+             "en": "The bishop on b5"
+            }
+           },
+           {
+            "text": {
+             "fr": "Le roi noir",
+             "en": "The black king"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Le cavalier est entre le fou et son propre roi.",
+           "en": "The knight stands between the bishop and its own king."
+          },
+          "hint": {
+           "fr": "Suis la diagonale du fou.",
+           "en": "Follow the bishop's diagonal."
+          },
+          "skills": [
+           "pin"
+          ]
+         },
+         {
+          "id": "target",
+          "type": "explain",
+          "fen": "4k3/1p4pp/2n5/1B6/3P4/8/6PP/4K3 w - - 0 1",
+          "text": {
+           "fr": "Une pièce clouée est une cible facile : attaque-la encore. Elle ne peut pas s'enfuir.",
+           "en": "A pinned piece is an easy target: attack it again. It cannot run away."
+          }
+         },
+         {
+          "id": "attack-pinned",
+          "type": "find_move",
+          "fen": "4k3/1p4pp/2n5/1B6/3P4/8/6PP/4K3 w - - 0 1",
+          "prompt": {
+           "fr": "Gagne le cavalier cloué.",
+           "en": "Win the pinned knight."
+          },
+          "correct": {
+           "fr": "d5 : le pion attaque le cavalier, qui ne peut pas s'échapper.",
+           "en": "d5: the pawn attacks the knight, and the knight cannot escape."
+          },
+          "hint": {
+           "fr": "Attaque le cavalier avec quelque chose de pas cher.",
+           "en": "Attack the knight with something cheap."
+          },
+          "accept": [
+           "d4d5"
+          ],
+          "skills": [
+           "pin"
+          ]
+         },
+         {
+          "id": "make-pin",
+          "type": "find_move",
+          "fen": "4k3/8/8/4q3/8/8/5K2/R7 w - - 0 1",
+          "prompt": {
+           "fr": "Cloue la dame noire à son roi.",
+           "en": "Pin the black queen to its king."
+          },
+          "correct": {
+           "fr": "Re1 : la dame ne peut pas quitter la colonne, et ton roi protège la tour.",
+           "en": "Re1: the queen cannot leave the file, and your king protects the rook."
+          },
+          "hint": {
+           "fr": "Mets ta tour sur la même colonne que la dame et le roi.",
+           "en": "Put your rook on the same file as the queen and the king."
+          },
+          "accept": [
+           "a1e1"
+          ],
+          "skills": [
+           "pin"
+          ]
+         },
+         {
+          "id": "pin-result",
+          "type": "show_moves",
+          "fen": "4k3/8/8/4q3/8/8/5K2/4R3 b - - 1 1",
+          "moves": [
+           {
+            "uci": "e5e1",
+            "caption": {
+             "fr": "Qxe1+ : le mieux pour les Noirs est de donner la dame contre la tour.",
+             "en": "Qxe1+: Black's best is to give the queen for the rook."
+            }
+           },
+           {
+            "uci": "f2e1",
+            "caption": {
+             "fr": "Kxe1 : tu as gagné une dame contre une tour.",
+             "en": "Kxe1: you won a queen for a rook."
+            }
+           }
+          ]
+         }
+        ]
+       }
+      },
+      {
+       "slug": "skewers",
+       "order": 4,
+       "kind": "tactic",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Les enfilades",
+          "en": "Skewers"
+         },
+         "description": {
+          "fr": "Attaque la grosse pièce, prends celle de derrière.",
+          "en": "Attack the big piece; take the one behind it."
+         },
+         "objectives": [
+          {
+           "fr": "Reconnaître une enfilade",
+           "en": "Recognise a skewer"
+          },
+          {
+           "fr": "Distinguer une enfilade d'un clouage",
+           "en": "Tell a skewer from a pin"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "q3k3/8/8/8/8/8/8/4K2R w - - 0 1",
+          "text": {
+           "fr": "Une enfilade : tu attaques une pièce de valeur, elle doit bouger, et tu prends la pièce derrière elle.",
+           "en": "A skewer: you attack a valuable piece, it has to move, and you take the piece behind it."
+          }
+         },
+         {
+          "id": "rook-skewer",
+          "type": "play_line",
+          "fen": "q3k3/8/8/8/8/8/8/4K2R w - - 0 1",
+          "side": "white",
+          "moves": [
+           "h1h8",
+           "e8d7",
+           "h8a8"
+          ],
+          "prompt": {
+           "fr": "Fais échec au roi sur la dernière rangée, puis prends ce qu'il y avait derrière.",
+           "en": "Check the king along the back rank, then take what stood behind it."
+          },
+          "hint": {
+           "fr": "Ta tour peut atteindre la dernière rangée.",
+           "en": "Your rook can reach the back rank."
+          },
+          "skills": [
+           "skewer"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Rh8+ : le roi doit quitter la rangée.",
+            "en": "Rh8+: the king must step off the rank."
+           },
+           "2": {
+            "fr": "Rxa8 : la dame derrière est perdue.",
+            "en": "Rxa8: the queen behind it is lost."
+           }
+          }
+         },
+         {
+          "id": "bishop-skewer",
+          "type": "show_moves",
+          "fen": "r7/8/2k5/8/8/8/8/3BK3 w - - 0 1",
+          "moves": [
+           {
+            "uci": "d1f3",
+            "caption": {
+             "fr": "Bf3+ : échec sur la grande diagonale.",
+             "en": "Bf3+: check along the long diagonal."
+            }
+           },
+           {
+            "uci": "c6c5",
+            "caption": {
+             "fr": "Le roi s'écarte.",
+             "en": "The king steps aside."
+            }
+           },
+           {
+            "uci": "f3a8",
+            "caption": {
+             "fr": "Bxa8 : la tour derrière est prise.",
+             "en": "Bxa8: the rook behind it is taken."
+            }
+           }
+          ]
+         },
+         {
+          "id": "which-skewer",
+          "type": "choice",
+          "fen": "r3k3/8/8/8/8/8/8/4K1R1 w - - 0 1",
+          "question": {
+           "fr": "Quel coup fait une enfilade sur le roi et la tour ?",
+           "en": "Which move skewers the king and the rook?"
+          },
+          "options": [
+           {
+            "uci": "g1g8"
+           },
+           {
+            "uci": "g1f1"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Rg8+ : le roi doit quitter la dernière rangée, puis la tour en a8 est perdue.",
+           "en": "Rg8+: the king must leave the back rank, then the rook on a8 is lost."
+          },
+          "hint": {
+           "fr": "Fais un échec sur la dernière rangée.",
+           "en": "Give a check along the back rank."
+          },
+          "skills": [
+           "skewer"
+          ]
+         },
+         {
+          "id": "bishop-find",
+          "type": "find_move",
+          "fen": "1q6/8/3k4/8/8/8/8/2B1K3 w - - 0 1",
+          "prompt": {
+           "fr": "Fais une enfilade sur le roi et la dame avec ton fou.",
+           "en": "Skewer the king and the queen with your bishop."
+          },
+          "correct": {
+           "fr": "Bf4+ : le roi doit bouger, puis la dame en b8 tombe.",
+           "en": "Bf4+: the king must move, then the queen on b8 falls."
+          },
+          "hint": {
+           "fr": "Le roi et la dame sont sur la même diagonale.",
+           "en": "The king and the queen share a diagonal."
+          },
+          "accept": [
+           "c1f4"
+          ],
+          "skills": [
+           "skewer"
+          ]
+         },
+         {
+          "id": "pin-or-skewer",
+          "type": "explain",
+          "fen": "q3k3/8/8/8/8/8/8/4K2R w - - 0 1",
+          "text": {
+           "fr": "Clouage : la pièce la plus précieuse est derrière. Enfilade : la plus précieuse est devant et doit bouger.",
+           "en": "Pin: the more valuable piece hides behind. Skewer: the more valuable piece is in front and must move."
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "discovered-attacks",
+       "order": 5,
+       "kind": "tactic",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Les attaques à la découverte",
+          "en": "Discovered attacks"
+         },
+         "description": {
+          "fr": "Bouge une pièce, et une autre attaque.",
+          "en": "Move one piece, and another one attacks."
+         },
+         "objectives": [
+          {
+           "fr": "Reconnaître une attaque à la découverte",
+           "en": "Recognise a discovered attack"
+          },
+          {
+           "fr": "Gagner du matériel avec un échec à la découverte",
+           "en": "Win material with a discovered check"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "4k3/8/8/8/4N3/8/8/4R1K1 w - - 0 1",
+          "text": {
+           "fr": "Ta tour est cachée derrière ton cavalier. Quand le cavalier s'en va, la tour attaque : une attaque à la découverte.",
+           "en": "Your rook hides behind your knight. When the knight moves away, the rook attacks: a discovered attack."
+          },
+          "arrows": [
+           [
+            "e1",
+            "e8"
+           ]
+          ]
+         },
+         {
+          "id": "name-it",
+          "type": "choice",
+          "fen": "4k3/8/8/8/4N3/8/8/4R1K1 w - - 0 1",
+          "question": {
+           "fr": "Si le cavalier bouge, la tour fait échec. Comment cela s'appelle-t-il ?",
+           "en": "If the knight moves, the rook gives check. What is this called?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Un échec à la découverte",
+             "en": "A discovered check"
+            }
+           },
+           {
+            "text": {
+             "fr": "Un clouage",
+             "en": "A pin"
+            }
+           },
+           {
+            "text": {
+             "fr": "Une fourchette",
+             "en": "A fork"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Le cavalier libère la ligne de la tour : un échec à la découverte. Le cavalier peut aller où il veut.",
+           "en": "The knight uncovers the rook's line: a discovered check. The knight is free to go anywhere."
+          },
+          "hint": {
+           "fr": "L'échec vient de la pièce qui n'a pas bougé.",
+           "en": "The check comes from the piece that did not move."
+          },
+          "skills": [
+           "discoveredCheck"
+          ]
+         },
+         {
+          "id": "take-queen",
+          "type": "find_move",
+          "fen": "4k3/8/5q2/8/4N3/8/8/4R1K1 w - - 0 1",
+          "prompt": {
+           "fr": "Gagne la dame noire.",
+           "en": "Win the black queen."
+          },
+          "correct": {
+           "fr": "Nxf6+ : le cavalier prend la dame et la tour fait échec.",
+           "en": "Nxf6+: the knight takes the queen and the rook gives check."
+          },
+          "hint": {
+           "fr": "Bouge le cavalier là où il fait mal.",
+           "en": "Move the knight where it does damage."
+          },
+          "accept": [
+           "e4f6"
+          ],
+          "skills": [
+           "discoveredCheck",
+           "discoveredAttack"
+          ]
+         },
+         {
+          "id": "double-check",
+          "type": "play_line",
+          "fen": "4k3/8/8/1q6/4N3/8/8/4R1K1 w - - 0 1",
+          "side": "white",
+          "moves": [
+           "e4d6",
+           "e8d7",
+           "d6b5"
+          ],
+          "prompt": {
+           "fr": "Utilise un échec à la découverte pour gagner la dame.",
+           "en": "Use a discovered check to win the queen."
+          },
+          "hint": {
+           "fr": "Trouve un coup de cavalier qui attaque aussi la dame.",
+           "en": "Find a knight move that also attacks the queen."
+          },
+          "skills": [
+           "discoveredCheck",
+           "doubleCheck"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Nd6+ : échec double ! Le roi doit bouger.",
+            "en": "Nd6+: double check! The king must move."
+           },
+           "2": {
+            "fr": "Nxb5 : la dame tombe.",
+            "en": "Nxb5: the queen falls."
+           }
+          },
+          "also_accept": {
+           "0": [
+            "e4c3"
+           ]
+          }
+         },
+         {
+          "id": "bishop-uncovers",
+          "type": "show_moves",
+          "fen": "1k1q4/8/8/8/3B4/8/8/3R2K1 w - - 0 1",
+          "moves": [
+           {
+            "uci": "d4e5",
+            "caption": {
+             "fr": "Be5+ : échec du fou, et maintenant la tour attaque la dame.",
+             "en": "Be5+: check from the bishop, and now the rook attacks the queen."
+            }
+           },
+           {
+            "uci": "b8b7",
+            "caption": {
+             "fr": "Le roi s'écarte.",
+             "en": "The king steps away."
+            }
+           },
+           {
+            "uci": "d1d8",
+            "caption": {
+             "fr": "Rxd8 : la dame est gagnée.",
+             "en": "Rxd8: queen won."
+            }
+           }
+          ]
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "1k1q4/8/8/8/3B4/8/8/3R2K1 w - - 0 1",
+          "text": {
+           "fr": "Avant de bouger une pièce, regarde ce qu'elle découvre derrière elle.",
+           "en": "Before you move a piece, look at what it uncovers behind it."
+          }
+         }
+        ]
+       }
+      }
+     ]
     }
    ]
   }
