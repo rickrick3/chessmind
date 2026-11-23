@@ -55,6 +55,13 @@ docker compose run --rm web python manage.py import_lessons curriculum/seed/foun
 Then, as a staff user, open `/studio/`: validate each draft (the `content` queue runs the checks with Stockfish),
 read the report, preview it, approve and publish.
 
+The beginner course (30 more lessons in six units of the same course) comes in its own file; import it after
+`foundation.json`:
+
+```bash
+docker compose run --rm web python manage.py import_lessons curriculum/seed/beginner.json
+```
+
 ## Puzzles
 
 Puzzles from the Lichess puzzle database (CC0). Download the file on your machine, then import a sample of it:
