@@ -4624,6 +4624,1028 @@
        }
       }
      ]
+    },
+    {
+     "slug": "first-endgames",
+     "order": 6,
+     "title": {
+      "fr": "Premières finales",
+      "en": "First endgames"
+     },
+     "description": {
+      "fr": "Le carré, le roi actif, l'opposition, roi et pion, le mur de la tour.",
+      "en": "The square, an active king, the opposition, king and pawn, the rook wall."
+     },
+     "lessons": [
+      {
+       "slug": "square-rule",
+       "order": 1,
+       "kind": "endgame",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "La règle du carré",
+          "en": "The square rule"
+         },
+         "description": {
+          "fr": "Le roi peut-il rattraper le pion ? Compte-le d'un coup d'œil.",
+          "en": "Can the king catch the pawn? Count it in one look."
+         },
+         "objectives": [
+          {
+           "fr": "Utiliser le carré pour voir si un roi rattrape un pion",
+           "en": "Use the square to see if a king catches a pawn"
+          },
+          {
+           "fr": "Pousser un pion qu'on ne peut pas rattraper",
+           "en": "Push a pawn that cannot be caught"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "8/8/8/4k3/P7/8/8/7K b - - 0 1",
+          "text": {
+           "fr": "Trace un carré du pion jusqu'à sa case de promotion. Si le roi peut entrer dedans, il rattrape le pion.",
+           "en": "Draw a square from the pawn to its promotion square. If the king can step inside it, the king catches the pawn."
+          },
+          "highlights": [
+           "a4",
+           "a8",
+           "e8",
+           "e4"
+          ]
+         },
+         {
+          "id": "inside",
+          "type": "choice",
+          "fen": "8/8/8/4k3/P7/8/8/7K b - - 0 1",
+          "question": {
+           "fr": "Les Noirs jouent. Le roi noir peut-il rattraper le pion ?",
+           "en": "Black to move. Can the black king catch the pawn?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Oui : il est dans le carré",
+             "en": "Yes: it is inside the square"
+            }
+           },
+           {
+            "text": {
+             "fr": "Non : le pion est trop rapide",
+             "en": "No: the pawn is too fast"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Le carré va de a4 à e8 et le roi est en e5, à l'intérieur. Il rattrape le pion à temps.",
+           "en": "The square runs from a4 to e8 and the king is on e5, inside it. It catches the pawn in time."
+          },
+          "hint": {
+           "fr": "Trace le carré : quatre cases de côté.",
+           "en": "Draw the square: four squares wide."
+          },
+          "skills": [
+           "endgames",
+           "pawnEndgame"
+          ]
+         },
+         {
+          "id": "caught",
+          "type": "show_moves",
+          "fen": "8/8/8/4k3/P7/8/8/7K b - - 0 1",
+          "moves": [
+           {
+            "uci": "e5d5",
+            "caption": {
+             "fr": "Kd5",
+             "en": "Kd5"
+            }
+           },
+           {
+            "uci": "a4a5",
+            "caption": {
+             "fr": "a5",
+             "en": "a5"
+            }
+           },
+           {
+            "uci": "d5c6",
+            "caption": {
+             "fr": "Kc6",
+             "en": "Kc6"
+            }
+           },
+           {
+            "uci": "a5a6",
+            "caption": {
+             "fr": "a6",
+             "en": "a6"
+            }
+           },
+           {
+            "uci": "c6b6",
+            "caption": {
+             "fr": "Kb6",
+             "en": "Kb6"
+            }
+           },
+           {
+            "uci": "a6a7",
+            "caption": {
+             "fr": "a7",
+             "en": "a7"
+            }
+           },
+           {
+            "uci": "b6a7",
+            "caption": {
+             "fr": "Kxa7 : rattrapé, comme le disait le carré.",
+             "en": "Kxa7: caught, as the square said."
+            }
+           }
+          ]
+         },
+         {
+          "id": "outside",
+          "type": "find_move",
+          "fen": "8/8/8/5k2/P7/8/8/7K w - - 0 1",
+          "prompt": {
+           "fr": "Le roi noir est hors du carré. Gagne la course.",
+           "en": "The black king is outside the square. Win the race."
+          },
+          "correct": {
+           "fr": "a5 : le pion file et le roi a un temps de retard.",
+           "en": "a5: the pawn runs and the king is one step too late."
+          },
+          "hint": {
+           "fr": "Ne perds pas de temps avec ton roi.",
+           "en": "Don't waste a move with your king."
+          },
+          "accept": [
+           "a4a5"
+          ],
+          "skills": [
+           "endgames",
+           "pawnEndgame"
+          ]
+         },
+         {
+          "id": "race",
+          "type": "play_line",
+          "fen": "8/8/8/5k2/P7/8/8/7K w - - 0 1",
+          "side": "white",
+          "moves": [
+           "a4a5",
+           "f5e6",
+           "a5a6",
+           "e6d7",
+           "a6a7",
+           "d7c7",
+           "a7a8q"
+          ],
+          "prompt": {
+           "fr": "Fonce avec le pion et fais une dame.",
+           "en": "Run with the pawn and make a queen."
+          },
+          "hint": {
+           "fr": "Seul le pion bouge.",
+           "en": "Only the pawn moves."
+          },
+          "skills": [
+           "endgames",
+           "pawnEndgame",
+           "promotion"
+          ],
+          "notes": {
+           "6": {
+            "fr": "a8=Q : la course est gagnée.",
+            "en": "a8=Q: the race is won."
+           }
+          }
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "8/8/8/5k2/P7/8/8/7K w - - 0 1",
+          "text": {
+           "fr": "Si le pion est sur sa case de départ, compte depuis la case qu'il atteint après son double pas.",
+           "en": "On a pawn's first square, count from the square it reaches after its double step."
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "active-king",
+       "order": 2,
+       "kind": "endgame",
+       "difficulty": 2,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Un roi actif",
+          "en": "An active king"
+         },
+         "description": {
+          "fr": "En finale, le roi devient un combattant.",
+          "en": "In the endgame, the king becomes a fighter."
+         },
+         "objectives": [
+          {
+           "fr": "Amener le roi au centre en finale",
+           "en": "Bring the king to the centre in the endgame"
+          },
+          {
+           "fr": "Utiliser le roi pour attaquer les pions",
+           "en": "Use the king to attack pawns"
+          }
+         ],
+         "difficulty": 2,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "6k1/5ppp/8/8/8/8/5PPP/6K1 w - - 0 1",
+          "text": {
+           "fr": "Les dames et les tours ont disparu. Ton roi n'est plus en danger, il doit donc combattre : amène-le au centre.",
+           "en": "The queens and rooks are gone. Your king is no longer in danger, so it must join the fight: walk it to the centre."
+          }
+         },
+         {
+          "id": "first-step",
+          "type": "choice",
+          "fen": "6k1/5ppp/8/8/8/8/5PPP/6K1 w - - 0 1",
+          "question": {
+           "fr": "Quel coup est le meilleur ici ?",
+           "en": "Which move is best here?"
+          },
+          "options": [
+           {
+            "uci": "g1f1"
+           },
+           {
+            "uci": "h2h4"
+           },
+           {
+            "uci": "g2g4"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Kf1 : le roi part vers le centre. Les coups de pion peuvent attendre.",
+           "en": "Kf1: the king heads for the centre. The pawn moves can wait."
+          },
+          "hint": {
+           "fr": "Quelle pièce ne travaille pas encore ?",
+           "en": "Which piece is not working yet?"
+          },
+          "skills": [
+           "endgames",
+           "pawnEndgame"
+          ]
+         },
+         {
+          "id": "march",
+          "type": "show_moves",
+          "fen": "6k1/5ppp/8/8/8/8/5PPP/6K1 w - - 0 1",
+          "moves": [
+           {
+            "uci": "g1f1",
+            "caption": {
+             "fr": "Kf1",
+             "en": "Kf1"
+            }
+           },
+           {
+            "uci": "g8f8",
+            "caption": {
+             "fr": "Kf8 : les Noirs font pareil.",
+             "en": "Kf8: Black does the same."
+            }
+           },
+           {
+            "uci": "f1e2",
+            "caption": {
+             "fr": "Ke2",
+             "en": "Ke2"
+            }
+           },
+           {
+            "uci": "f8e7",
+            "caption": {
+             "fr": "Ke7",
+             "en": "Ke7"
+            }
+           },
+           {
+            "uci": "e2d3",
+            "caption": {
+             "fr": "Kd3",
+             "en": "Kd3"
+            }
+           },
+           {
+            "uci": "e7d6",
+            "caption": {
+             "fr": "Kd6 : les deux rois au centre.",
+             "en": "Kd6: both kings in the centre."
+            }
+           }
+          ]
+         },
+         {
+          "id": "hunt",
+          "type": "choice",
+          "fen": "8/p7/8/8/3K4/8/4P3/7k w - - 0 1",
+          "question": {
+           "fr": "Ton roi peut gagner le pion a7. Quel chemin est sûr ?",
+           "en": "Your king can win the pawn on a7. Which way is safe?"
+          },
+          "options": [
+           {
+            "uci": "d4c5"
+           },
+           {
+            "uci": "d4e3"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Kc5, puis b5 et a6 : le roi contourne b6, que le pion garde.",
+           "en": "Kc5, then b5 and a6: the king goes around b6, which the pawn guards."
+          },
+          "hint": {
+           "fr": "Va vers le pion.",
+           "en": "Head towards the pawn."
+          },
+          "skills": [
+           "endgames",
+           "pawnEndgame"
+          ]
+         },
+         {
+          "id": "where",
+          "type": "choice",
+          "fen": "6k1/5ppp/8/8/8/8/5PPP/6K1 w - - 0 1",
+          "question": {
+           "fr": "En finale, où ton roi doit-il être en général ?",
+           "en": "In the endgame, where should your king usually be?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Au centre, actif",
+             "en": "In the centre, active"
+            }
+           },
+           {
+            "text": {
+             "fr": "Dans le coin, à l'abri",
+             "en": "In the corner, safe"
+            }
+           },
+           {
+            "text": {
+             "fr": "Derrière ses pions",
+             "en": "Behind its pawns"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Depuis le centre, le roi atteint les deux côtés de l'échiquier et aide ses pions.",
+           "en": "From the centre the king reaches both sides of the board and helps its pawns."
+          },
+          "hint": {
+           "fr": "Un roi dans le coin ne fait rien.",
+           "en": "A king in the corner does nothing."
+          },
+          "skills": [
+           "endgames"
+          ]
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "8/p7/8/8/3K4/8/4P3/7k w - - 0 1",
+          "text": {
+           "fr": "Milieu de partie : cache le roi. Finale : utilise-le. Il vaut à peu près une pièce mineure.",
+           "en": "Middlegame: hide the king. Endgame: use it. It is worth about as much as a minor piece."
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "opposition",
+       "order": 3,
+       "kind": "endgame",
+       "difficulty": 3,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "L'opposition",
+          "en": "The opposition"
+         },
+         "description": {
+          "fr": "Quand les rois se font face, celui qui doit jouer cède.",
+          "en": "When kings face off, the one who must move gives way."
+         },
+         "objectives": [
+          {
+           "fr": "Reconnaître l'opposition",
+           "en": "Recognise the opposition"
+          },
+          {
+           "fr": "Prendre l'opposition pour gagner",
+           "en": "Take the opposition to win"
+          }
+         ],
+         "difficulty": 3,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "8/8/4k3/8/4K3/8/8/8 b - - 0 1",
+          "text": {
+           "fr": "Les rois se font face avec une case entre eux. Celui qui doit jouer doit s'écarter : l'autre a l'opposition.",
+           "en": "The kings face each other with one square between them. Whoever has to move must step aside: the other side has the opposition."
+          }
+         },
+         {
+          "id": "who",
+          "type": "choice",
+          "fen": "8/8/4k3/8/4K3/8/8/8 b - - 0 1",
+          "question": {
+           "fr": "Les Noirs jouent. Qui a l'opposition ?",
+           "en": "Black to move. Who has the opposition?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Les Blancs",
+             "en": "White"
+            }
+           },
+           {
+            "text": {
+             "fr": "Les Noirs",
+             "en": "Black"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Les Noirs doivent bouger et laisser passer le roi blanc.",
+           "en": "Black must move and let the white king through."
+          },
+          "hint": {
+           "fr": "Qui aimerait passer son tour ?",
+           "en": "Who would like to pass instead of moving?"
+          },
+          "skills": [
+           "endgames",
+           "pawnEndgame"
+          ]
+         },
+         {
+          "id": "take-it",
+          "type": "choice",
+          "fen": "8/4k3/8/8/4K3/8/8/8 w - - 0 1",
+          "question": {
+           "fr": "Quel coup prend l'opposition ?",
+           "en": "Which move takes the opposition?"
+          },
+          "options": [
+           {
+            "uci": "e4e5"
+           },
+           {
+            "uci": "e4d4"
+           },
+           {
+            "uci": "e4f3"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Ke5 : les rois se font face avec une case entre eux, et les Noirs doivent jouer.",
+           "en": "Ke5: now the kings face each other with one square between, and Black must move."
+          },
+          "hint": {
+           "fr": "Laisse exactement une case entre les rois.",
+           "en": "Leave exactly one square between the kings."
+          },
+          "skills": [
+           "endgames",
+           "pawnEndgame"
+          ]
+         },
+         {
+          "id": "why-it-wins",
+          "type": "show_moves",
+          "fen": "4k3/8/4K3/4P3/8/8/8/8 b - - 0 1",
+          "moves": [
+           {
+            "uci": "e8d8",
+            "caption": {
+             "fr": "Kd8 : les Noirs doivent céder.",
+             "en": "Kd8: Black has to give way."
+            }
+           },
+           {
+            "uci": "e6f7",
+            "caption": {
+             "fr": "Kf7 : le roi blanc contrôle la case de promotion.",
+             "en": "Kf7: the white king controls the queening square."
+            }
+           },
+           {
+            "uci": "d8d7",
+            "caption": {
+             "fr": "Kd7",
+             "en": "Kd7"
+            }
+           },
+           {
+            "uci": "e5e6",
+            "caption": {
+             "fr": "e6+",
+             "en": "e6+"
+            }
+           },
+           {
+            "uci": "d7d6",
+            "caption": {
+             "fr": "Kd6",
+             "en": "Kd6"
+            }
+           },
+           {
+            "uci": "e6e7",
+            "caption": {
+             "fr": "e7",
+             "en": "e7"
+            }
+           },
+           {
+            "uci": "d6d7",
+            "caption": {
+             "fr": "Kd7",
+             "en": "Kd7"
+            }
+           },
+           {
+            "uci": "e7e8q",
+            "caption": {
+             "fr": "e8=Q+",
+             "en": "e8=Q+"
+            }
+           }
+          ]
+         },
+         {
+          "id": "win-it",
+          "type": "play_line",
+          "fen": "4k3/8/4K3/4P3/8/8/8/8 b - - 0 1",
+          "side": "white",
+          "moves": [
+           "e8f8",
+           "e6d7",
+           "f8f7",
+           "e5e6",
+           "f7f6",
+           "e6e7",
+           "f6f7",
+           "e7e8q"
+          ],
+          "prompt": {
+           "fr": "Les Noirs s'écartent. Profites-en pour faire une dame.",
+           "en": "Black steps aside. Use it and make a queen."
+          },
+          "hint": {
+           "fr": "Va du côté que le roi noir a quitté.",
+           "en": "Go to the side the black king left."
+          },
+          "skills": [
+           "endgames",
+           "pawnEndgame"
+          ],
+          "notes": {
+           "1": {
+            "fr": "Kd7 : le roi prend le contrôle de la case de promotion.",
+            "en": "Kd7: the king takes the queening square under control."
+           },
+           "7": {
+            "fr": "e8=Q+",
+            "en": "e8=Q+"
+           }
+          }
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "4k3/8/4K3/4P3/8/8/8/8 b - - 0 1",
+          "text": {
+           "fr": "Dans les finales de pions, demande-toi : qui a l'opposition ? C'est souvent la différence entre gain et nulle.",
+           "en": "In king and pawn endings, ask: who has the opposition? It often decides between a win and a draw."
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "king-pawn-king",
+       "order": 4,
+       "kind": "endgame",
+       "difficulty": 3,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Roi et pion contre roi",
+          "en": "King and pawn against king"
+         },
+         "description": {
+          "fr": "Le roi ouvre la route, le pion suit.",
+          "en": "The king leads, the pawn follows."
+         },
+         "objectives": [
+          {
+           "fr": "Placer le roi devant le pion",
+           "en": "Put the king in front of the pawn"
+          },
+          {
+           "fr": "Éviter le piège du pat",
+           "en": "Avoid the stalemate trap"
+          }
+         ],
+         "difficulty": 3,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "8/8/4k3/8/8/3K4/4P3/8 w - - 0 1",
+          "text": {
+           "fr": "Avec roi et pion contre roi, le roi passe devant et ouvre la route. Le pion suit derrière.",
+           "en": "With king and pawn against king, the king walks first and clears the way. The pawn follows behind."
+          }
+         },
+         {
+          "id": "king-first",
+          "type": "choice",
+          "fen": "8/8/4k3/8/8/3K4/4P3/8 w - - 0 1",
+          "question": {
+           "fr": "Le roi d'abord ou le pion d'abord ?",
+           "en": "King first or pawn first?"
+          },
+          "options": [
+           {
+            "uci": "d3e4"
+           },
+           {
+            "uci": "e2e4"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Ke4 : le roi passe devant le pion et prend l'opposition. e4 pousse trop tôt.",
+           "en": "Ke4: the king goes in front of the pawn and takes the opposition. e4 pushes too early."
+          },
+          "hint": {
+           "fr": "Le roi doit ouvrir la route.",
+           "en": "The king should lead."
+          },
+          "skills": [
+           "endgames",
+           "pawnEndgame"
+          ]
+         },
+         {
+          "id": "lead",
+          "type": "show_moves",
+          "fen": "8/8/4k3/8/8/3K4/4P3/8 w - - 0 1",
+          "moves": [
+           {
+            "uci": "d3e4",
+            "caption": {
+             "fr": "Ke4 : l'opposition.",
+             "en": "Ke4: opposition."
+            }
+           },
+           {
+            "uci": "e6f6",
+            "caption": {
+             "fr": "Kf6",
+             "en": "Kf6"
+            }
+           },
+           {
+            "uci": "e4d5",
+            "caption": {
+             "fr": "Kd5 : le roi se faufile.",
+             "en": "Kd5: the king slips past."
+            }
+           },
+           {
+            "uci": "f6e7",
+            "caption": {
+             "fr": "Ke7",
+             "en": "Ke7"
+            }
+           },
+           {
+            "uci": "d5e5",
+            "caption": {
+             "fr": "Ke5 : devant son pion, le roi dégage la route.",
+             "en": "Ke5: in front of its pawn, the king clears the path."
+            }
+           }
+          ]
+         },
+         {
+          "id": "stalemate-trap",
+          "type": "choice",
+          "fen": "4k3/8/3K4/4P3/8/8/8/8 w - - 0 1",
+          "question": {
+           "fr": "Quel coup gagne ? L'autre ne fait que nulle.",
+           "en": "Which move wins? The other one only draws."
+          },
+          "options": [
+           {
+            "uci": "d6e6"
+           },
+           {
+            "uci": "e5e6"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Ke6 gagne. Après e6, le roi noir va en d8, le pion fait échec depuis e7, le roi revient en e8, et chaque coup blanc fait pat ou perd le pion.",
+           "en": "Ke6 wins. After e6, the black king goes to d8, the pawn checks from e7, the king goes back to e8, and now every white move is stalemate or loses the pawn."
+          },
+          "hint": {
+           "fr": "Garde ton roi devant le pion.",
+           "en": "Keep your king in front of the pawn."
+          },
+          "skills": [
+           "endgames",
+           "pawnEndgame"
+          ]
+         },
+         {
+          "id": "convert",
+          "type": "play_line",
+          "fen": "4k3/8/3K4/4P3/8/8/8/8 w - - 0 1",
+          "side": "white",
+          "moves": [
+           "d6e6",
+           "e8f8",
+           "e6d7",
+           "f8f7",
+           "e5e6",
+           "f7f6",
+           "e6e7",
+           "f6f7",
+           "e7e8q"
+          ],
+          "prompt": {
+           "fr": "Gagne : le roi d'abord, puis le pion.",
+           "en": "Win it: king first, then the pawn."
+          },
+          "hint": {
+           "fr": "Amène ton roi à côté de la case de promotion.",
+           "en": "Get your king next to the queening square."
+          },
+          "skills": [
+           "endgames",
+           "pawnEndgame"
+          ],
+          "notes": {
+           "0": {
+            "fr": "Ke6 : l'opposition.",
+            "en": "Ke6: the opposition."
+           },
+           "2": {
+            "fr": "Kd7 : maintenant le pion peut avancer.",
+            "en": "Kd7: now the pawn walks in."
+           },
+           "8": {
+            "fr": "e8=Q+",
+            "en": "e8=Q+"
+           }
+          }
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "4k3/8/3K4/4P3/8/8/8/8 w - - 0 1",
+          "text": {
+           "fr": "Le roi devant, l'opposition, puis pousse. Et avant chaque poussée, vérifie que les Noirs ont encore un coup.",
+           "en": "King in front, opposition, then push. And before every pawn push, check that Black still has a move."
+          }
+         }
+        ]
+       }
+      },
+      {
+       "slug": "cut-off-the-king",
+       "order": 5,
+       "kind": "endgame",
+       "difficulty": 3,
+       "content": {
+        "schema": 1,
+        "meta": {
+         "title": {
+          "fr": "Couper le roi avec la tour",
+          "en": "Cutting off the king with a rook"
+         },
+         "description": {
+          "fr": "Un mur de tour tient le roi loin de ton pion.",
+          "en": "A rook wall keeps the king away from your pawn."
+         },
+         "objectives": [
+          {
+           "fr": "Couper le roi adverse sur une colonne",
+           "en": "Cut the enemy king off along a file"
+          },
+          {
+           "fr": "Promouvoir derrière le mur",
+           "en": "Promote behind the wall"
+          }
+         ],
+         "difficulty": 3,
+         "estimated_minutes": 5,
+         "orientation": "white"
+        },
+        "steps": [
+         {
+          "id": "idea",
+          "type": "explain",
+          "fen": "8/8/8/7k/4P3/8/4K3/R7 w - - 0 1",
+          "text": {
+           "fr": "Avec une tour et un pion, construis un mur : place la tour sur une colonne entre le roi adverse et ton pion.",
+           "en": "With a rook and a pawn, build a wall: put the rook on a file between the enemy king and your pawn."
+          }
+         },
+         {
+          "id": "wall",
+          "type": "show_moves",
+          "fen": "8/8/8/7k/4P3/8/4K3/R7 w - - 0 1",
+          "moves": [
+           {
+            "uci": "a1f1",
+            "caption": {
+             "fr": "Rf1 : le roi noir ne pourra jamais franchir la colonne f.",
+             "en": "Rf1: the black king can never cross the f-file."
+            }
+           }
+          ]
+         },
+         {
+          "id": "which-wall",
+          "type": "choice",
+          "fen": "8/8/8/7k/4P3/8/4K3/R7 w - - 0 1",
+          "question": {
+           "fr": "Quel coup construit le mur ?",
+           "en": "Which move builds the wall?"
+          },
+          "options": [
+           {
+            "uci": "a1f1"
+           },
+           {
+            "uci": "a1a5"
+           },
+           {
+            "uci": "e2e3"
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "Rf1 coupe le roi. Ra5+ ne fait que le chasser, et Ke3 le laisse s'approcher.",
+           "en": "Rf1 cuts the king off. Ra5+ only chases it, and Ke3 lets it come closer."
+          },
+          "hint": {
+           "fr": "Mets la tour entre le roi et ton pion.",
+           "en": "Put the rook between the king and your pawn."
+          },
+          "skills": [
+           "endgames",
+           "rookEndgame"
+          ]
+         },
+         {
+          "id": "walk",
+          "type": "play_line",
+          "fen": "8/8/8/7k/4P3/8/4K3/5R2 b - - 0 1",
+          "side": "white",
+          "moves": [
+           "h5g4",
+           "e4e5",
+           "g4g5",
+           "e5e6",
+           "g5g6",
+           "e6e7",
+           "g6g7",
+           "e7e8q"
+          ],
+          "prompt": {
+           "fr": "Le mur est en place. Avance ton pion jusqu'au bout.",
+           "en": "The wall is up. Walk your pawn to the end."
+          },
+          "hint": {
+           "fr": "Le roi ne peut pas atteindre ton pion : pousse-le.",
+           "en": "The king cannot reach your pawn: push it."
+          },
+          "skills": [
+           "endgames",
+           "rookEndgame",
+           "promotion"
+          ],
+          "notes": {
+           "7": {
+            "fr": "e8=Q : le mur a fait son travail.",
+            "en": "e8=Q: the wall did its job."
+           }
+          }
+         },
+         {
+          "id": "meaning",
+          "type": "choice",
+          "fen": "8/8/8/7k/4P3/8/4K3/5R2 b - - 0 1",
+          "question": {
+           "fr": "Que veut dire couper le roi ?",
+           "en": "What does cutting off the king mean?"
+          },
+          "options": [
+           {
+            "text": {
+             "fr": "Le tenir loin de ton pion avec un mur de tour",
+             "en": "Keeping it away from your pawn with a rook wall"
+            }
+           },
+           {
+            "text": {
+             "fr": "Faire échec à chaque coup",
+             "en": "Giving check every move"
+            }
+           },
+           {
+            "text": {
+             "fr": "Échanger les tours",
+             "en": "Trading the rooks"
+            }
+           }
+          ],
+          "answer": 0,
+          "explanation": {
+           "fr": "La tour garde toute une colonne que le roi ne peut pas franchir, et ton pion avance en sécurité.",
+           "en": "The rook guards a whole file the king cannot cross, so your pawn walks in safety."
+          },
+          "hint": {
+           "fr": "Pense à un mur.",
+           "en": "Think of a wall."
+          },
+          "skills": [
+           "endgames",
+           "rookEndgame"
+          ]
+         },
+         {
+          "id": "recap",
+          "type": "explain",
+          "fen": "8/8/8/7k/4P3/8/4K3/5R2 b - - 0 1",
+          "text": {
+           "fr": "La tour se place loin du roi adverse, du côté opposé à ton pion : ainsi le mur ne peut pas être attaqué.",
+           "en": "Rooks belong far from the enemy king and on the side away from your pawn: then the wall cannot be attacked."
+          }
+         }
+        ]
+       }
+      }
+     ]
     }
    ]
   }
