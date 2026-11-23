@@ -1,5 +1,6 @@
 """The skill vocabulary: areas, Lichess themes, old lesson tags. Pure, no database."""
 import pytest
+from django.utils import translation
 
 from skills.domain.areas import (
     ALL_THEMES, AREAS, MOTIF_THEMES, NOT_DIAGNOSED, canonical_tags, diagnosable, lesson_step_areas, puzzle_areas,
@@ -35,5 +36,8 @@ def test_lesson_step_areas(tags, kind, areas):
 
 def test_labels_cover_everything():
     assert set(THEME_LABELS) == ALL_THEMES and set(AREA_LABELS) == set(AREAS)
-    assert theme_label("mateIn2") == "Mate in 2" and area_label("defense") == "Defence"
+    with translation.override("en"):  # another test may leave French active
+        assert theme_label("mateIn2") == "Mate in 2" and area_label("defense") == "Defence"
+    with translation.override("fr"):
+        assert theme_label("mateIn2") == "Mat en 2" and area_label("defense") == "Défense"
     assert theme_label("nope") == "nope"
